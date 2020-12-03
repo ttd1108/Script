@@ -2,6 +2,6 @@ local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/
 local w = lib:CreateWindows("Roghoul2")
 local sec = w:NewSection("Roghoul2")
 local lab = sec:NewLabel("Click this button to exe script")
-local but = sec:NewButton('THIS BUTTOn',function()
+local but = sec:NewButton('THIS BUTTON',function()
 loadstring(game:HttpGet(('https://pastebin.com/raw/MdK8dy1k')))()
 end)
