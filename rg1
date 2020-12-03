@@ -1,0 +1,6 @@
+local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/master/ui_library_cyber_only.lua'))()
+local w = lib:CreateWindows("Roghoul1")
+local sec = w:NewSection("Roghoul1")
+local lab = sec:NewLabel("Click this button to exe script")
+local but = sec:NewButton('THIS BUTTON',function()
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/ttd1108/Script/master/rg2')))() end)
