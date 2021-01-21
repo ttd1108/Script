@@ -1,3 +1,0 @@
-if key == "abcdefg" then
-game.Players.LocalPlayer:Kick("You Have Been Banned From Game")
-end
