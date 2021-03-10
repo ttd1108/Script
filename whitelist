@@ -1,0 +1,21 @@
+local id = game.PlaceId
+local playerid = game.Players.LocalPlayer.UserId
+if id == 6186867282 then --Project XL
+  if playerid == 1226385289 
+  or playerid == 1308279155
+  or playerid == 307221489
+  or playerid == 238405517
+  or playerid == 148295126
+  or playerid ==710151141
+  or playerid == 932120570
+  or playerid == 91596375
+  or playerid ==248230437
+  or playerid == 1928731155
+  then
+    print("Success")
+  else 
+    game.Players.LocalPlayer:Kick("concac")
+  end
+end
+  
+  
