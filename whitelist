@@ -14,6 +14,7 @@ if id == 6186867282 then --Project XL
   or playerid == 1928731155 and plrname =="Ainar_monster"
   or playerid == 598297580 and plrname =="luuquocthang00"
   or playerid == 617728026 and plrname =="lionYT_VN"
+  or playerid == 275485611 and plrname =="ngunguoi789"
   then
     print("Success")
   else 
