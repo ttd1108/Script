@@ -1,1 +1,25 @@
-print'cc'
+  
+local id = game.PlaceId
+local plrname = game.Players.LocalPlayer.Name
+local playerid = game.Players.LocalPlayer.UserId
+if id == 6186867282 then --Project XL
+  if playerid == 1226385289 and plrname == "ttd0968"
+  or playerid == 1308279155 and plrname == "Kirasagi1"
+  or playerid == 307221489  and plrname == "pentakills123"
+  or playerid == 238405517 and plrname == "thaiproduc"
+  or playerid == 148295126 and plrname == "ilovedanh"
+  or playerid ==710151141 and plrname == "tanvjppro"
+  or playerid == 932120570 and plrname == "nguyendaithang6"
+  or playerid == 91596375 and plrname == "vip0tuan" 
+  or playerid ==248230437 and plrname == "Huy_Otaku"
+  or playerid == 1928731155 and plrname =="Ainar_monster"
+  or playerid == 598297580 and plrname =="luuquocthang00"
+  or playerid == 617728026 and plrname =="lionYT_VN"
+  or playerid == 2227676448 and plrname =="LawwGoodBoyy"
+  or plrname == "nguyendaithang8"
+  then
+    print("Success")
+  else 
+    game.Players.LocalPlayer:Kick("Invalid")
+  end
+end
