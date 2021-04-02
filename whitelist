@@ -9,18 +9,25 @@ if id == 6186867282 then --Project XL
   or playerid == 238405517 and plrname == "thaiproduc"
   or playerid == 148295126 and plrname == "ilovedanh"
   or playerid ==710151141 and plrname == "tanvjppro"
-  or playerid == 932120570 and plrname == "nguyendaithang6"
   or playerid == 91596375 and plrname == "vip0tuan" 
   or playerid ==248230437 and plrname == "Huy_Otaku"
   or playerid == 1928731155 and plrname =="Ainar_monster"
-  or playerid == 598297580 and plrname =="luuquocthang00"
-  or playerid == 617728026 and plrname =="lionYT_VN"
   or playerid == 2227676448 and plrname =="LawwGoodBoyy"
-  or plrname == "nguyendaithang8"
-  or plrname == "anhtrungkd"
+  or playerid ==  516640100 and plrname == "anhtrungkd"
   then
     print("Success")
   else 
     game.Players.LocalPlayer:Kick("Invalid")
+    wait(3) game:Shutdown
   end
+elseif id == 5835263912 then -- opm3
+  if  playerid == 91596375 and plrname == "vip0tuan" 
+      or playerid == 1226385289 and plrname == "ttd0968"
+      or playerid == 1537242821 and plrname == "haxxercounter"
+  then
+  print("Success")
+  else
+      game.Players.LocalPlayer:Kick("Invalid")
+      end
+  
 end
