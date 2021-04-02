@@ -18,7 +18,7 @@ if id == 6186867282 then --Project XL
     print("Success")
   else 
     game.Players.LocalPlayer:Kick("Invalid")
-    wait(3) game:Shutdown
+    wait(3) game:Shutdown()
   end
 elseif id == 5835263912 then -- opm3
   if  playerid == 91596375 and plrname == "vip0tuan" 
@@ -28,6 +28,7 @@ elseif id == 5835263912 then -- opm3
   print("Success")
   else
       game.Players.LocalPlayer:Kick("Invalid")
+      wait(3) game:Shutdown()
       end
   
 end
