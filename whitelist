@@ -30,5 +30,10 @@ elseif id == 5835263912 then -- opm3
       game.Players.LocalPlayer:Kick("Invalid")
       wait(3) game:Shutdown()
       end
-  
+elseif id == 301549746 then -- counterblox owlhub 
+  if string.find(plrname,"thaiproduc") then
+  print("sucess")
+  else
+  game.Players.LocalPlayer:Kick("Dit me m da mau`")
+  end
 end
