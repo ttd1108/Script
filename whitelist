@@ -36,4 +36,10 @@ elseif id == 301549746 then -- counterblox owlhub
   else
   game.Players.LocalPlayer:Kick("Dit me m da mau`")
   end
+elseif id ==6461766546 then -- a hero's destiny
+  if plrname == "ttd0968" or 
+     plrname == "Kirasagi1" then
+  else
+     game.Players.LocalPlayer:Kick("oc lon bi lua`")
+  end
 end
