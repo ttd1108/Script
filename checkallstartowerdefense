@@ -6,7 +6,7 @@ getgenv().logg = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildA
 time1 = os.time() - ostime
 if time1 < 60 then
   time2 = tostring( string.format("%.2f",tostring(time1))).."giây"
-elseif time1 >= 60 then
+elseif time1 >= 60 and time1 <=3600 then
   time2 = tostring( string.format("%.2f",tostring(time1/60 ))).."phút"
 elseif time1 >= 3600 then
   time2 = tostring(   string.format("%.2f",tostring(time1/3600))).."giờ"
