@@ -38,7 +38,7 @@ elseif id == 301549746 then -- counterblox owlhub
   end
 elseif id == 6461766546 then -- ahd premium
   if plrname == "VanhNeverDie2006" and playerid == 275485611  or plrname == "ttd0968" then
-  
+  else
   game.Players.LocalPlayer:Kick("50k 0968694047")
   
   end
