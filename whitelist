@@ -40,7 +40,6 @@ elseif id == 6461766546 then -- ahd premium
   if plrname == "VanhNeverDie2006" and playerid == 275485611  or plrname == "ttd0968" then
   
   game.Players.LocalPlayer:Kick("50k 0968694047")
-  wait(3)
-  game:Shutdown()
+  
   end
 end
