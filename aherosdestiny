@@ -1,3 +1,3 @@
  setclipboard("loadstring(game:HttpGet(('https://raw.githubusercontent.com/ttd1108/Script/master/aherosdestiny2'), true))()")
- game.Players.LocalPlayer:Kick("The old script has been removed, the new script has been copied to your clipboard, if not, please visit v3r:https://v3rmillion.net/showthread.php?tid=1115062")
+ game.Players.LocalPlayer:Kick("The old script has been removed, the new script has been copied to your clipboard, if not, please visit https://v3rmillion.net/showthread.php?tid=1115062")
   
