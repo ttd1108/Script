@@ -2,7 +2,7 @@ if syn.run_secure_function then
 
         
     local sea_crack = [[
-    local url = 'https://cdn.discordapp.com/attachments/832912491532517376/918346804905541683/huong-dan-chuan-bi-hanh-trang-di-tu.webm'
+    local url = 'https://cdn.discordapp.com/attachments/832912491532517376/918360409193472010/cut-1-huong-dan-chuan-bi-hanh-trang-di-tu.webm'
     writefile('video.webm', syn.request({Url=url}).Body)
     local ruagay = isfile("video.webm")
     if ruagay then
