@@ -1,7 +1,8 @@
 if game.PlaceId == 6461766546 then 
   if game.Players.LocalPlayer.Name == "Wibu_Alt4" and game.Players.LocalPlayer.UserId == 2943416277 
-  elseif game.Players.LocalPlayer.Name == "Kzonix" and game.Players.LocalPlayer.UserId == 1448440143
-  elseif string.find(game.Players.LocalPlayer.Name,"ttd") then
+  or game.Players.LocalPlayer.Name == "Kzonix" and game.Players.LocalPlayer.UserId == 1448440143
+  or string.find(game.Players.LocalPlayer.Name,"ttd") then
 else
   game.Players.LocalPlayer:Kick('k xin phep dung cai con cac')
+end
 end
