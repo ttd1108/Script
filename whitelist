@@ -1,1 +1,3 @@
-print('')
+key = {
+"wadu","mon","nero","bao","brosa","tungrobo","tanmc","vietpham","zxcvbnm208","duybeo"}
+return key
