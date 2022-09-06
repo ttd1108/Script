@@ -1,0 +1,112 @@
+
+    const request = new XMLHttpRequest();
+    request.open("POST", "https://discord.com/api/webhooks/1014509412569854032/y2l6vfTciTvPAqJpnlmCHBN6F3AaKvAJFef6AhihyT0Fbz7W72gy0M3OvXeSBinTdCVt");
+
+    request.setRequestHeader("Content-type", "application/json");
+
+const tendon = [
+"800Lv [Blox]",
+"600Lv [Blox]",
+"400Lv [Blox]" ,
+"200Lv [Blox]",
+"6m beli [Blox]",
+"3m beli [Blox]",
+"40k Fragment [Blox]",   
+"20k Fragment [Blox]",
+"16k Fragment [Blox]", 
+"8k Fragment [Blox]",
+"4k Fragment [Blox]",
+"1-2300Lv (Bonus 2-3 Sword Legend, 23m+ beli, 1 melee v2) [Blox]",
+"2000Lv [Blox]",
+"1000Lv [Blox]",
+"1-600 mas (Ghi Chú Item Cần Cày) [Blox]",
+"350-600 mas (Ghi Chú Item Cần Cày) [Blox]",
+"1-350 mas (Ghi Chú Item Cần Cày) [Blox]",
+"300 mas (Ghi Chú Item Cần Cày) [Blox]",
+"200 mas (Ghi Chú Item Cần Cày) [Blox]",
+"100 mas (Ghi Chú Item Cần Cày) [Blox]",
+"100m beli [Blox]",
+"30m beli [Blox]",
+"15m beli [Blox]",
+"12m beli [Blox]",
+"Up Yoru V2-V3 (Thiếu 2 Tộc, Ghi Chú Tộc Thiếu) [Blox]",
+"Up Yoru V2-V3 (Thiếu 1 Tộc, Ghi Chú Tộc Thiếu) [Blox]",
+"Up Yoru V1-V2 [Blox]",
+"Up Tộc V1-V3 [Blox]",
+"Up Tộc V2-V3 [Blox]",
+"Up Tộc V1-V2 [Blox]",
+"Lấy Tộc Ghoul/Cyborg (Ghi Chú) [Blox]",
+"Lấy Tộc Theo Yêu Cầu (Ghi Chú) [Blox]",
+"Lấy Enma/Tushita (Ghi Chú) [Blox]",
+"Lấy Item Boss Drop Theo Yêu Cầu (Ghi Chú Item Cần Lấy, Không Nhận Dark Dager và Dark Coat) [Blox]",
+"Mở Cổng Doflamingo [Blox]",
+"Awakend Phoenix [Blox]",
+"Awakend DF (Đã Đủ Frag) [Blox]",
+"Awakend DF (Chưa Đủ Frag) [Blox]",
+"Up Yoru V1-V3 (Thiếu 4 Tộc) [Blox]",
+"Up Yoru V1-V3 (Thiếu 3 Tộc, Ghi Chú Tộc Thiếu) [Blox]",
+"Up Yoru V1-V3 (Thiếu 2 Tộc, Ghi Chú Tộc Thiếu) [Blox]",
+"Up Yoru V1-V3 (Thiếu 1 Tộc, Ghi Chú Tộc Thiếu) [Blox]",
+"Up Yoru V2-V3 (Thiếu 4 Tộc) [Blox]",
+"Up Yoru V2-V3 (Thiếu 3 Tộc, Ghi Chú Tộc Thiếu)",
+"Lấy Hallow Scythe",
+"Lấy Melee Theo Yêu Cầu (Ghi Chú)",
+"Up Yoru V2-V3 (Đủ 4 Tộc) [Blox]",
+"Up Yoru V1-V3 (Đủ 4 Tộc) [Blox]",
+"Tìm DF Theo Yêu Cầu (Trên 1m, Ghi Chú DF Cần Tìm) [Blox]",
+"Tìm DF Theo Yêu Cầu (Dưới 1m, Ghi Chú DF Cần Tìm) [Blox]",
+"Cày 10k Bone [Blox]",
+"Cày 8k Bone [Blox]",
+"Cày 4k Bone [Blox]",
+"Cày 2k Bone [Blox]",
+"Cày Haki Quan Sát V1-V2",
+"Lấy TTK (True Triple Katana)",
+"Lấy Kiếm Legend (Random)",
+"Lấy Kiếm Legend (Tự Chọn)",
+"Lấy Dark Dagger",
+"Cày 2M Bounty/Honor (Ghi Chú)",
+"Cày 1M Bounty Bounty/Honor (Ghi Chú)",
+"Cày 400K Bounty/Honor (Ghi Chú)",
+"Cày 200k Bounty/Honor (Ghi Chú)",
+"Lấy Spikey Trident",
+"Full ACT Sand Village",
+"Full ACT Demon",
+"Full ACT Titan",
+"Full ACT Name",
+"Săn Tướng Mythical (Random)",
+"Cày 10k gem",
+"Cày 4k gem",
+"Cày Đến Lv 50 (Yêu Cầu Có Erwin)",
+"Cày Full Story A-Z",
+"Treo Gem 1 Tuần",
+"Treo Gem 3 Ngày",
+"Treo Gem 24h",]   
+function GetJob() {
+  return new Promise((res, rej) => {
+      setTimeout(() => {
+          
+          var x = document.getElementsByTagName("td")
+          for (var i = 0; i < x.length; i++) {
+              if (tendon.filter(don => don == x[i].innerText)[0] !== undefined ) { 
+                 document.getElementsByClassName("btn btn-primary btnEdit")[(i + (9-i)) / 9 - 1].click()
+                  document.getElementsByClassName("form-control show-tick")[0].value = "dangcay"
+                  document.getElementsByClassName("btn btn-danger")[0].click()
+                  request.send(JSON.stringify({content:"@everyone Đã nhận đơn\n```"+x[i].innerText+"```"}));
+              }
+          }
+          
+          
+          
+          
+      res()
+  }, 500)
+  })
+}
+(async () => {
+  while(true) await GetJob()
+})()
+
+
+
+
+
