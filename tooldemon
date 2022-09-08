@@ -1,0 +1,30 @@
+
+
+ 
+function GetJob() {
+  return new Promise((res, rej) => {
+      setTimeout(() => {
+          
+       
+              if (document.getElementsByClassName("btn btn-primary btnEdit")[0] !== undefined ) { 
+                 document.getElementsByClassName("btn btn-primary btnEdit")[0].click()
+                  document.getElementsByClassName("form-control show-tick")[0].value = "dangcay"
+                  document.getElementsByClassName("btn btn-danger")[0].click()
+              }
+          }
+          
+          
+          
+          
+      res()
+  }, 1500)
+  })
+}
+(async () => {
+  while(true) await GetJob()
+})()
+
+
+
+
+
