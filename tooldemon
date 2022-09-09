@@ -1,5 +1,3 @@
-
-
  
 function GetJob() {
   return new Promise((res, rej) => {
@@ -11,7 +9,7 @@ function GetJob() {
                   document.getElementsByClassName("form-control show-tick")[0].value = "dangcay"
                   document.getElementsByClassName("btn btn-danger")[0].click()
               }
-          }
+          
           
           
           
@@ -23,8 +21,3 @@ function GetJob() {
 (async () => {
   while(true) await GetJob()
 })()
-
-
-
-
-
