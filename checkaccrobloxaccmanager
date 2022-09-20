@@ -1,7 +1,4 @@
-getgenv().keyy = "tanmc"
-getgenv().GetData = false
-getgenv().AutoRejoin = false
-getgenv().BlockSameServer  = false
+
 
 repeat
     wait(.5)
