@@ -3,7 +3,7 @@ repeat
 until game:IsLoaded()
 local key1 = loadstring(game:HttpGet(("https://raw.githubusercontent.com/ttd1108/Script/master/whitelist"), true))()
 ip = game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/iptool")
-if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.ident.me")) or string.find(ip,game:HttpGet("https://v6.ident.me")) then
+if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.ident.me")) or string.find(ip,game:HttpGet("https://v6.ident.me")) hen
     getgenv().http_request = http_request or request or (http and http.request) or syn.request
     local GameId = {
         [994732206] = 2753915549,
@@ -157,7 +157,7 @@ if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.i
                     end
                 )
             until not game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam")
-            if getgetv().GetData then 
+            if getgenv().GetData then 
                 pcall(
                     function()
                         wpstorage2 = ""
