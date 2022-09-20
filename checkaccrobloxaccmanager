@@ -1,3 +1,8 @@
+getgenv().keyy = "tanmc"
+getgenv().GetData = false
+getgenv().AutoRejoin = false
+getgenv().BlockSameServer  = false
+
 repeat
     wait(.5)
 until game:IsLoaded()
@@ -6,7 +11,7 @@ ip = game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/iptoo
 if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.ident.me")) or string.find(ip,game:HttpGet("https://v6.ident.me")) then
     getgenv().http_request = http_request or request or (http and http.request) or syn.request
     local GameId = {
-        [994732206] = 2753915549,
+            994732206] = 2753915549,
          --Blox Fruits
         [1451439645] = 4520749081,
          --King Legacy
@@ -160,6 +165,7 @@ if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.i
             if getgenv().GetData then 
                 pcall(
                     function()
+                        Sea = {[7449423635] = "3",[4442272183] = "2",[2753915549] = "1"}
                         wpstorage2 = ""
                         for i, v in pairs(
                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")
@@ -181,8 +187,8 @@ if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.i
                                 currentmelee = v.Name
                             end
                         end
-                        MyAccount:SetDescription(
-                            "Level:" ..
+                        MyAccount:SetDescription("Sea:"..Sea[game.PlaceId]
+                            ..",Level:" ..
                                 game.Players.LocalPlayer.Data.Level.Value ..
                                     ",Beli:" ..
                                         game.Players.LocalPlayer.Data.Beli.Value ..
@@ -197,6 +203,8 @@ if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.i
                         while wait(60 * 5) do
                             pcall(
                                 function()
+                                    Sea = {[7449423635] = "3",[4442272183] = "2",[2753915549] = "1"}
+
                                     wpstorage2 = ""
                                     for i, v in pairs(
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventoryWeapons")
@@ -212,15 +220,15 @@ if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.i
                                             currentmelee = v.Name
                                         end
                                     end
-                                    MyAccount:SetDescription(
-                                        "Level:" ..
-                                            game.Players.LocalPlayer.Data.Level.Value ..
-                                                ",Beli:" ..
-                                                    game.Players.LocalPlayer.Data.Beli.Value ..
-                                                        ",Fragment:" ..
-                                                            game.Players.LocalPlayer.Data.Fragments.Value ..
-                                                                ",Current Melee:" .. currentmelee .. ",Inventory:" .. wpstorage2
-                                    )
+                                    MyAccount:SetDescription("Sea:"..Sea[game.PlaceId]
+                            ..",Level:" ..
+                                game.Players.LocalPlayer.Data.Level.Value ..
+                                    ",Beli:" ..
+                                        game.Players.LocalPlayer.Data.Beli.Value ..
+                                            ",Fragment:" ..
+                                                game.Players.LocalPlayer.Data.Fragments.Value ..
+                                                    ",Current Melee:" .. currentmelee .. ",Inventory:" .. wpstorage2
+                        )
                                 end
                             )
                         end
@@ -313,6 +321,518 @@ if table.find(key1, getgenv().keyy) or string.find(ip,game:HttpGet("https://v4.i
                     end
                 end
             end
+        end
+        if getgenv().ShowItem then 
+            pcall(function()
+                if game.CoreGui:FindFirstChild("Vando") then
+                    game.CoreGui:FindFirstChild("Vando"):Destroy()
+                end
+            end)
+        
+            local LocalizationService = game:GetService("LocalizationService")
+            local Players = game:GetService("Players").LocalPlayer
+            local CommF = game.ReplicatedStorage.Remotes.CommF_
+            local Main = Players.PlayerGui.Main
+        
+            local a = Instance.new('ScreenGui')
+            local b = Instance.new("UIListLayout")
+        
+            a.Parent = game.CoreGui
+            a.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+            a.Name = 'Vando'
+            masteryframe = Instance.new("Frame",a)
+            masteryframe.Size = UDim2.new(.5,0,0,0)
+            masteryframe.AnchorPoint = Vector2.new(1,0)
+            masteryframe.Position = UDim2.new(1,-10,0,50)
+            masteryframe.Transparency = 1
+            masteryframe.Name = 'masteryframe'
+        
+            masteryframe_gird = Instance.new("UIGridLayout",masteryframe)
+            masteryframe_gird.FillDirection = Enum.FillDirection.Horizontal
+            masteryframe_gird.HorizontalAlignment = Enum.HorizontalAlignment.Right
+            masteryframe_gird.StartCorner = Enum.StartCorner.TopLeft
+            masteryframe_gird.CellSize = UDim2.new(0,250,0,60)
+        
+            fruitframe = Instance.new("Frame",a)
+            fruitframe.Size = UDim2.new(.5,0,0,0)
+            fruitframe.AnchorPoint = Vector2.new(1,1)
+            fruitframe.Position = UDim2.new(1, -5, 1, -5)
+            fruitframe.Transparency = 1 
+            fruitframe.Name = 'fruitframe'
+        
+            fruitframe_gird = Instance.new("UIGridLayout",fruitframe)
+            fruitframe_gird.Parent = fruitframe
+            fruitframe_gird.FillDirection = Enum.FillDirection.Horizontal
+            fruitframe_gird.HorizontalAlignment = Enum.HorizontalAlignment.Right
+            fruitframe_gird.StartCorner = Enum.StartCorner.BottomLeft
+            fruitframe_gird.CellPadding = UDim2.new(0,15,0,15)
+            fruitframe_gird.CellSize = UDim2.new(0,100,0,100)
+        
+            fruitframe_gird:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+                fruitframe_gird.Parent.Size = UDim2.new(.5, 0, 0, fruitframe_gird.AbsoluteContentSize.Y + 5)
+            end)
+        
+            racframe = Instance.new("Frame",a)
+            racframe.Size = UDim2.new(.5, 0,1,0)
+            racframe.Name = 'racframe'
+            racframe.Transparency = 1
+            racframe.Position = UDim2.new(0,15,0,50)
+        
+            b.Parent = game.CoreGui.Vando.racframe
+            b.FillDirection = Enum.FillDirection.Vertical
+            b.SortOrder = Enum.SortOrder.Name
+            b.Padding = UDim.new(0,10)
+        
+            local Frame = {
+                'AMelee',
+                'BMythical',
+                'CLegendary',
+                'DRare',
+                'EUncommon',
+                'FCommon',
+                'GData',
+            }
+        
+            for i, v in pairs(Frame) do
+                local c = Instance.new("Frame")
+                local d = Instance.new("UIGridLayout")
+        
+                c.Name = v
+                c.Parent = game.CoreGui.Vando.racframe
+                c.BackgroundTransparency = 1.000
+                c.Size = UDim2.new(1,0,0,100)
+                c.Visible = true
+        
+                d.Parent = game.CoreGui.Vando.racframe[v]
+                d.FillDirection = Enum.FillDirection.Horizontal
+                d.CellSize = UDim2.new(0,75,0,75)
+                d.CellPadding = UDim2.new(0,15,0,15)
+        
+                d:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+                    d.Parent.Size = UDim2.new(1, 0, 0, d.AbsoluteContentSize.Y + 5)
+                end)
+            end
+        
+        
+            local Weapon = {
+                ['Meele'] = {
+                    Superhuman = {
+                        ['func'] =  ,
+                        ['img'] = 4831781711,
+                        ["remote"] = "BuySuperhuman"
+                    },
+                    DeathStep = {
+                        ['func'] = CommF:InvokeServer("BuyDeathStep", true),
+                        ['img'] = 6085350468,
+                        ["remote"] = "BuyDeathStep"
+                    },
+                    SharkmanKarate = {
+                        ['func'] = CommF:InvokeServer("BuySharkmanKarate", true),
+                        ['img'] = 6525157144,
+                        ["remote"] = "BuySharkmanKarate"
+                    },
+                    ElectricClaw = {
+                        ['func'] = CommF:InvokeServer("BuyElectricClaw", true),
+                        ['img'] = 6866994470,
+                        ["remote"] = "BuyElectricClaw"
+                    },
+                    DragonTalon = {
+                        ['func'] = CommF:InvokeServer("BuyDragonTalon", true),
+                        ['img'] = 7831677967,
+                        ["remote"] = "BuyDragonTalon"
+                    },
+                    BuyGodhuman = {
+                        ['func'] = CommF:InvokeServer("BuyGodhuman", true),
+                        ['img'] = 10338473987,
+                        ["remote"] = "BuyGodhuman"
+                    }
+                }
+            }
+        
+            local tablerarity = {
+                [0] = {"Common", Color3.fromRGB(179, 179, 179)},
+                {"Uncommon", Color3.fromRGB(92, 140, 211)},
+                {"Rare", Color3.fromRGB(140, 82, 255)},
+                {"Legendary", Color3.fromRGB(213, 43, 228)},
+                {"Mythical", Color3.fromRGB(238, 47, 50), true},
+                {"Premium", Color3.fromRGB(221, 188, 0), true}
+            }
+        
+            cacparnt = {
+                [0] = 'FCommon',
+                [1] = 'EUncommon',
+                [2] = 'DRare',
+                [3] = 'CLegendary',
+                [4] = 'BMythical',
+            }
+        
+            function functioncheckitemwp(x)
+                local v93 = game:GetService("Players").LocalPlayer.PlayerGui.Main.InventoryContainer.Right.Content.ScrollingFrame.Frame["1"]
+                for i,v in next,getupvalues(require(game:GetService("Players").LocalPlayer.PlayerGui.Main.UIController.Inventory).UpdateRender) do
+                    if i == 4 then
+                        for i1,v1 in next, v do
+                            if v1.details.Type ~= "Blox Fruit" and v1.details.Rarity == x  then
+                                require(game:GetService("Players").LocalPlayer.PlayerGui.Main.UIController.Inventory).ApplyThumbnailToObject(true,game:GetService("Players").LocalPlayer.PlayerGui.Main.InventoryContainer.Right.Content.ScrollingFrame.Frame["1"],v1)
+                                v93.Background.BackgroundColor3 = tablerarity[v1.details.Rarity][2];
+                                v93.BackgroundShadow.BackgroundColor3 = tablerarity[v1.details.Rarity][2];
+                                v93.Background.UIStroke.Color = tablerarity[v1.details.Rarity][2];
+                                v93.BackgroundShadow.UIStroke.Color = tablerarity[v1.details.Rarity][2];
+                                if v1.details.Count and v1.details.Count > 0 then
+                                    v93.ItemLine1.Text = "x" .. v1.details.Count;
+                                else
+                                    v93.ItemLine1.Text = string.rep("\226\152\133", v1.details.Upgrades);
+                                end;
+                                v93.ItemLine2.Text = v1.details.Type;
+                                v93.ItemName.Text = v1.details.DisplayName or v1.details.Name;
+                                if v93:FindFirstChild("OutlineGlow") then
+                                    if tablerarity[v1.details.Rarity][3]  then
+                                        v93.OutlineGlow.Visible = true;
+                                        v93.OutlineGlow.ImageColor3 = tablerarity[v1.details.Rarity][2];
+                                    else
+                                        v93.OutlineGlow.Visible = false;
+                                    end;
+                                end;
+                                local a = v93:Clone()
+                                a.Name = v93.ItemName.Text
+                                a.Parent = game.CoreGui.Vando.racframe[cacparnt[v1.details.Rarity]]
+                            end
+                        end
+                    end
+                end
+            end
+            function functioncheckdf(x)
+                local v94 =  game:GetService("Players").LocalPlayer.PlayerGui.Main.InventoryContainer.Right.Content.ScrollingFrame.Frame["2"]
+                for i,v in next,getupvalues(require(game:GetService("Players").LocalPlayer.PlayerGui.Main.UIController.Inventory).UpdateRender) do
+                    if i == 4 then
+                        for i1,v1 in next,v do
+                            if v1.details.Type == "Blox Fruit"  and v1.details.Rarity == x then
+                                require(game:GetService("Players").LocalPlayer.PlayerGui.Main.UIController.Inventory).ApplyThumbnailToObject(true,game:GetService("Players").LocalPlayer.PlayerGui.Main.InventoryContainer.Right.Content.ScrollingFrame.Frame["2"],v1)
+                                v94.Background.BackgroundColor3 = tablerarity[v1.details.Rarity][2];
+                                v94.BackgroundShadow.BackgroundColor3 = tablerarity[v1.details.Rarity][2];
+                                v94.Background.UIStroke.Color = tablerarity[v1.details.Rarity][2];
+                                v94.BackgroundShadow.UIStroke.Color = tablerarity[v1.details.Rarity][2];
+                                if v1.details.Count and v1.details.Count > 0 then
+                                    v94.ItemLine1.Text = "x" .. v1.details.Count;
+                                else
+                                    v94.ItemLine1.Text = string.rep("\226\152\133", v1.details.Upgrades);
+                                end;
+                                v94.ItemLine2.Text = v1.details.Type;
+                                v94.ItemName.Text = v1.details.DisplayName or v1.details.Name:gsub("-(.*)","");
+                                if v94:FindFirstChild("OutlineGlow") then
+                                    if tablerarity[v1.details.Rarity][3]  then
+                                        v94.OutlineGlow.Visible = true;
+                                        v94.OutlineGlow.ImageColor3 = tablerarity[v1.details.Rarity][2];
+                                    else
+                                        v94.OutlineGlow.Visible = false;
+                                    end;
+                                end;
+                                local a = v94:Clone()
+                                a.Name = 'con cac'
+                                a.Parent = game:GetService("CoreGui").Vando.fruitframe
+                            end
+                        end
+                    end
+                end
+            end
+            i1 = 4
+        
+            while i1 >= 0 do
+                functioncheckdf(i1)
+                i1 = i1 - 1
+            end
+        
+            i = 4
+            while i >= 0 do
+                functioncheckitemwp(i)
+                i = i - 1
+            end
+        
+        
+        
+            function melee(i, img)
+                local c = Instance.new("Frame")
+                local d = Instance.new("ImageLabel")
+                local f = Instance.new("TextLabel")
+                local e = Instance.new("TextLabel")
+                local h = Instance.new("TextLabel")
+        
+                c.Name = i
+                c.Parent = game.CoreGui.Vando.racframe.AMelee
+                c.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+                c.BackgroundTransparency = 0.500
+                c.BorderColor3 = Color3.fromRGB(255, 255, 255)
+                c.LayoutOrder = 1
+                c.Position = UDim2.new(0, 200, 0, 5)
+                c.Size = UDim2.new(0, 60, 0, 60)
+        
+                ccac = Instance.new('UICorner',c)
+                ccac.CornerRadius = UDim.new(0, 8)
+        
+                game.CoreGui.Vando.racframe.AMelee.Visible = true
+        
+                d.Name = "d"
+                d.Parent = c
+                d.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                d.BackgroundTransparency = 1.000
+                d.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                d.BorderSizePixel = 0
+                d.Position = UDim2.new(0.100000001, 0, 0.100000001, 0)
+                d.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)
+                d.Image = "http://www.roblox.com/asset/?id="..tostring(img)
+        
+                f.Name = i
+                f.Parent = c
+                f.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                f.BackgroundTransparency = 1.000
+                f.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                f.BorderSizePixel = 0
+                f.Position = UDim2.new(0, 1, 0, 1)
+                f.Size = UDim2.new(1, -2, 1, -2)
+                f.Visible = false
+                f.Font = Enum.Font.SourceSans
+                f.Text = i
+                f.TextColor3 = Color3.fromRGB(255, 255, 255)
+                f.TextSize = 14.000
+                f.TextWrapped = true
+        
+                e.Name = "e"
+                e.Parent = c
+                e.BackgroundColor3 = Color3.fromRGB(102, 102, 102)
+                e.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                e.BorderSizePixel = 0
+                e.Position = UDim2.new(0.5, -18, 0, -25)
+                e.Size = UDim2.new(0, 36, 0, 16)
+                e.Visible = false
+                e.Font = Enum.Font.SourceSans
+                e.Text = "Melee"
+                e.TextColor3 = Color3.fromRGB(255, 255, 255)
+                e.TextSize = 14.000
+                e.TextYAlignment = Enum.TextYAlignment.Top
+        
+                h.Name = "h"
+                h.Parent = c
+                h.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                h.BackgroundTransparency = 1.000
+                h.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                h.BorderSizePixel = 0
+                h.Size = UDim2.new(0.150000006, 0, 0.150000006, 0)
+                h.Font = Enum.Font.SourceSans
+                h.Text = "1"
+                h.TextColor3 = Color3.fromRGB(255, 255, 255)
+                h.TextSize = 14.000
+                h.TextWrapped = true
+            end
+        
+            master = function(p1)
+                return 54 + math.ceil((2 * p1 ^ 2.26 + 30) * 0.5);
+            end;
+        
+        
+            local function convertnum(p13)
+                local v111 = p13
+                while true do
+                    local v112, v113 = string.gsub(v111, "^(-?%d+)(%d%d%d)", "%1,%2")
+                    v111 = v112
+                    if v113 == 0 then
+                        break
+                    end	
+                end
+                return v111
+            end
+        
+            local melee1 = {}
+            function addtool()
+                
+                for i, v in pairs(Players.Backpack:GetChildren()) do
+                    if v.ToolTip == "Melee" then  
+                        if not table.find(melee1,v.Name) then 
+                            local d = Instance.new("Frame")
+                            local title = Main.Skills.Title:Clone()
+                            local level = Main.Skills.Level:Clone()
+                            level.Name = 'cac'
+                            
+                            local exp = master(v.Level.Value)
+                            d.Size = UDim2.new(.5, 0, 0, 0)
+                            d.Name = v.Name
+                            d.Parent = masteryframe
+                            d.Transparency = 1 
+                            title.Text = v.Name:upper()
+                            title.Parent = masteryframe[v.Name]
+                            title.Size = UDim2.new(1,0,0,30)
+                            title.Position = UDim2.new(0,0,0,30)
+        
+                            level.Parent = masteryframe[v.Name]
+                            level.Size = UDim2.new(1,0,0,30)
+                            level.Text = "Mastery " .. v.Level.Value .. " (Max. " .. 600 .. ")"
+                            level.Bar.Size = UDim2.new(v.Exp.Value / exp, 0, 0.2, 0)
+                            print(v.Exp.Value / exp)
+                            level.Exp.Text = convertnum(v.Exp.Value) .. "/" .. convertnum(exp)
+                            table.insert(melee1,v.Name)
+                        end
+                    end
+                end
+            end
+            backpack1 ={}
+            function addtool1()
+                for i, v in pairs(Players.Backpack:GetChildren()) do
+                    if v.ToolTip ~="Wear" and v.ToolTip ~= "" and not table.find(melee1,v.Name) then  
+                        if not table.find(backpack1,v.Name) then 
+                            local d = Instance.new("Frame")
+                            local title = Main.Skills.Title:Clone()
+                            local level = Main.Skills.Level:Clone()
+                            level.Name = 'cac'
+                            
+                            local exp = master(v.Level.Value)
+                            d.Size = UDim2.new(.5, 0, 0, 0)
+                            d.Name = v.Name
+                            d.Parent = masteryframe
+                            d.Transparency = 1 
+                            title.Text = v.Name:upper()
+                            title.Parent = masteryframe[v.Name]
+                            title.Size = UDim2.new(1,0,0,30)
+                            title.Position = UDim2.new(0,0,0,30)
+        
+                            level.Parent = masteryframe[v.Name]
+                            level.Size = UDim2.new(1,0,0,30)
+                            level.Text = "Mastery " .. v.Level.Value .. " (Max. " .. 600 .. ")"
+                            level.Bar.Size = UDim2.new(v.Exp.Value / exp, 0, 0.2, 0)
+                            print(v.Exp.Value / exp)
+                            level.Exp.Text = convertnum(v.Exp.Value) .. "/" .. convertnum(exp)
+                            table.insert(backpack1,v.Name)
+                        end
+                    end
+                end
+            end
+            for i,v in pairs(Weapon['Meele']) do
+                if v['func'] == 1 then
+                    melee(i, v['img'])
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(v['remote'])
+                    addtool()
+                    addtool1()
+                end
+            end
+        
+            local formatNumber = (function (n)
+                n = tostring(n)
+                return n:reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
+            end)
+        
+            framev_list = Instance.new("UIListLayout", game.CoreGui.Vando.racframe.GData)
+        
+        
+            framev_list:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+                framev_list.Parent.Size = UDim2.new(1, 0, 0, framev_list.AbsoluteContentSize.Y + 5)
+            end)
+        
+            local cq = Instance.new("Frame", game.CoreGui.Vando.racframe.GData)
+            local dq = Instance.new("UIListLayout", cq)
+            dq.SortOrder = Enum.SortOrder.LayoutOrder
+            dq.Padding = UDim.new(0, 10)
+        
+            cq.Name = 'beli'
+            cq.BackgroundTransparency = 1.000
+            cq.Size = UDim2.new(1,0,0,100)
+        
+            dq:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+                dq.Parent.Size = UDim2.new(1, 0, 0, dq.AbsoluteContentSize.Y + 5)
+            end)
+        
+            local cf = Instance.new("Frame", game.CoreGui.Vando.racframe.GData)
+            local df = Instance.new("UIGridLayout", cf)
+        
+            cf.Name = 'awk'
+            cf.BackgroundTransparency = 1.000
+            cf.Size = UDim2.new(1,0,0,100)
+            cf.Visible = false
+            df.FillDirection = Enum.FillDirection.Horizontal
+            df.CellSize = UDim2.new(0, 70, 0, 70)
+            df.StartCorner = Enum.StartCorner.TopLeft
+        
+            df:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+                df.Parent.Size = UDim2.new(1, 0, 0, df.AbsoluteContentSize.Y + 5)
+            end)
+        
+            fruit = function(data) 
+                fr = Players.PlayerGui.Main.FruitInventory.Container.Stored.ScrollingFrame.Frame.Template:Clone()
+                fr.Visible = true
+                fr.Parent = fruitframe
+                fr.Type.TextLabel.Text = formatNumber(data.Price)
+                fr.Title.TextLabel.Text = data.Name 
+                fr.IconLabel.TextLabel.Visible = false 
+                fr.IconLabel.Icon.Visible = true 
+                fr.IconLabel.Icon.Image = data.TextureId
+                fr.Name = 'con di me may'
+            end
+        
+            levelframe = Players.PlayerGui.Main.Level:Clone()
+            levelframe.Parent = cq
+            levelframe.Size = UDim2.new(0,400,0,60)
+            levelframe.LayoutOrder = 0
+        
+            beli = Players.PlayerGui.Main.Beli:Clone()
+            beli.Parent = cq
+            beli.Text = "$"..formatNumber(Players.Data.Beli.Value)
+            beli.Size = UDim2.new(1,0,0,50)
+            beli.TextSize = 75
+            beli.LayoutOrder = 1
+        
+            fragment = Players.PlayerGui.Main.Fragments:Clone()
+            fragment.Parent = cq
+            fragment.Text = "\198\146"..formatNumber(Players.Data.Fragments.Value)
+            fragment.Size = UDim2.new(1,0,0,50)
+            fragment.TextSize = 75
+            fragment.LayoutOrder = 2
+        
+            getdata = function(data)
+                return CommF:InvokeServer(data)
+            end
+        
+            local skill = {
+                Z = 1, 
+                X = 2, 
+                C = 3, 
+                V = 4, 
+                F = 5
+            }
+            local awk = ''
+        
+            pcall(function()
+                for i, v in pairs(getdata('getAwakenedAbilities')) do
+                    if v.Awakened then
+                        local clone = Players.PlayerGui.Main.AwakeningToggler.BottomContainer.Frame.Template:Clone()
+                        clone.Name = v.Key
+                        if v.Enabled then
+                            awk = "(Awakened)"
+                        else
+                            awk = "(Unawakened)"
+                        end
+                        clone.Label.Text = awk
+                        clone.ImageLabel.ImageColor3 = v.Enabled and Color3.new(0, 1, 0) or Color3.new(1, 1, 1)
+                        clone.TextLabel.Text = v.Key
+                        clone.LayoutOrder = skill[v.Key] and 6
+                        clone.Parent = cf
+                        clone.Visible = true
+                    end
+                end
+            end)
+        
+        
+        
+        
+        
+            pcall(function()
+                cf.Parent:FindFirstChild('UIGridLayout'):Destroy();
+                cf.Parent.Visible = true
+                if #cf:GetChildren() > 2 then
+                    cf.Visible = true
+                end
+            end)
+        
+        
+            addtool()
+        
+            game.Players.LocalPlayer.PlayerGui.Main.Enabled = false
+            game:GetService("Players").LocalPlayer.PlayerGui.Backpack.Enabled= false
         end
     else 
         game.Players.LocalPlayer:Kick("Lỗi file RamSetting.ini vui lòng cài đặt lại")
