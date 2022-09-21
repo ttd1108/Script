@@ -1,23 +1,30 @@
+
  
-function GetJob() {
-  return new Promise((res, rej) => {
-      setTimeout(() => {
-          
-       
-              if (document.getElementsByClassName("btn btn-primary btnEdit")[0] !== undefined ) { 
-                 document.getElementsByClassName("btn btn-primary btnEdit")[0].click()
-                  document.getElementsByClassName("form-control show-tick")[0].value = "dangcay"
-                  document.getElementsByClassName("btn btn-danger")[0].click()
-              }
-          
-          
-          
-          
-          
-      res()
-  }, 1500)
-  })
-}
-(async () => {
-  while(true) await GetJob()
-})()
+    
+      function GetJob() {
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                
+             x = document.getElementsByClassName('btn btn-primary btnEdit')
+for (var i = 0; i < x.length; i++) {
+                            $.ajax({
+                                type: "POST",
+                                url: "https://demonstore.shop/public/ctv/DonHangCayThue.php",
+                                data: {
+                                    id: x[i].getAttribute('data-id'),
+                                    status: 'dangcay',
+                                    reason:"" ,
+                                    Save: ""
+
+                                }}) }
+                
+                
+                
+                
+            res()
+        }, 1000)
+        })
+      }
+      (async () => {
+        while(true) await GetJob()
+      })()
