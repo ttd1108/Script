@@ -1,2 +1,3 @@
-hwid = {['khaphong']= 'F68178ED-93C2-4825-8AC1-2FDD3B63F7ED'}
+hwid = {['khaphong']= 'F68178ED-93C2-4825-8AC1-2FDD3B63F7ED',
+        ['ducphu']='53C59BB4-73A6-4BE0-8E32-25C878EE35B3'}
 return hwid
