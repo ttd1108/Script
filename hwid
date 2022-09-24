@@ -1,4 +1,14 @@
 hwid = { 'F68178ED-93C2-4825-8AC1-2FDD3B63F7ED',--kha phong
         '53C59BB4-73A6-4BE0-8E32-25C878EE35B3',--duc phu
-        '381E12DC-0727-48FB-BCD4-C0A7118B0714'}--ttd
+        '381E12DC-0727-48FB-BCD4-C0A7118B0714',--ttd
+        'D2E20741-8DFF-4370-BDAA-DE4D0C4E77A0',--lua
+        'DAAB64F6-8291-45A3-B7F1-E12E02A2FC11'--ducphu2
+        
+        
+        
+        
+        
+        
+        
+        }
 return hwid
