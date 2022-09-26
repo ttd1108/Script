@@ -53,8 +53,6 @@ const tendon = [
 "Lấy Melee Theo Yêu Cầu (Ghi Chú)",
 "Up Yoru V2-V3 (Đủ 4 Tộc) [Blox]",
 "Up Yoru V1-V3 (Đủ 4 Tộc) [Blox]",
-"Tìm DF Theo Yêu Cầu (Trên 1m, Ghi Chú DF Cần Tìm) [Blox]",
-"Tìm DF Theo Yêu Cầu (Dưới 1m, Ghi Chú DF Cần Tìm) [Blox]",
 "Cày 10k Bone [Blox]",
 "Cày 8k Bone [Blox]",
 "Cày 4k Bone [Blox]",
@@ -63,7 +61,6 @@ const tendon = [
 "Lấy TTK (True Triple Katana)",
 "Lấy Kiếm Legend (Random)",
 "Lấy Kiếm Legend (Tự Chọn)",
-"Lấy Dark Dagger",
 "Cày 2M Bounty/Honor (Ghi Chú)",
 "Cày 1M Bounty Bounty/Honor (Ghi Chú)",
 "Cày 400K Bounty/Honor (Ghi Chú)",
@@ -80,7 +77,10 @@ const tendon = [
 "Cày Full Story A-Z",
 "Treo Gem 1 Tuần",
 "Treo Gem 3 Ngày",
-"Treo Gem 24h",]   
+"Treo Gem 24h",
+"Lấy Curse Dual Katana (Tushita 3 Trial)",
+"Lấy Curse Dual Katana (Yama 3 Trial)",
+"Lấy Curse Dual Katana",]   
 function GetJob() {
   return new Promise((res, rej) => {
       setTimeout(() => {
