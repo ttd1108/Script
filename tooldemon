@@ -9,7 +9,7 @@
 for (var i = 0; i < x.length; i++) {
                             $.ajax({
                                 type: "POST",
-                                url: "https://demonstore.shop/public/ctv/DonHangCayThue.php",
+                                url: "https://demonstore.shop/public/ctvcaythue/DHCTDN.php",
                                 data: {
                                     id: x[i].getAttribute('data-id'),
                                     status: 'dangcay',
