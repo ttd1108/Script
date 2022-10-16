@@ -1,30 +1,54 @@
+function GetJob() {
+    return new Promise((res, rej) => {
+                setTimeout(() => {
+                        var xmlHttp = new XMLHttpRequest();
+                        xmlHttp.open("GET", "https://demonstore.shop/public/ctvcaythue/DonHangCayThue.php", false);
+                        xmlHttp.send(null);
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(xmlHttp.responseText, "text/html");
 
- 
-    
-      function GetJob() {
-        return new Promise((res, rej) => {
-            setTimeout(() => {
-                
-             x = document.getElementsByClassName('btn btn-primary btnEdit')
-for (var i = 0; i < x.length; i++) {
+                        var table = doc.querySelector("#datatable1 > tbody");
+                        var rows = table.querySelectorAll("tr");
+                        var data = [];
+                        for (var i = 0; i < rows.length; i++) {
+                            var row = rows[i];
+                            var cells = row.querySelectorAll("td");
+                            var rowData = [];
+                            for (var j = 0; j < cells.length; j++) {
+                                var cell = cells[j];
+                                if (j != 10) {
+                                    rowData.push(cell.innerText);
+                                } else {
+                                    var button = cell.querySelector("button");
+                                    rowData.push(button.getAttribute("data-id"));
+
+                                }
+
+                            }
+                            data.push(rowData);
+                        }
+
+                        for (var i = 0; i < data.length; i++) {
+                          console.log(data[i][10])
                             $.ajax({
                                 type: "POST",
-                                url: "https://demonstore.shop/public/ctvcaythue/DHCTDN.php",
+                                url: "https://demonstore.shop/public/ctvcaythue/DonHangCayThue.php",
                                 data: {
-                                    id: x[i].getAttribute('data-id'),
+                                    id: data[i][10],
                                     status: 'dangcay',
-                                    reason:"" ,
+                                    reason: "",
                                     Save: ""
 
-                                }}) }
-                
-                
-                
-                
-            res()
-        }, 1000)
-        })
-      }
-      (async () => {
-        while(true) await GetJob()
-      })()
+                                }
+                            }) }
+
+
+
+
+                            res()
+                        }, 200)
+                })
+        }
+        (async () => {
+            while (true) await GetJob()
+        })()
