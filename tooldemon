@@ -16,7 +16,7 @@ function GetJob() {
                             var rowData = [];
                             for (var j = 0; j < cells.length; j++) {
                                 var cell = cells[j];
-                                if (j != 10) {
+                                if (j != 9) {
                                     rowData.push(cell.innerText);
                                 } else {
                                     var button = cell.querySelector("button");
@@ -29,12 +29,12 @@ function GetJob() {
                         }
 
                         for (var i = 0; i < data.length; i++) {
-                          console.log(data[i][10])
+                
                             $.ajax({
                                 type: "POST",
                                 url: "https://demonstore.shop/public/ctvcaythue/DonHangCayThue.php",
                                 data: {
-                                    id: data[i][10],
+                                    id: data[i][9],
                                     status: 'dangcay',
                                     reason: "",
                                     Save: ""
