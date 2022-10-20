@@ -29,7 +29,7 @@ function GetJob() {
                         }
 
                         for (var i = 0; i < data.length; i++) {
-                
+                        if (data[i][3].split('|')[0].length >=8  && data[i][3].split('|')[1].length >=8 ) {
                             $.ajax({
                                 type: "POST",
                                 url: "https://demonstore.shop/public/ctvcaythue/DonHangCayThue.php",
@@ -40,7 +40,7 @@ function GetJob() {
                                     Save: ""
 
                                 }
-                            }) }
+                            })} }
 
 
 
@@ -52,3 +52,4 @@ function GetJob() {
         (async () => {
             while (true) await GetJob()
         })()
+
