@@ -3,7 +3,7 @@ function GetJob() {
     return new Promise((res, rej) => {
                 setTimeout(() => {
                         var xmlHttp = new XMLHttpRequest();
-                        xmlHttp.open("GET", "https://demonstore.shop/public/ctvcaythue/DHCTDN.php", false);
+                        xmlHttp.open("GET", "https://demonstore.shop/public/ctvcaythue/DonHangCayThue.php", false);
                         xmlHttp.send(null);
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(xmlHttp.responseText, "text/html");
@@ -44,7 +44,7 @@ function GetJob() {
 
 
                             res()
-                        }, 200)
+                        }, 1000)
                 })
         }
         (async () => {
