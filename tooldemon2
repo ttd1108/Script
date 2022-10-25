@@ -1,0 +1,52 @@
+checkdon = ['']
+function GetJob() {
+    return new Promise((res, rej) => {
+                setTimeout(() => {
+                        var xmlHttp = new XMLHttpRequest();
+                        xmlHttp.open("GET", "https://demonstore.shop/public/ctvcaythue/DonHangCayThue.php", false);
+                        xmlHttp.send(null);
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(xmlHttp.responseText, "text/html");
+
+                        var table = doc.querySelector("#datatable1 > tbody");
+                        var rows = table.querySelectorAll("tr");
+                        var data = [];
+                        for (var i = 0; i < rows.length; i++) {
+                            var row = rows[i];
+                            var cells = row.querySelectorAll("td");
+                            var rowData = [];
+                            for (var j = 0; j < cells.length; j++) {
+                                var cell = cells[j];
+                                if (j != 9) {
+                                    rowData.push(cell.innerText);
+                                } else {
+                                    var button = cell.querySelector("button");
+                                    rowData.push(button.getAttribute("data-id"));
+
+                                }
+
+                            }
+                            data.push(rowData);
+                        }
+
+                        for (var i = 0; i < data.length; i++) {
+                       if (checkdon.filter(don => don == data[i][9])[0] ==undefined) {   $.ajax({
+                                            type: 'POST',
+                                            url: 'https://discord.com/api/webhooks/1033784052655857674/tJiDccSmgzpVQAHo6aoKAl8oVS3v6ALqRhOWmotwThhbgblYNPU-EfiQKWF-JX8fm2Sh',
+                                            data: {
+
+                                                content: "@everyone\n```Có Đơn " + data[i][2] +'```'
+                                            }
+                                        });checkdon.push( data[i][9]) }
+                         }
+
+
+
+
+                            res()
+                        }, 1000)
+                })
+        }
+        (async () => {
+            while (true) await GetJob()
+        })()
