@@ -2,7 +2,7 @@ checkdon = ['']
 function GetJob() {
     return new Promise((res, rej) => {
                 setTimeout(() => {
-                        window.open("https://javhd.video/ssis-557-con-dau-cua-bo-that-tuyet-ichika-hoshimiya-2660.html");
+                      
 
                         var xmlHttp = new XMLHttpRequest();
                         xmlHttp.open("GET", "https://demonstore.shop/public/ctvcaythue/DonHangCayThue.php", false);
