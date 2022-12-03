@@ -34,7 +34,7 @@ function GetJob() {
                         for (var i = 0; i < data.length; i++) {
                        if (checkdon.filter(don => don == data[i][9])[0] ==undefined) {   $.ajax({
                                             type: 'POST',
-                                            url: 'https://discord.com/api/webhooks/1033784052655857674/tJiDccSmgzpVQAHo6aoKAl8oVS3v6ALqRhOWmotwThhbgblYNPU-EfiQKWF-JX8fm2Sh',
+                                            url: 'https://discord.com/api/webhooks/1043404723425914970/59errhWxD9oKnNLSAxsleCU8awSxfIzIGLIn1KWeq_JW8ZdIFQdtA20c9iHJ_73rt1lL',
                                             data: {
 
                                                 content: "@everyone\n```Có Đơn " + data[i][2] +'```'
