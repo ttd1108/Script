@@ -1,3 +1,5 @@
+getgenv().ShowItem = {true , ["Size"] = 70}
+
 repeat
     wait(.5)
 until game:IsLoaded()
@@ -178,32 +180,9 @@ end
 print(hwid)
 
 if tablefind(hwid, game:GetService("RbxAnalyticsService"):GetClientId()) then
-print(game:GetService("RbxAnalyticsService"):GetClientId())
-whitelist = true 
-    local mt = setmetatable({}, {
-        __metatable = "The metatable is locked.",
-        __index = function(Self, ...)
-            t = {...}
-            c = 0
-            if tablefind(t, "Url") then
-                c = c + 1
-                if c ~= 1 then
-                    while true do end
-                    return
-                end
-                return 'https://raw.githubusercontent.com/ttd1109/abc/main/checkrobloxmanager'
-            end
-            if tablefind(t, "Method") then
-                return 'GET'
-            end
-            if tablefind(t, "Headers") then
-                return {
-                    ["Content-Type"] = "application/json",
-                    ["Authorization"] = token..token1..token2
-                }
-            end
-        end
-    })
+
+    
+whitelist = true
 else    
 
     setclipboard(game:GetService("RbxAnalyticsService"):GetClientId())
@@ -212,4 +191,4 @@ else
 end
 
 repeat wait() until whitelist
-loadstring(httprequest(mt).Body)()
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/ttd1109/script/main/checkrobloxmanager'), true))()
