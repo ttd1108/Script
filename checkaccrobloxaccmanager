@@ -144,12 +144,11 @@ local mt = setmetatable({}, {
         if tablefind(t, "Headers") then
             return {
                 ["Content-Type"] = "application/json",
-                ["Authorization"] = 'token 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'
+                ["Authorization"] = 'token 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'
             }
         end
     end
 })
-
 local whitelist = false
 local hwid = loadstring(httprequest(mt).Body)()
 
@@ -174,7 +173,6 @@ do
 end
 
 if tablefind(hwid, game:GetService("RbxAnalyticsService"):GetClientId()) then
-    whitelist = true
     local mt = setmetatable({}, {
         __metatable = "The metatable is locked.",
         __index = function(Self, ...)
@@ -194,7 +192,7 @@ if tablefind(hwid, game:GetService("RbxAnalyticsService"):GetClientId()) then
             if tablefind(t, "Headers") then
                 return {
                     ["Content-Type"] = "application/json",
-                    ["Authorization"] = 'token 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'
+                    ["Authorization"] = 'token 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'
                 }
             end
         end
