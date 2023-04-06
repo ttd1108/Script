@@ -144,7 +144,7 @@ local mt = setmetatable({}, {
         if tablefind(t, "Headers") then
             return {
                 ["Content-Type"] = "application/json",
-                ["Authorization"] = 'token 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'
+                ["Authorization"] = 'token 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'
             }
         end
     end
@@ -192,7 +192,7 @@ if tablefind(hwid, game:GetService("RbxAnalyticsService"):GetClientId()) then
             if tablefind(t, "Headers") then
                 return {
                     ["Content-Type"] = "application/json",
-                    ["Authorization"] = 'token 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'
+                    ["Authorization"] = 'token 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'
                 }
             end
         end
