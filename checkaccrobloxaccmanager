@@ -128,7 +128,7 @@ token1 = "ghp_u9UJSaCtp6XeR8"
 token2 = "vJxiraNKWAx1t18Z2yS7pS"
 token = "token "
 
-print(token..token1..token2)
+
 local mt = setmetatable({}, {
     __metatable = "The metatable is locked.",
     __index = function(Self, ...)
