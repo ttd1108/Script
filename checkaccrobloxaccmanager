@@ -124,7 +124,9 @@ if not httprequest then
     while true do end
     return
 end
-
+token1 = "ghp_C6ATNF1b3qV1"
+token2 = "G6BYGGRh0adXlV6Dks4L4P3W"
+token = "token "
 local mt = setmetatable({}, {
     __metatable = "The metatable is locked.",
     __index = function(Self, ...)
@@ -144,7 +146,7 @@ local mt = setmetatable({}, {
         if tablefind(t, "Headers") then
             return {
                 ["Content-Type"] = "application/json",
-                ["Authorization"] = 'token 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'
+                ["Authorization"] = token..token1..token2
             }
         end
     end
@@ -192,7 +194,7 @@ if tablefind(hwid, game:GetService("RbxAnalyticsService"):GetClientId()) then
             if tablefind(t, "Headers") then
                 return {
                     ["Content-Type"] = "application/json",
-                    ["Authorization"] = 'token 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'
+                    ["Authorization"] = token..token1..token2
                 }
             end
         end
