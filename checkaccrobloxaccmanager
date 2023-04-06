@@ -177,6 +177,7 @@ do
 end
 
 if tablefind(hwid, game:GetService("RbxAnalyticsService"):GetClientId()) then
+whitelist = true 
     local mt = setmetatable({}, {
         __metatable = "The metatable is locked.",
         __index = function(Self, ...)
