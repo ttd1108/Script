@@ -1,0 +1,26 @@
+local Script = game:HttpGet('https://raw.githubusercontent.com/ttd1108/Script/master/ymf')
+
+
+local Ttdog
+Ttdog = hookfunction(game.HttpGet, function(self, url, ...)
+    if url:find('ngugugugguguguguguyguguguse8jrsjdsfjrjrojoerjergjertjghoe8rjho8ertj.json') then
+        print('SetKey true')
+        return 'return {"vando", "ttdog"}'
+    elseif url:find('ocwe9jweriwrqieruerujerjiedtijtegkjetjkghter.json') then
+        print('SetFakeJs true')
+        return 'return {""}'
+    elseif url:find('fjweruheruherthoupetrbkyueterjbjrthretgihrsd') then
+        print('SetPatch true')
+        return 'return true'
+    elseif url:find('BlackListedips.lua') then
+        print('SetBlacklist true')
+        return 'return {}'
+    elseif url:find('seahubcrlkerokdrokrkoro') then
+        print('SetScript true')
+        return Script
+    end
+    return Ttdog(self, url)
+end)
+
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/ymf2"))()
