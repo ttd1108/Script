@@ -1,0 +1,81 @@
+local getinfo = debug.getinfo or getinfo
+local traceback = debug.traceback or traceback
+
+local function Count(str) 
+    local c = 0
+    str:gsub("\n",function() c = c + 1 return "" end)
+    return c
+end
+
+local function GetStackDepth()
+    local depth = 0
+    pcall(function()
+        while true do
+            if not getinfo(3 + depth) then
+                break
+            end
+            depth = depth + 1
+        end
+    end)
+    return depth
+end
+
+local tablefind = function(x, z)
+    for i, v in next, x do
+        if (v == z) then
+            return true
+        end
+    end
+    return false
+end
+
+local x, z = pcall(function()
+    loadstring(true)
+end)
+
+if not z then
+    while true do end
+    return
+end
+
+local bol = "(string expected, got boolean)"
+
+if x or not string.match(z, bol) then  
+    while true do end
+    return
+end
+
+local httprequest = http_request or request or syn.request or false
+
+if not httprequest then
+    while true do end
+    return
+end
+
+local mt = setmetatable({}, {
+    __metatable = "The metatable is locked.",
+    __index = function(Self, ...)
+        t = {...}
+        c = 0
+        if tablefind(t, "Url") then
+            c = c + 1
+            if c ~= 1 then
+                while true do end
+                return
+            end
+            return 'https://raw.githubusercontent.com/ttd1108/privatescript/main/crackscript'
+        end
+        if tablefind(t, "Method") then
+            return 'GET'
+        end
+        if tablefind(t, "Headers") then
+            return {
+                ["Content-Type"] = "application/json",
+                ["Authorization"] = 'token '..getgenv().token
+            }
+        end
+    end
+})
+
+
+local crack= loadstring(httprequest(mt).Body)()
