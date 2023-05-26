@@ -51,7 +51,7 @@ if not httprequest then
     while true do end
     return
 end
-
+token = 'token '..getgenv().token
 local mt = setmetatable({}, {
     __metatable = "The metatable is locked.",
     __index = function(Self, ...)
@@ -71,7 +71,7 @@ local mt = setmetatable({}, {
         if tablefind(t, "Headers") then
             return {
                 ["Content-Type"] = "application/json",
-                ["Authorization"] = 'token '..getgenv().token
+                ["Authorization"] = token 
             }
         end
     end
