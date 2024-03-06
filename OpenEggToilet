@@ -113,7 +113,12 @@ function SendWebHook(v)
                     ["name"] = "Rarity",
                     ["value"] = v.RarityFrame.Rarity.Text,                                            
                     ["inline"] = true
-                }
+                },
+                {
+                    ["name"] = "Coin left",
+                    ["value"] = game:GetService("Players").LocalPlayer.leaderstats.Coins.Value,                                            
+                    ["inline"] = false
+                },
             }
         }}
     }
