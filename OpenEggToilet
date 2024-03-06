@@ -105,6 +105,11 @@ function SendWebHook(v)
             ["color"] = tonumber(0xbdce44),
             ["fields"] = {
                 {
+                    ["name"] = "User",
+                    ["value"] = game.Players.LocalPlayer.Name,                                            
+                    ["inline"] = false
+                },
+                {
                     ["name"] = "Name",
                     ["value"] = v.UnitName.Text,                                            
                     ["inline"] = true
