@@ -94,6 +94,7 @@ function GetUnitList()
     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= false
     table.sort(unitlist)
 end
+wait(5)
 GetUnitList()
 
 while _G.Toggle do wait()
