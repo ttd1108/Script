@@ -77,6 +77,7 @@ function CheckRarity(v)
 end 
 function GetUnitList()
     ClickButton(100,55)
+    wait(.5)
     if #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren() <= 1 then 
         repeat wait()
             ClickButton(26,170)
