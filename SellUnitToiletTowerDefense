@@ -100,7 +100,7 @@ while _G.Toggle do wait()
                 until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
             else 
                 for i,v in pairs(unitlist) do             
-                    if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient) and not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.TroopIcon.Image == "rbxassetid://15798757056" then 
+                    if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)  then 
                         print('chọn unit để bán')
                         ClickButton(290,190)
                         wait(.7)
