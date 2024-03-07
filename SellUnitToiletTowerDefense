@@ -130,7 +130,7 @@ while _G.Toggle do wait()
                         
                         
                     else 
-                        print('ẩn unit')
+                        print('ẩn unit1')
                         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
                         wait(.3)
                     end
