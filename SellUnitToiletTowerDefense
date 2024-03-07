@@ -15,7 +15,7 @@ until plr.Character:FindFirstChild("HumanoidRootPart")
 repeat
     wait()
 until plr.Character:FindFirstChild("Humanoid")
-spawn(
+--[[spawn(
     function()
         while wait() do
             if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"sell") then 
@@ -25,7 +25,7 @@ spawn(
             game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
         end
     end
-)
+)]]--
 
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
@@ -126,3 +126,4 @@ while _G.Toggle do wait()
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
     end 
 end 
+
