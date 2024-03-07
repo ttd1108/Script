@@ -8,7 +8,7 @@ local plr = game.Players.LocalPlayer
 
 repeat
     wait()
-until plr.Character
+until plr.Character 
 repeat
     wait()
 until plr.Character:FindFirstChild("HumanoidRootPart")
