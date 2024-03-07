@@ -15,17 +15,6 @@ until plr.Character:FindFirstChild("HumanoidRootPart")
 repeat
     wait()
 until plr.Character:FindFirstChild("Humanoid")
---[[spawn(
-    function()
-        while wait() do
-            if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"sell") then 
-                game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false
-            end
-            
-            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
-        end
-    end
-)]]--
 
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
@@ -33,6 +22,22 @@ function ClickButton(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
 end
+spawn(
+    function()
+        while wait() do
+            if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible then
+                if  string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"trade") then 
+                    ClickButton(550,330)
+                elseif string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"recieved") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"not ready") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"VIP")then
+                     ClickButton(480,330)
+                end
+            end
+            
+            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
+        end
+    end
+)
+
 RarityColor = {}
 function ConvertGradientToRGB(v,num)
     color = v.Color.Keypoints[num].Value
