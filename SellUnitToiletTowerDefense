@@ -1,4 +1,3 @@
-
 repeat
     wait()
 until game:IsLoaded()
@@ -103,7 +102,7 @@ while _G.Toggle do wait()
                             wait(.1)
                         end
                     else 
-                        CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
+                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
                     end 
                 end     
             end
