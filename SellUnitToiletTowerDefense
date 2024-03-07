@@ -87,12 +87,12 @@ GetUnitList()
 while _G.Toggle do wait()
     if  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
-        wait(.1)
+        wait(1)
         if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
             print('bật chế độ bán')
             repeat wait()
                 ClickButton(616,420)
-                wait(.1)
+                wait(.5)
             until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
         else 
             for i,v in pairs(unitlist) do             
@@ -102,17 +102,18 @@ while _G.Toggle do wait()
                     wait(.3)
                     print('bán unit')
                     ClickButton(616,420)
-                    wait(.3)
+                    wait(1)
                 else 
                     print('ẩn unit')
                     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
-                    wait(.3)
+                    wait(1)
                 end 
             end     
         end
     else 
         print('mở gui unit')
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
+    wait(1)
     end 
 end 
 
