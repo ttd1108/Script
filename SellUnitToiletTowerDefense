@@ -120,13 +120,14 @@ function GetUnitList()
     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible = false
     table.sort(unitlist)
 end
+wait(3)
 GetUnitList()
 
 while _G.Toggle do
     wait()
     if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
-        wait(.1)
+        wait(.5)
 
         for i, v in pairs(unitlist) do
             if
