@@ -98,10 +98,10 @@ while _G.Toggle do wait()
             for i,v in pairs(unitlist) do             
                 if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient) then 
                     print('chọn unit để bán')
-                    ClickButton(616,420)
+                    ClickButton(290,190)
                     wait(.3)
                     print('bán unit')
-                    ClickButton(290,190)
+                    ClickButton(616,420)
                     wait(.3)
                 else 
                     print('ẩn unit')
@@ -115,3 +115,4 @@ while _G.Toggle do wait()
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
     end 
 end 
+
