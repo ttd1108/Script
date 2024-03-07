@@ -1,16 +1,4 @@
-_G.Toggle = true 
-_G.SettingRaritySell = {
-    ["Basic"] = true,
-    ["Uncommon"] = true,
-    ["Rare"] = true,
-    ["Epic"] = true,
-    ["Legendary"] = false,
-    ["Mythic"] = false,
-    ['Godly'] = false,
-    ["Exclusive"] = false,
-    ["Ultimate"] = false,
 
-}
 repeat
     wait()
 until game:IsLoaded()
