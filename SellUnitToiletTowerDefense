@@ -167,6 +167,7 @@ while _G.Toggle do
                     ClickButton(400, 330)
                     wait(.5)
                 end
+                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false
             else
                 print("ẩn unit")
                 game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false
