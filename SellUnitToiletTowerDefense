@@ -18,12 +18,7 @@ until plr.Character:FindFirstChild("Humanoid")
 spawn(
     function()
         while wait() do
-            if
-                not string.find(
-                    game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,
-                    "sell"
-                )
-             then
+            if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"sell") then 
                 game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
             end
             game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false
@@ -38,115 +33,98 @@ function ClickButton(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
 end
 RarityColor = {}
-function ConvertGradientToRGB(v, num)
+function ConvertGradientToRGB(v,num)
     color = v.Color.Keypoints[num].Value
     local r = math.floor(color.R * 255)
     local g = math.floor(color.G * 255)
     local b = math.floor(color.B * 255)
-    return Color3.fromRGB(r, g, b)
+    return Color3.fromRGB(r,g,b)
 end
-for _, v in pairs(
-    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren(
-
-    )
-) do
-    if v:IsA("Frame") then
-        RarityColor[v.Name] = {
-            ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
-            ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
-        }
-    end
+for _, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do 
+if v:IsA("Frame") then
+    RarityColor[v.Name] = {
+        ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
+        ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
+    }
+end
 end
 function GetRarity(color1, color2)
     for rarity, colors in pairs(RarityColor) do
         if (color1 == colors["1"] and color2 == colors["2"]) then
-            return rarity
+            return rarity 
         end
     end
 end
 
 ListRaritySell = {}
-for i, v in pairs(_G.SettingRaritySell) do
-    if v == true then
-        table.insert(ListRaritySell, i)
+for i,v in pairs(_G.SettingRaritySell) do 
+    if v == true then 
+        table.insert(ListRaritySell,i)
     end
 end
 
 function CheckRarity(v)
-    if table.find(ListRaritySell, GetRarity(ConvertGradientToRGB(v, 1), ConvertGradientToRGB(v, 2))) then
-        return true
-    end
-    return false
-end
+    if table.find(ListRaritySell ,GetRarity(ConvertGradientToRGB(v,1),ConvertGradientToRGB(v,2))) then 
+        return true 
+    end 
+    return false 
+end 
 function GetUnitList()
-    ClickButton(100, 55)
+    ClickButton(100,55)
     wait(.5)
-    ClickButton(26, 170)
+    ClickButton(26,170)
     wait(.1)
     unitlist = {}
-    for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren()) do
-        if v:IsA("Frame") then
-            table.insert(unitlist, v.Name)
-        end
-    end
-    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible = false
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren()) do 
+
+        if v:IsA("Frame") then 
+            table.insert(unitlist,v.Name)
+        end 
+    end 
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= false
     table.sort(unitlist)
 end
 GetUnitList()
 
-while _G.Toggle do
-    wait()
-    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then
-        if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible then
-            if
-                string.find(
-                    game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,
-                    "sell"
-                )
-             then
-                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder =
-                    "Name"
-                wait(.1)
-                if
-                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text ==
-                        "Sell Units"
-                 then
-                    print("bật chế độ bán")
-                    repeat
-                        wait()
-                        ClickButton(616, 420)
-                        wait(.1)
-                    until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text ==
-                        "Cancel"
-                else
-                    for i, v in pairs(unitlist) do
-                        if
-                            CheckRarity(
-                                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient
-                            ) and
-                                not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.TroopIcon.Image ==
-                                    "rbxassetid://15798757056"
-                         then
-                            print("chọn unit để bán")
-                            ClickButton(290, 190)
-                            wait(.7)
-
-                            print("bán unit")
-                            ClickButton(616, 420)
-                            wait(1)
-                        else
-                            print("ẩn unit")
-                            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false
-                            wait(.3)
-                        end
-                    end
-                end
+while _G.Toggle do wait()
+    if  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
+        
+        if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"sell") then
+            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
+            wait(.1)
+            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
+                print('bật chế độ bán')
+                repeat wait()
+                    ClickButton(616,420)
+                    wait(.1)
+                until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
+            else 
+                for i,v in pairs(unitlist) do             
+                    if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient) and not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.TroopIcon.Image == "rbxassetid://15798757056" then 
+                        print('chọn unit để bán')
+                        ClickButton(290,190)
+                        wait(.7)
+                        
+                        
+                        print('bán unit')
+                        ClickButton(616,420)
+                        wait(1)
+                        
+                        
+                        
+                    else 
+                        print('ẩn unit')
+                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
+                        wait(.3)
+                    end 
+                end     
             end
-        else
-            ClickButton(400, 330)
+        else 
+            ClickButton(400,330)
         end
-    else
-        print("mở gui unit")
-        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible = true
-    end
-end
+    else 
+        print('mở gui unit')
+        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
+    end 
+end 
+
