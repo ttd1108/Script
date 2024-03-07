@@ -68,6 +68,8 @@ function CheckRarity(v)
     return false 
 end 
 function GetUnitList()
+    ClickButton(100,55)
+    wait(.5)
     ClickButton(26,170)
     wait(.1)
     unitlist = {}
