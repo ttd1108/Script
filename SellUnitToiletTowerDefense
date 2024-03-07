@@ -19,9 +19,10 @@ spawn(
     function()
         while wait() do
             if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"sell") then 
-                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
+                game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false
             end
-            game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false
+            
+            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
         end
     end
 )
@@ -88,43 +89,40 @@ GetUnitList()
 
 while _G.Toggle do wait()
     if  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
-        
-        if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.HeyText.Text,"sell") then
-            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
-            wait(.1)
-            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
-                print('bật chế độ bán')
-                repeat wait()
-                    ClickButton(616,420)
-                    wait(.1)
-                until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
-            else 
-                for i,v in pairs(unitlist) do             
-                    if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)  then 
-                        print('chọn unit để bán')
-                        ClickButton(290,190)
-                        wait(.7)
-                        
-                        
-                        print('bán unit')
-                        ClickButton(616,420)
-                        wait(1)
-                        
-                        
-                        
-                    else 
-                        print('ẩn unit')
-                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
-                        wait(.3)
-                    end 
-                end     
-            end
+        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
+        wait(.1)
+        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
+            print('bật chế độ bán')
+            repeat wait()
+                ClickButton(616,420)
+                wait(.1)
+            until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
         else 
-            ClickButton(400,330)
+            for i,v in pairs(unitlist) do             
+                if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)  then 
+                    print('chọn unit để bán')
+                    ClickButton(290,190)
+                    wait(.7)
+                    
+                    
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible then 
+                        repeat wait()
+                            ClickButton(616,420)
+                            wait(.5)
+                        until game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible 
+                        ClickButton(400,330)
+                    end
+                    
+                    
+                else 
+                    print('ẩn unit')
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
+                    wait(.3)
+                end 
+            end     
         end
     else 
         print('mở gui unit')
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
     end 
 end 
-
