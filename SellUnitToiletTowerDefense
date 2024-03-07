@@ -1,3 +1,4 @@
+
 repeat
     wait()
 until game:IsLoaded()
@@ -86,10 +87,7 @@ GetUnitList()
 
 while _G.Toggle do wait()
     if  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
-        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder ~= "Name" then 
-            print('chỉnh sort mode')
-            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
-        else 
+        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder == "Name" then 
             if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
                 print('bật chế độ bán')
                 repeat wait()
@@ -112,9 +110,13 @@ while _G.Toggle do wait()
                     end 
                 end     
             end
+        else
+            print('chỉnh sort mode')
+            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
         end
     else 
         print('mở gui unit')
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
     end 
 end 
+
