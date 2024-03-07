@@ -1,3 +1,4 @@
+_G.Toggle = true 
 _G.SettingRaritySell = {
     ["Basic"] = true,
     ["Uncommon"] = true,
