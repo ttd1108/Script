@@ -77,9 +77,12 @@ function CheckRarity(v)
 end 
 function GetUnitList()
     ClickButton(100,55)
-    wait(.5)
-    ClickButton(26,170)
-    wait(.1)
+    if #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren() <= 1 then 
+        repeat wait()
+            ClickButton(26,170)
+            wait(.5)
+        until #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren() > 1
+    end
     unitlist = {}
     for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren()) do 
 
@@ -103,31 +106,37 @@ while _G.Toggle do wait()
                 wait(.1)
             until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
         else 
-            for i,v in pairs(unitlist) do             
-                if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)  then 
-                    print('chọn unit để bán')
-                    
-                    if not  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible then 
-                        repeat wait()
-                            ClickButton(290,190)
+            for i,v in pairs(unitlist) do
+                if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.TroopIcon.Image == 'rbxassetid://15798757056' then    
+                    if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)  then 
+                        print('chọn unit để bán')
+                        
+                        if not  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible then 
+                            repeat wait()
+                                ClickButton(290,190)
+                                wait(.5)
+                            until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible
+                        end 
+                        if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible then 
+                            repeat wait()
+                                ClickButton(616,420)
+                                wait(.5)
+                            until game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible 
+                            ClickButton(400,330)
                             wait(.5)
-                        until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible
-                    end 
-                    if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible then 
-                        repeat wait()
-                            ClickButton(616,420)
-                            wait(.5)
-                        until game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible 
-                        ClickButton(400,330)
-                        wait(.5)
+                        end
+                        
+                        
+                    else 
+                        print('ẩn unit')
+                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
+                        wait(.3)
                     end
-                    
-                    
                 else 
                     print('ẩn unit')
                     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
                     wait(.3)
-                end 
+                end
             end     
         end
     else 
