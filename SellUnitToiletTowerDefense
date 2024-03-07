@@ -68,7 +68,7 @@ function CheckRarity(v)
     return false 
 end 
 function GetUnitList()
-    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible= true 
+    ClickButton(26,170)
     wait(.1)
     unitlist = {}
     for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren()) do 
@@ -77,13 +77,13 @@ function GetUnitList()
             table.insert(unitlist,v.Name)
         end 
     end 
-    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible= false
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= false
     table.sort(unitlist)
 end
 GetUnitList()
 
 while _G.Toggle do wait()
-    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
+    if  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
         if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder ~= "Name" then 
             game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
         else 
@@ -112,4 +112,3 @@ while _G.Toggle do wait()
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
     end 
 end 
-
