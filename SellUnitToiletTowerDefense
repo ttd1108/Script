@@ -1,0 +1,49 @@
+_G.SettingRaritySell = {
+    ["Basic"] = true,
+    ["Uncommon"] = true,
+    ["Rare"] = true,
+    ["Epic"] = true,
+    ["Legendary"] = false,
+    ["Mythic"] = false,
+    ['Godly'] = false,
+    ["Exclusive"] = false,
+    ["Ultimate"] = false,
+}
+RarityColor = {}
+function ConvertGradientToRGB(v,num)
+    color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r,g,b)
+end
+for _, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do 
+if v:IsA("Frame") then
+    RarityColor[v.Name] = {
+        ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
+        ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
+    }
+end
+end
+function GetRarity(color1, color2)
+    for rarity, colors in pairs(RarityColor) do
+        if (color1 == colors["1"] and color2 == colors["2"]) then
+            return rarity 
+        end
+    end
+end
+
+ListRaritySell = {}
+for i,v in pairs(_G.SettingRaritySell) do 
+    if v == true then 
+        table.insert(ListRaritySell,i)
+    end
+end
+
+function CheckRarity(v)
+    if table.find(ListRaritySell ,GetRarity(ConvertGradientToRGB(v,1),ConvertGradientToRGB(v,2))) then 
+        return true 
+    end 
+    return false 
+end 
+print(CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities.Basic.FilterButton.Basic))
