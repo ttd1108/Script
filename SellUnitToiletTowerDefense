@@ -8,7 +8,40 @@ _G.SettingRaritySell = {
     ['Godly'] = false,
     ["Exclusive"] = false,
     ["Ultimate"] = false,
+
 }
+repeat
+    wait()
+until game:IsLoaded()
+repeat
+    wait()
+until game.Players.LocalPlayer
+local plr = game.Players.LocalPlayer
+
+repeat
+    wait()
+until plr.Character
+repeat
+    wait()
+until plr.Character:FindFirstChild("HumanoidRootPart")
+repeat
+    wait()
+until plr.Character:FindFirstChild("Humanoid")
+spawn(
+    function()
+        while wait() do
+            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
+            game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false
+        end
+    end
+)
+
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+function ClickButton(x, y)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
+end
 RarityColor = {}
 function ConvertGradientToRGB(v,num)
     color = v.Color.Keypoints[num].Value
@@ -46,4 +79,48 @@ function CheckRarity(v)
     end 
     return false 
 end 
-print(CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities.Basic.FilterButton.Basic))
+function GetUnitList()
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible= true 
+    wait(.1)
+    unitlist = {}
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList:GetChildren()) do 
+
+        if v:IsA("Frame") then 
+            table.insert(unitlist,v.Name)
+        end 
+    end 
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible= false
+end
+table.sort(unitlist)
+
+while _G.Toggle do wait()
+    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible then 
+        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder ~= "Name" then 
+            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
+        else 
+            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
+                repeat wait()
+                    ClickButton(616,420)
+                    wait(.1)
+                until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
+            else 
+                for i,v in pairs(unitlist) do
+                    
+                    if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient) then 
+                        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible then 
+                            ClickButton(616,420)
+                        else 
+                            ClickButton(290,190)
+                            wait(.1)
+                        end
+                    else 
+                        CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
+                    end 
+                end     
+            end
+        end
+    else 
+        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible= true 
+    end 
+end 
+
