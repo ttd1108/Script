@@ -83,7 +83,7 @@ end
 GetUnitList()
 
 while _G.Toggle do wait()
-    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible then 
+    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
         if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder ~= "Name" then 
             game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
         else 
@@ -109,7 +109,7 @@ while _G.Toggle do wait()
             end
         end
     else 
-        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.Visible= true 
+        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= true 
     end 
 end 
 
