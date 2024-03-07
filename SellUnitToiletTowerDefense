@@ -94,7 +94,6 @@ function GetUnitList()
     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible= false
     table.sort(unitlist)
 end
-wait(5)
 GetUnitList()
 
 while _G.Toggle do wait()
@@ -109,7 +108,7 @@ while _G.Toggle do wait()
             until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
         else 
             for i,v in pairs(unitlist) do
-                if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.TroopIcon.Image == 'rbxassetid://15798757056' then    
+                 
                     if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)  then 
                         print('chọn unit để bán')
                         
@@ -129,11 +128,7 @@ while _G.Toggle do wait()
                         end
                         
                         
-                    else 
-                        print('ẩn unit1')
-                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
-                        wait(.3)
-                    end
+                    
                 else 
                     print('ẩn unit')
                     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
