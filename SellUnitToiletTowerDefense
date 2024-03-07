@@ -1,4 +1,3 @@
-
 repeat
     wait()
 until game:IsLoaded()
@@ -87,32 +86,29 @@ GetUnitList()
 
 while _G.Toggle do wait()
     if  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then 
-        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder == "Name" then 
-            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
-                print('bật chế độ bán')
-                repeat wait()
-                    ClickButton(616,420)
-                    wait(.1)
-                until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
-            else 
-                for i,v in pairs(unitlist) do
-                    
-                    if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient) then 
-                        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible then 
-                            ClickButton(616,420)
-                        else 
-                            ClickButton(290,190)
-                            wait(.1)
-                        end
+        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
+        wait(.1)
+        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Sell Units" then 
+            print('bật chế độ bán')
+            repeat wait()
+                ClickButton(616,420)
+                wait(.1)
+            until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text == "Cancel"
+        else 
+            for i,v in pairs(unitlist) do
+                
+                if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient) then 
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible then 
+                        ClickButton(616,420)
                     else 
-                        print('ẩn unit')
-                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
-                    end 
-                end     
-            end
-        else
-            print('chỉnh sort mode')
-            game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
+                        ClickButton(290,190)
+                        wait(.1)
+                    end
+                else 
+                    print('ẩn unit')
+                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false 
+                end 
+            end     
         end
     else 
         print('mở gui unit')
