@@ -26,9 +26,9 @@ spawn(
 )
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-function ClickButton(x, y)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
 end
 function CloseAllUi()
     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = false
@@ -183,6 +183,7 @@ if _G.Notify then
     end
 end
 local UUIDSummon = Summon()
+if UUIDSummon == nil then 
 repeat wait()
 if not game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible then 
 game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
@@ -194,6 +195,7 @@ end
             end
 ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.BuyButtons[b])
 until UUIDSummon ~= nil
+end
 while _G.Toggle do
     task.wait()
     if _G.Boost then
