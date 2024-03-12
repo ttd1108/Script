@@ -184,7 +184,7 @@ if _G.Notify then
 end
 local UUIDSummon = Summon()
 
-end
+
 while _G.Toggle do
     wait(2)
 if  UUIDSummon == nil then 
