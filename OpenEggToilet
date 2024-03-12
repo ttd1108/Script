@@ -134,35 +134,9 @@ function SendWebHook(v)
         Body = game:GetService("HttpService"):JSONEncode(msg)
     }) 
 end
-function allSettingsProcessed()
-    for key, value in pairs(_G.SettingSell) do
-        if value == true then
-            return false 
-        end
-    end
-    return true 
-end
 
-while not allSettingsProcessed() do
-    wait(.1)
-    CloseAllUi()
-    game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
-    for key, value in pairs(_G.PosClick) do
-        if _G.SettingSell[key] and _G.PosClick[key] then
-            if _G.SettingSell[key] == true then
-                if plr.PlayerGui.Lobby.SummonShopFrame.AutoSell[key].OnAndOff.Text == "Off" then
-                    repeat
-                        wait(1)
-                        ClickButton(value[1], value[2])
-                        wait(.5)
-                    until plr.PlayerGui.Lobby.SummonShopFrame.AutoSell[key].OnAndOff.Text == "On"
-                    _G.SettingSell[key] = false
-                end
-            end
-        end
-    end
-    game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = false
-end
+
+
 wait(.5)
 
 summonamount = "1xSummon"
@@ -172,6 +146,18 @@ elseif _G.SummonAmount == "10" then
     summonamount = "10xSummon"
 else
     game.Players.LocalPlayer:Kick("Chọn sai số lượng")
+end
+function Summon()
+    local b = "Summon1"
+    if _G.SummonAmount == "10" then 
+        b = "Summon10"
+    end
+    local a = require(game:GetService("ReplicatedStorage").MultiboxFramework)
+    for i,v in next,getupvalues(getupvalues(a.Network.Fire)[1])[4] do 
+        if i == b then
+            return v._identifier
+        end
+    end
 end
 if _G.Notify then 
     if summonamount == "1xSummon" then 
@@ -196,6 +182,18 @@ if _G.Notify then
         end)
     end
 end
+local UUIDSummon = Summon()
+repeat wait()
+if not game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible then 
+game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
+wait(.5)
+end
+ local b = "Summon1"
+            if _G.SummonAmount == "10" then 
+                b = "Summon10"
+            end
+ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.BuyButtons[b])
+until UUIDSummon ~= nil
 while _G.Toggle do
     task.wait()
     if _G.Boost then
@@ -205,9 +203,11 @@ while _G.Toggle do
             wait(.1)
         end
     end
-    if not game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible then
-        game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
-    else
-        ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
-    end
+   local args = {
+                [1] = {
+                    [1] = {_G.SettingSell},
+                    [2] = UUIDSummon
+                }
+            }
+            game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args))
 end
