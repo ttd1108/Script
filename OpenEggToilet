@@ -194,6 +194,7 @@ end
                 b = "Summon10"
             end
 ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
+UUIDSummon = Summon()
 until UUIDSummon ~= nil
 end
 while _G.Toggle do
