@@ -26,9 +26,9 @@ spawn(
 )
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-function ClickButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
+function ClickButton(x, y)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
 end
 function CloseAllUi()
     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = false
@@ -193,7 +193,7 @@ end
             if _G.SummonAmount == "10" then 
                 b = "Summon10"
             end
-ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.BuyButtons[b])
+ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
 until UUIDSummon ~= nil
 end
 while _G.Toggle do
