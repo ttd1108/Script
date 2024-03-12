@@ -199,7 +199,7 @@ until UUIDSummon ~= nil
 print(UUIDSummon)
 end
 while _G.Toggle do
-    wait(5)
+    wait()
     if _G.Boost then
         if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost") then
             UseBoost()
