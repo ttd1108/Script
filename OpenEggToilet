@@ -196,6 +196,7 @@ end
 ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
 UUIDSummon = Summon()
 until UUIDSummon ~= nil
+print(UUIDSummon)
 end
 while _G.Toggle do
     wait(5)
