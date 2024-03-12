@@ -186,7 +186,7 @@ local UUIDSummon = Summon()
 
 end
 while _G.Toggle do
-    wait()
+    wait(2)
 if  UUIDSummon == nil then 
     game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
     wait(.1)
