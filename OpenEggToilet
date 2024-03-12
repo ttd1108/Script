@@ -183,24 +183,19 @@ if _G.Notify then
     end
 end
 local UUIDSummon = Summon()
-if UUIDSummon == nil then 
-repeat wait()
-if not game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible then 
-game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
-wait(.5)
-end
- local b = "Summon1"
-            if _G.SummonAmount == "10" then 
-                b = "Summon10"
-            end
-ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
-UUIDSummon = Summon()
-until UUIDSummon ~= nil
-print(UUIDSummon)
+
 end
 while _G.Toggle do
     wait()
-    if _G.Boost then
+if  UUIDSummon == nil then 
+    game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
+    wait(.1)
+    ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
+    UUIDSummon = Summon()
+    wait(.5_)
+
+ else 
+if _G.Boost then
         if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost") then
             UseBoost()
 
@@ -213,5 +208,6 @@ while _G.Toggle do
                     [2] = UUIDSummon
                 }
             }
-            game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args))
+            game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args))   
+end 
 end
