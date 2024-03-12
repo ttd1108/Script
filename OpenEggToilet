@@ -198,7 +198,7 @@ UUIDSummon = Summon()
 until UUIDSummon ~= nil
 end
 while _G.Toggle do
-    task.wait()
+    wait(5)
     if _G.Boost then
         if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost") then
             UseBoost()
