@@ -67,11 +67,12 @@ function UseBoost()
     CloseAllUi()
     local boost = FindBoost()
     if tonumber(boost["2xLuckBoost"].BoostInfo.BoostOwnAmount.Text:match("%d+")) > 0 then
+        repeat wait()
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = true
-        wait(.1)
-        ClickButton(412, 225)
-        wait(.1)
-        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = true
+         ClickButton(412, 225)
+        wait(.5)
+        until   game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost")     
+ game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = false 
     end
 end
 local RarityCheck = {}
