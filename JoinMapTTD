@@ -133,6 +133,7 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Vi
             end
         end
     else
+local TeleportService = game:GetService("TeleportService")
         vote = false
         spawn(
             function()
@@ -140,6 +141,15 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Vi
                     wait()
                 until game:IsLoaded()
                 wait(20 * 60)
+                 TeleportService:Teleport(13775256536)
+            end
+        )
+spawn(
+            function()
+                repeat
+                    wait()
+                until game:IsLoaded()
+                wait(30 * 60)
                 game:Shutdown()
             end
         )
@@ -151,7 +161,7 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Vi
             vote = true
         end
         if vote == false then
-            local TeleportService = game:GetService("TeleportService")
+            
             TeleportService:Teleport(13775256536)
         end
         repeat
