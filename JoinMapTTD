@@ -28,38 +28,106 @@ function ClickButton(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
 end
-
+function CheckClaimed()
+    if
+        game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible and
+            (string.find(
+                game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,
+                "VIP"
+            ) or
+                string.find(
+                    game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,
+                    "not ready"
+                ) or
+                string.find(
+                    game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,
+                    "recieved"
+                ))
+     then
+        return true
+    end
+    return false
+end
 if game.GameId == 4778845442 then
     if game.PlaceId == 13775256536 then
         spawn(
             function()
                 while wait() do
                     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.RejoinMatch.Visible = false
-                    game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false
                 end
             end
         )
-        function GetEmptyTeleport()
-            for i, v in pairs(game.Workspace.Lifts:GetChildren()) do
-                if v.Name == _G.Map then
-                    if
-                        string.find(v.BasePart.StatusGui.PlayersCount.Text, "0/") and
-                            not string.find(v.BasePart.StatusGui.PlayersCount.Text, "100")
-                     then
-                        return v
+        if _G.ClaimVip then
+            if CheckClaimed() == false then
+                repeat
+                    wait()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                        CFrame.new(-677.666504, 231.722336, -121.744644, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+                    wait(.3)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                        CFrame.new(
+                        -699.199951,
+                        229.771469,
+                        -100.440773,
+                        -0.969727337,
+                        2.80895929e-08,
+                        0.24419035,
+                        1.13951408e-08,
+                        1,
+                        -6.97792331e-08,
+                        -0.24419035,
+                        -6.48842402e-08,
+                        -0.969727337
+                    )
+                until CheckClaimed() == true
+                function GetEmptyTeleport()
+                    for i, v in pairs(game.Workspace.Lifts:GetChildren()) do
+                        if v.Name == _G.Map then
+                            if
+                                string.find(v.BasePart.StatusGui.PlayersCount.Text, "0/") and
+                                    not string.find(v.BasePart.StatusGui.PlayersCount.Text, "100")
+                             then
+                                return v
+                            end
+                        end
+                    end
+                    return nil
+                end
+                while wait() do
+                    local v = GetEmptyTeleport() -- Get the teleport directly
+                    if v then
+                        print(v)
+                        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.QueueFrame.Visible then
+                            ClickButton(477, 390)
+                        else
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.BasePart.CFrame
+                        end
                     end
                 end
             end
-            return nil
-        end
-        while wait() do
-            local v = GetEmptyTeleport() -- Get the teleport directly
-            if v then
-                print(v)
-                if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.QueueFrame.Visible then
-                    ClickButton(477, 390)
-                else
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.BasePart.CFrame
+        else
+            function GetEmptyTeleport()
+                for i, v in pairs(game.Workspace.Lifts:GetChildren()) do
+                    if v.Name == _G.Map then
+                        if
+                            string.find(v.BasePart.StatusGui.PlayersCount.Text, "0/") and
+                                not string.find(v.BasePart.StatusGui.PlayersCount.Text, "100")
+                         then
+                            return v
+                        end
+                    end
+                end
+                return nil
+            end
+            while wait() do
+                local v = GetEmptyTeleport() -- Get the teleport directly
+                if v then
+                    print(v)
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.QueueFrame.Visible then
+                        ClickButton(477, 390)
+                    else
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.BasePart.CFrame
+                    end
                 end
             end
         end
@@ -82,8 +150,8 @@ if game.GameId == 4778845442 then
             vote = true
         end
         if vote == false then
-           local TeleportService = game:GetService("TeleportService")
-TeleportService:Teleport(13775256536)
+            local TeleportService = game:GetService("TeleportService")
+            TeleportService:Teleport(13775256536)
         end
         repeat
             wait()
