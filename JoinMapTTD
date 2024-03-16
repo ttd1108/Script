@@ -1,4 +1,4 @@
-PosClick = {
+_G.PosClick = {
     ["Easy"] = {265, 360},
     ["Medium"] = {410, 360},
     ["Hard"] = {523, 360},
