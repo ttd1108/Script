@@ -82,7 +82,8 @@ if game.GameId == 4778845442 then
             vote = true
         end
         if vote == false then
-            game:Shutdown()
+           local TeleportService = game:GetService("TeleportService")
+TeleportService:Teleport(13775256536)
         end
         repeat
             wait()
