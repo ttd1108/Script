@@ -80,7 +80,7 @@ if game.GameId == 4778845442 then
                         -0.969727337
                     )
                 until CheckClaimed() == true
-game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible
+game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false 
                 function GetEmptyTeleport()
                     for i, v in pairs(game.Workspace.Lifts:GetChildren()) do
                         if v.Name == _G.Map then
