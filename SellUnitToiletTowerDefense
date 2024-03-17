@@ -148,16 +148,12 @@ while wait() do
                 wait(.3)
             end
 end else 
-    local args = {
-    [1] = {
-        [1] = {
-            [1] = {
-                [1] = v
+   local args = {
+                [1] = {
+                    [1] = v,
+                    [2] = GetSellRandom()
+                }
             }
-        },
-        [2] = GetSellRandom()
-    }
-}
 
 game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
 
