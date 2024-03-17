@@ -88,14 +88,22 @@ function GetUnitList()
 end
 wait(3)
 GetUnitList()
-
-while _G.Toggle do
-    wait()
+function GetSellRandom()
+    local a = require(game:GetService("ReplicatedStorage").MultiboxFramework)
+    for i,v in next,getupvalues(getupvalues(a.Network.Fire)[1])[4] do 
+        if i == 'SellTroops' then
+            return v._identifier
+        end
+    end
+end 
+while wait() do
+ 
     if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
         wait(.5)
 
         for i, v in pairs(unitlist) do
+            if GetSellRandom() == nil then 
             if
                 game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text ==
                     "Sell Units"
@@ -139,6 +147,20 @@ while _G.Toggle do
                 game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false
                 wait(.3)
             end
+end else 
+    local args = {
+    [1] = {
+        [1] = {
+            [1] = {
+                [1] = v
+            }
+        },
+        [2] = GetSellRandom()
+    }
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+
         end
     else
         print("mở gui unit")
