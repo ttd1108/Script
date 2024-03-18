@@ -153,6 +153,7 @@ spawn(
                 game:Shutdown()
             end
         )
+    if game.PlaceId == 14082129854 then 
         if game:GetService("Players").LocalPlayer.PlayerGui.VotingFrame.VoteFrame.Visible then
             repeat
                 wait()
@@ -164,6 +165,7 @@ spawn(
             
             TeleportService:Teleport(13775256536)
         end
+end
         repeat
             wait()
             ClickButton(515, 35)
