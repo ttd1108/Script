@@ -147,6 +147,7 @@ while wait() do
                     wait(.3)
                 end
             else
+                print(GetSellRandom())
                 local args = {
                     [1] = {
                         [1] = v,
