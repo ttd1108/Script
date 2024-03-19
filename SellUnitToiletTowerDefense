@@ -148,6 +148,7 @@ while wait() do
                     wait(.3)
                 end
             else 
+                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false
                 local args = {
                     [1] = {
                         [1] = {
@@ -160,6 +161,7 @@ while wait() do
                 }
                 
                 game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                
             end 
         end
     else
