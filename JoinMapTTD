@@ -157,6 +157,7 @@ spawn(
         if game:GetService("Players").LocalPlayer.PlayerGui.VotingFrame.VoteFrame.Visible then
             repeat
                 wait()
+                print('voting')
                 ClickButton(_G.PosClick[_G.Mode][1], _G.PosClick[_G.Mode][2])
             until not game:GetService("Players").LocalPlayer.PlayerGui.VotingFrame.VoteFrame.Visible
             vote = true
