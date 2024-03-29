@@ -1,0 +1,143 @@
+repeat
+    wait()
+until game:IsLoaded()
+repeat
+    wait()
+until game.Players.LocalPlayer
+local plr = game.Players.LocalPlayer
+
+repeat
+    wait()
+until plr.Character
+repeat
+    wait()
+until plr.Character:FindFirstChild("HumanoidRootPart")
+repeat
+    wait()
+until plr.Character:FindFirstChild("Humanoid")
+
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+function ClickButton(x, y)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
+end
+function DetectInvoke()
+    local a = require(game:GetService("ReplicatedStorage").MultiboxFramework)
+    for i,v in next,getupvalues(getupvalues(a.Network.Invoke)[1])[5] do 
+        if i == "Marketplace_ListUnitOnSale" then 
+            return v.SendBridge._identifier
+        end
+    end
+end
+function DetectMarketPlace()
+    local b = {}
+    local a = getsenv(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
+    for i,v in next,getupvalues(a.startSellUnitPrompt)[12]._data.MarketplaceUnitsSelling do 
+        for i1,v1 in next,v do 
+            if typeof(v1) == "table"  then
+                table.insert(b,v1[2])
+            end
+        end
+    end
+    return b
+end
+function DetectUID(x)
+    for i,v in next,getupvalues(getsenv(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do 
+        if i == x  then 
+            for i1,v1 in next,v do 
+                if not table.find(DetectMarketPlace(),i1) then 
+                    return i1 
+                end
+            end
+        end
+    end
+end
+local UUIDSale =  DetectInvoke()
+
+if game.GameId == 4778845442 then
+    if game.PlaceId == 13775256536 then
+        while wait() do 
+            if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.TradingPlazaFrame.Visible then 
+                plr.Character.HumanoidRootPart.CFrame = CFrame.new(-493.427948, 245.360794, 47.9400749)
+            else 
+                ClickButton(475,400)
+            end 
+        end
+    elseif game.PlaceId == 13775256536 then 
+        local function CheckCurrentSellSlot()
+            local slot = string.split(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.TotalUnitsForSale.UnitsForSaleDisplay.DisplayFrame.UnitsAmount.Text,"/")
+            if tonumber(slot[1]) < tonumber(slot[2]) then
+                return true 
+            end
+            return false 
+        end 
+
+
+        local function GetUnitList()
+            if #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren() <= 2 then
+                repeat wait()
+                   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=CFrame.new( 2129.6333, 1.52409017, 2132.97534)
+                until #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren() > 2
+            end
+            plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = false  
+          
+        end
+
+        GetUnitList()
+        wait(2)
+        while wait() do 
+            if  plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible then 
+                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory.UIGridLayout.SortOrder = "Name"
+                wait(.5)
+
+                if DetectInvoke() == nil then 
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then 
+                        if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible then 
+                            repeat wait()
+                                ClickButton(615,300)
+                                wait(.1)
+                            until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible 
+                        end
+                        if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
+                            repeat wait()
+                                ClickButton(627,307)
+                                wait(.1)
+                            until ame:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
+                        end 
+                        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
+                            repeat wait()
+                                ClickButton(315,357)
+                                wait(.1)
+                            until not  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
+                        end 
+                    elseif game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then
+                        repeat wait()
+                            ClickButton(572,190)
+                            wait(.1)
+                        until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible
+                    end 
+                else 
+                    if CheckCurrentSellSlot() == true then 
+                        local args = {
+                            [1] = {
+                                [1] = {
+                                    [1] = "4339383939333535463144383444414341413646344138353141313636383443",
+                                    [2] = "Troops",
+                                    [3] = DetectUID(getgenv().Name),
+                                    [4] = getgenv().Price
+                                },
+                                [2] =DetectInvoke()
+                            }
+                        }
+                        game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args))     
+                end 
+            else 
+                plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
+                plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = true 
+                local d = getsenv(plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
+                d:OpenFrame()
+            end
+        end
+    end  
+            
