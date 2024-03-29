@@ -64,7 +64,7 @@ if game.GameId == 4778845442 then
                 ClickButton(475,400)
             end 
         end
-    elseif game.PlaceId == 13775256536 then 
+    elseif game.PlaceId == 14682939953 then 
         local function CheckCurrentSellSlot()
             local slot = string.split(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.TotalUnitsForSale.UnitsForSaleDisplay.DisplayFrame.UnitsAmount.Text,"/")
             if tonumber(slot[1]) < tonumber(slot[2]) then
