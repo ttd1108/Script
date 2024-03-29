@@ -130,7 +130,9 @@ if game.GameId == 4778845442 then
                                 [2] =DetectInvoke()
                             }
                         }
-                        game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args))     
+                        game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args)) 
+                        wait()
+                    end     
                 end 
             else 
                 plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
@@ -140,4 +142,4 @@ if game.GameId == 4778845442 then
             end
         end
     end  
-            
+end            
