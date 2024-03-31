@@ -99,7 +99,7 @@ if game.GameId == 4778845442 then
                     if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then 
                         if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible then 
                             repeat wait()
-                                ClickButton(615,300)
+                                ClickButton(190,190)
                                 wait(.1)
                             until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible 
                         end
