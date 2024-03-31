@@ -18,8 +18,6 @@ until plr.Character:FindFirstChild("Humanoid")
 
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-
 function ClickButton(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
@@ -109,7 +107,7 @@ if game.GameId == 4778845442 then
                             repeat wait()
                                 ClickButton(627,307)
                                 wait(.1)
-                            until ame:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
+                            until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
                         end 
                         if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
                             repeat wait()
@@ -123,6 +121,7 @@ if game.GameId == 4778845442 then
                             wait(.1)
                         until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible
                     end 
+
                 else 
                     if CheckCurrentSellSlot() == true then 
                         local args = {
