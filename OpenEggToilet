@@ -88,8 +88,10 @@ function CheckRarity(v)
     return false 
 end
 _G.PosClick = {
-    ["1xSummon"] = {575, 250},
-    ["10xSummon"] = {575, 320},
+    ["1xSummon"] = {590,330},
+    ["10xSummon"] = {590, 400},
+    ["BasicCrate"] = {588,170},
+    ["MythicCrate"] = {588,250},
     ["Basic"] = {843, 180},
     ["Uncommon"] = {843, 230},
     ["Rare"] = {843, 270},
@@ -188,27 +190,35 @@ local UUIDSummon = Summon()
 
 while _G.Toggle do
     task.wait()
-if  UUIDSummon == nil then 
-    game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
-    wait(.1)
-    ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
-    UUIDSummon = Summon()
-    wait(1)
-
- else 
-if _G.Boost then
-        if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost") then
-            UseBoost()
-
-            wait(.5)
+    if  UUIDSummon == nil then 
+        if game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible then 
+            if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.Crates.Crates[_G.Crate].CrateButton.SelectedStroke.Enabled then 
+                repeat wait()
+                    ClickButton(_G.PosClick[_G.Crate])
+                    wait(.1)
+                until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.Crates.Crates[_G.Crate].CrateButton.SelectedStroke.Enabled
+            end
+            wait(.1)
+            ClickButton(_G.PosClick[summonamount][1], _G.PosClick[summonamount][2])
+            UUIDSummon = Summon()
+            wait(1)
+        else  
+            game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = true
         end
-    end
-   local args = {
-                [1] = {
-                    [1] = {_G.SettingSell},
-                    [2] = UUIDSummon
-                }
+    else 
+        if _G.Boost then
+            if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost") then
+                UseBoost()
+    
+                wait(.5)
+            end
+        end
+        local args = {
+            [1] = {
+                [1] = {_G.Crate,{_G.SettingSell}},
+                [2] = UUIDSummon
             }
-            game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args))   
-end 
+        }
+        game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer(unpack(args))  
+    end  
 end
