@@ -73,7 +73,7 @@ Selling = ""
     end
 return Selling
 end
-function SendWebHook(v)
+function SendWebHook()
     local msg = {
         ['content'] = '@everyone',
         ["embeds"] = {{
