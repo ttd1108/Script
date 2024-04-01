@@ -149,7 +149,7 @@ spawn(function() while _G.Notify do wait() SendWebHook()  wait(10*60) end end)
                                     ClickButton(572,190)
                                   
                             
-                                end
+                                
                         elseif game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then
                             repeat wait()
                                 ClickButton(572,190)
