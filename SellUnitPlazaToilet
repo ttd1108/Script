@@ -77,6 +77,7 @@ if game.GameId == 4778845442 then
 
 
         local function GetUnitList()
+            unitlist= {}
             if #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren() <= 2 then
                 repeat wait()
                     plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
@@ -85,11 +86,15 @@ if game.GameId == 4778845442 then
                     d:OpenFrame()
                     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory.UIGridLayout.SortOrder = "Name"
                 until #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren() > 2
+                for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren()) do 
+                    if v:IsA("Frame") then 
+                        table.insert(unitlist,v.Name)
+                    end 
+                end
+                table.sort(unitlist)
             end
-            
-          
         end
-
+        countunitlist = 1
         GetUnitList()
         wait(2)
         while wait() do 
@@ -98,38 +103,48 @@ if game.GameId == 4778845442 then
                 
 
                 if DetectInvoke() == nil then 
-                    if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then 
-                        if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible then 
-                            repeat wait()
-                                ClickButton(190,190)
-                                wait(.1)
-                            until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible 
-                        end
-                        if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
-                            repeat wait()
-                                ClickButton(627,307)
-                                wait(.1)
-                            until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
-                        end 
-                        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
-                            repeat wait()
-                                ClickButton(315,357)
-                                wait(.1)
-                            until not  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
-                        end 
-                        if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.CannotTrade.Visible then 
+                        countunitlist = countunitlist + 1 
+                    else 
+                        if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then 
+                            if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible then 
+                                repeat wait()
+                                   
+                                    ClickButton(190,190)
+                                   
+                                until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible 
+                            end
+                            if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
+                                repeat wait()
+                                    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.RightMenu.LowestPrice.Visible then 
+                                        ClickButton(627,307)
+                                    else 
+                                        ClickButton(627,200)
+                                    end
+                                    wait(.1)
+                                until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
+                            end 
+                            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
+                                repeat wait()
+                                    ClickButton(315,357)
+                                    wait(.1)
+                                until not  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
+                            end 
+                            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then
+                                repeat wait()
+                                    ClickButton(572,190)
+                                    wait(.1)
+                                until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible
+                            end 
+
+                        elseif game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then
                             repeat wait()
                                 ClickButton(572,190)
                                 wait(.1)
                             until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible
+                        
                         end 
-                    elseif game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then
-                        repeat wait()
-                            ClickButton(572,190)
-                            wait(.1)
-                        until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible
                     end 
-
                 else 
                     if CheckCurrentSellSlot() == true then 
                         local args = {
