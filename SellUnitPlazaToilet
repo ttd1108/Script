@@ -56,7 +56,58 @@ function DetectUID(x)
     end
 end
 local UUIDSale =  DetectInvoke()
-
+function GetSelling()
+Selling = ""
+ local a = getsenv(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
+    for i,v in next,getupvalues(a.startSellUnitPrompt)[12]._data.MarketplaceUnitsSelling do 
+        for i1,v1 in next,v do 
+            if typeof(v1) == "table"  then
+                for i2,v2 in next,getupvalues(getsenv(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do 
+                   if table.find(v2,v1[2]) then 
+                        Selling = Selling..i2..",\n"
+                    end
+                end
+            end
+            
+        end
+    end
+return Selling
+end
+function SendWebHook(v)
+    local msg = {
+        ['content'] = '@everyone',
+        ["embeds"] = {{
+            ["title"] = "Toilet Tower Defense",
+            ["description"] = "Egg Opened",
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "User",
+                    ["value"] = game.Players.LocalPlayer.Name,                                            
+                    ["inline"] = true
+                },
+                
+                {
+                    ["name"] = "Gem:",
+                    ["value"] = game:GetService("Players").LocalPlayer.leaderstats.GemS.Value,                                            
+                    ["inline"] = true 
+                },
+ {
+                    ["name"] = "Selling:",
+                    ["value"] = GetSelling(),                                            
+                    ["inline"] = false 
+                }
+            }
+        }}
+    }
+    request({
+        Url = _G.Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
 if game.GameId == 4778845442 then
     if game.PlaceId == 13775256536 then
         while wait() do 
@@ -67,6 +118,7 @@ if game.GameId == 4778845442 then
             end 
         end
     elseif game.PlaceId == 14682939953  then 
+spawn(function() while _G.Notify do wait(10*60) end end)
         local function CheckCurrentSellSlot()
             local slot = string.split(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.TotalUnitsForSale.UnitsForSaleDisplay.DisplayFrame.UnitsAmount.Text,"/")
             if tonumber(slot[1]) < tonumber(slot[2]) then
