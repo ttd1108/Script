@@ -145,7 +145,7 @@ spawn(function() while _G.Notify do wait() SendWebHook()  wait(10*60) end end)
                 plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = true 
                 local d = getsenv(plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
                 d:OpenFrame()
-                             
+                             wait(2.5)
                                     ClickButton(572,190)
                                   
                             
