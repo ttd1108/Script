@@ -56,30 +56,14 @@ function DetectUID(x)
     end
 end
 local UUIDSale =  DetectInvoke()
-function GetSelling()
-Selling = ""
- local a = getsenv(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
-    for i,v in next,getupvalues(a.startSellUnitPrompt)[12]._data.MarketplaceUnitsSelling do 
-        for i1,v1 in next,v do 
-            if typeof(v1) == "table"  then
-                for i2,v2 in next,getupvalues(getsenv(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do 
-                   if table.find(v2,v1[2]) then 
-                        Selling = Selling..i2..",\n"
-                    end
-                end
-            end
-            
-        end
-    end
-return Selling
-end
+
 function SendWebHook()
 
     request({
         Url = _G.Webhook,
         Method = "POST",
         Headers = {["Content-Type"] = "application/json"},
-        Body = game:GetService("HttpService"):JSONEncode({content = "Username:"..game.Players.LocalPlayer.Name.."\nGems:"..game:GetService("Players").LocalPlayer.leaderstats.Gems.Value}])
+        Body = game:GetService("HttpService"):JSONEncode({content = "Username:"..game.Players.LocalPlayer.Name.."\nGems:"..game:GetService("Players").LocalPlayer.leaderstats.Gems.Value})
     }) 
 end
 if game.GameId == 4778845442 then
