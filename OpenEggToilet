@@ -200,7 +200,7 @@ while _G.Toggle do
         if game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible then 
             if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.Crates.Crates[_G.Crate].CrateButton.SelectedStroke.Enabled then 
                 repeat wait()
-                    ClickButton(_G.PosClick[_G.Crate])
+                    ClickButton(_G.PosClick[_G.Crate][1],_G.PosClick[_G.Crate][2])
                     wait(.1)
                 until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.Crates.Crates[_G.Crate].CrateButton.SelectedStroke.Enabled
             end
