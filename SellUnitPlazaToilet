@@ -74,38 +74,12 @@ Selling = ""
 return Selling
 end
 function SendWebHook()
-    local msg = {
-        ['content'] = '@everyone',
-        ["embeds"] = {{
-            ["title"] = "Toilet Tower Defense",
-            ["description"] = "Egg Opened",
-            ["type"] = "rich",
-            ["color"] = tonumber(0xbdce44),
-            ["fields"] = {
-                {
-                    ["name"] = "User",
-                    ["value"] = game.Players.LocalPlayer.Name,                                            
-                    ["inline"] = true
-                },
-                
-                {
-                    ["name"] = "Gem:",
-                    ["value"] = game:GetService("Players").LocalPlayer.leaderstats.GemS.Value,                                            
-                    ["inline"] = true 
-                },
- {
-                    ["name"] = "Selling:",
-                    ["value"] = GetSelling(),                                            
-                    ["inline"] = false 
-                }
-            }
-        }}
-    }
+
     request({
         Url = _G.Webhook,
         Method = "POST",
         Headers = {["Content-Type"] = "application/json"},
-        Body = game:GetService("HttpService"):JSONEncode(msg)
+        Body = game:GetService("HttpService"):JSONEncode({content = "Username:"..game.Players.LocalPlayer.Name.."\nGems:"..game:GetService("Players").LocalPlayer.leaderstats.Gems.Value}])
     }) 
 end
 if game.GameId == 4778845442 then
