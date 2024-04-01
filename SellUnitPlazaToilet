@@ -150,7 +150,7 @@ spawn(function() while _G.Notify do wait() SendWebHook()  wait(10*60) end end)
         GetUnitList()
         wait(2)
         while wait() do 
- if not plr.PlayerGui.Lobby.MarketplaceFrame.Visible then 
+ if plr.PlayerGui.Lobby.MarketplaceFrame.Visible then 
             if  plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible then 
                 
                 
