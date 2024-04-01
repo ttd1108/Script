@@ -118,7 +118,7 @@ if game.GameId == 4778845442 then
             end 
         end
     elseif game.PlaceId == 14682939953  then 
-spawn(function() while _G.Notify do wait(10*60) end end)
+spawn(function() while _G.Notify do wait(10*60) SendWebHook() end end)
         local function CheckCurrentSellSlot()
             local slot = string.split(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.TotalUnitsForSale.UnitsForSaleDisplay.DisplayFrame.UnitsAmount.Text,"/")
             if tonumber(slot[1]) < tonumber(slot[2]) then
