@@ -111,7 +111,7 @@ if game.GameId == 4778845442 then
                                 repeat wait()
                                    
                                     ClickButton(190,190)
-                                   
+                                   wait(.1)
                                 until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SellUnitPopup.Visible 
                             end
                             if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
