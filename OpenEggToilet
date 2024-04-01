@@ -24,6 +24,13 @@ spawn(
         end
     end
 )
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+wait(1)
+vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 function ClickButton(x, y)
@@ -186,7 +193,6 @@ if _G.Notify then
     end
 end
 local UUIDSummon = Summon()
-
 
 while _G.Toggle do
     task.wait()
