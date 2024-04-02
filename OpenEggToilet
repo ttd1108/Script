@@ -220,7 +220,7 @@ while _G.Toggle do
             if not game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost") then
                 UseBoost()
     
-                wait(.5)
+                wait(1)
             end
         end
         local args = {
