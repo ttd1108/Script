@@ -99,6 +99,7 @@ _G.PosClick = {
     ["10xSummon"] = {590, 400},
     ["BasicCrate"] = {588,170},
     ["MythicCrate"] = {588,250},
+    ["JesterCrate"] = {588,170},
     ["Basic"] = {843, 180},
     ["Uncommon"] = {843, 230},
     ["Rare"] = {843, 270},
@@ -198,6 +199,9 @@ while _G.Toggle do
     task.wait()
     if  UUIDSummon == nil then 
         if game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible then 
+            if _G.Crate ~= "JesterCrate" then 
+                game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.Crates.Crates.JesterCrate.Visible = false
+            end
             if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.SummonShopFrame.SummonMenu.RightMenu.Crates.Crates[_G.Crate].CrateButton.SelectedStroke.Enabled then 
                 repeat wait()
                     ClickButton(_G.PosClick[_G.Crate][1],_G.PosClick[_G.Crate][2])
