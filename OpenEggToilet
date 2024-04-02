@@ -225,7 +225,7 @@ while _G.Toggle do
         end
         local args = {
             [1] = {
-                [1] = {_G.Crate,{_G.SettingSell}},
+                [1] = {_G.Crate,_G.SettingSell},
                 [2] = UUIDSummon
             }
         }
