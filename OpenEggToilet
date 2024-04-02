@@ -62,7 +62,7 @@ function HideShopList()
         if not string.find(v.Name, "UI") and v.Name ~= "Barrier" then
             if v ~= boost then
                 print(v.Name)
-                v.Visible = false
+                v:Destroy()
             end
         end
     end
