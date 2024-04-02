@@ -57,13 +57,36 @@ function DetectUID(x)
 end
 local UUIDSale =  DetectInvoke()
 
-function SendWebHook()
+function SendWebHook(v)
 
+    local msg = {
+        ['content'] = '@everyone',
+        ["embeds"] = {{
+            ["title"] = "Toilet Tower Defense",
+            ["description"] = "TradingPlaza",
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "User:",
+                    ["value"] = game.Players.LocalPlayer.Name,                                            
+                    ["inline"] = false
+                },
+               
+             
+                {
+                    ["name"] = " :gem: left:",
+                    ["value"] = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value,                                            
+                    ["inline"] = false
+                },
+            }
+        }}
+    }
     request({
         Url = _G.Webhook,
         Method = "POST",
         Headers = {["Content-Type"] = "application/json"},
-        Body = game:GetService("HttpService"):JSONEncode({content = "Username:"..game.Players.LocalPlayer.Name.."\nGems:"..game:GetService("Players").LocalPlayer.leaderstats.Gems.Value})
+        Body = game:GetService("HttpService"):JSONEncode(msg)
     }) 
 end
 if game.GameId == 4778845442 then
@@ -76,8 +99,8 @@ if game.GameId == 4778845442 then
             end 
         end
     elseif game.PlaceId == 14682939953  then 
-spawn(function() while _G.Notify do wait() SendWebHook()  wait(10*60) end end)
-        local function CheckCurrentSellSlot()
+spawn(function() while _G.Notify do wait() SendWebHook() wait(10*60) end   end)      
+local function CheckCurrentSellSlot()
             local slot = string.split(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.TotalUnitsForSale.UnitsForSaleDisplay.DisplayFrame.UnitsAmount.Text,"/")
             if tonumber(slot[1]) < tonumber(slot[2]) then
                 return true 
