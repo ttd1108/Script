@@ -105,6 +105,7 @@ if game.GameId == 4778845442 then
             end 
         end
     elseif game.PlaceId == 14682939953 then 
+game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame.Visible = false
         spawn(function() 
             while _G.Notify do 
                 wait() 
