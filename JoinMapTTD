@@ -114,12 +114,16 @@ if game.GameId == 4778845442 then
             wait(30 * 60)
             game:Shutdown()
         end)
+if _G.Map ~= "ToiletFortress" then
         if game:GetService("Players").LocalPlayer.PlayerGui.VotingFrame.VoteFrame.Visible then
             repeat wait()
                 ClickButton(_G.PosClick[_G.Mode][1], _G.PosClick[_G.Mode][2])
             until not game:GetService("Players").LocalPlayer.PlayerGui.VotingFrame.VoteFrame.Visible
             vote = true
         end
+else 
+    vote = true
+end
         if vote == false then
             TeleportService:Teleport(13775256536)
         end
