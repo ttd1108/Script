@@ -132,6 +132,7 @@ local function CheckCurrentSellSlot()
         countunitlist = 1
         GetUnitList()
         wait(2)
+spawn(function()
         while wait() do 
  if plr.PlayerGui.Lobby.MarketplaceFrame.Visible then 
             if  plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible then 
@@ -215,3 +216,10 @@ else
 plr.PlayerGui.Lobby.MarketplaceFrame.Visible = true 
 end            
 end
+end)
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+ vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+ wait(1)
+ vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
