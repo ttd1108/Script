@@ -178,27 +178,27 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:De
                                             wait(.1)
                                         until not  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible
                                     end 
+                                    wait(.5)
                                     repeat wait()
                                             
                                         
-                                    wait() until not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible
-                                   plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
+                                    until game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible == false
+                                       plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
                                         plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = true 
                                         local d = getsenv(plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
                                         d:OpenFrame()
                                     repeat wait()
-                                    ClickButton(572,190)  
-                                    until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible 
+                                  
+                                        ClickButton(572,190) 
+                                        
+                                    until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible == false
                                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then
                                      repeat wait()
                                   
-                                    ClickButton(572,190) 
-                                    wait()
-                                    until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible
-                                      plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
-                                    plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = true 
-                                    local d = getsenv(plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
-                                    d:OpenFrame()
+                                        ClickButton(572,190) 
+                                    
+                                    until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible == false
+                                     
                                 
                                 end 
                             end 
