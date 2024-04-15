@@ -180,11 +180,8 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:De
                                     end 
                                     repeat wait()
                                             
-                                        plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
-                                        plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = true 
-                                        local d = getsenv(plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
-                                        d:OpenFrame()
-                                    wait(.5) until not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible
+                                        
+                                    wait() until not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible
                                    
                                     repeat wait()
                                     ClickButton(572,190)  
