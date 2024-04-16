@@ -205,7 +205,7 @@ plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible =
                                         ClickButton(572,190) 
                                     
                                     until  game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible == false
-wait(2)
+wait(1)
                                      plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
                                         plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = true 
                                         local d = getsenv(plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
