@@ -105,6 +105,44 @@ if game.GameId == 4778845442 then
             end 
         end
     elseif game.PlaceId == 14682939953 then 
+RarityColor = {}
+function ConvertGradientToRGB(v, num)
+    color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+for _, v in pairs(
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren(
+
+    )
+) do
+    if v:IsA("Frame") then
+        RarityColor[v.Name] = {
+            ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
+            ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
+        }
+    end
+end
+function GetRarity(color1, color2)
+    for rarity, colors in pairs(RarityColor) do
+        if (color1 == colors["1"] and color2 == colors["2"]) then
+            return rarity
+        end
+    end
+end
+ListRaritySell = {"Basic",
+    "Uncommon" ,
+    "Rare",
+    "Epic",
+    "Legendary" }
+function CheckRarity(v)
+    if table.find(ListRaritySell, GetRarity(ConvertGradientToRGB(v, 1), ConvertGradientToRGB(v, 2))) then
+        return true
+    end
+    return false
+end
 game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:Destroy()
         spawn(function() 
             while _G.Notify do 
@@ -152,7 +190,8 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:De
                 if plr.PlayerGui.Lobby.MarketplaceFrame.Visible then 
                     if plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible then 
                         if DetectInvoke() == nil then 
-                            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.CannotTrade.Visible then 
+                            if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.CannotTrade.VisibleO or  CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.RarityGradient) == false  then 
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].Visible = false
                                 countunitlist = countunitlist + 1 
                             else 
                                 if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.SaleUnits.SaleUnitsList.Row1.Row.Slot1.YourUnit.Visible then 
