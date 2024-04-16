@@ -1,0 +1,65 @@
+repeat wait() until game:IsLoaded()
+local function GetUnitList()
+            unitlist= {}
+            if #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren() <= 2 then
+                repeat wait()
+                    pcall(function()
+                        plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.Visible = false 
+                        plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible = true 
+                        local d = getsenv(plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceHandler)
+                        d:OpenFrame()
+                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory.UIGridLayout.SortOrder = "Name" 
+                    end)   
+                until #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren() > 2
+                for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren()) do 
+                    if v:IsA("Frame") then 
+                        table.insert(unitlist,v.Name)
+                    end 
+                end
+                table.sort(unitlist)
+            end
+        end
+
+        countunitlist = 1
+        GetUnitList()
+RarityColor = {}
+function ConvertGradientToRGB(v, num)
+    color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+for _, v in pairs(
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren(
+
+    )
+) do
+    if v:IsA("Frame") then
+        RarityColor[v.Name] = {
+            ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
+            ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
+        }
+    end
+end
+function GetRarity(color1, color2)
+    for rarity, colors in pairs(RarityColor) do
+        if (color1 == colors["1"] and color2 == colors["2"]) then
+            return rarity
+        end
+    end
+end
+ListRaritySell = {"Basic",
+    "Uncommon" ,
+    "Rare",
+    "Epic",
+    "Legendary" }
+function CheckRarity(v)
+    if table.find(ListRaritySell, GetRarity(ConvertGradientToRGB(v, 1), ConvertGradientToRGB(v, 2))) then
+        return true
+    end
+    return false
+end
+if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.CannotTrade.Visible or  CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.RarityGradient) == false  then 
+    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].Visible = false
+                                countunitlist = countunitlist + 1  end
