@@ -192,7 +192,7 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:De
                     if plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible then 
                         if DetectInvoke() == nil then 
                             --print(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]])
-print(print(CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]])
+print(CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]]))
 countunitlist = countunitlist + 1
 if 1 > 0 then 
 print("")
