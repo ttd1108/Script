@@ -191,7 +191,7 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:De
                 if plr.PlayerGui.Lobby.MarketplaceFrame.Visible then 
                     if plr.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Visible then 
                         if DetectInvoke() == nil then 
-                            print(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].Name)
+                            print(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]])
 
                             if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.CannotTrade.Visible or  CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].TroopPicture.RarityGradient) == false  then 
     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory[unitlist[countunitlist]].Visible = false
