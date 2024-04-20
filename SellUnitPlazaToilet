@@ -143,7 +143,8 @@ function CheckRarity(v)
     end
     return false
 end
-game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:Destroy()
+if  game:GetService("Players").LocalPlayer.PlayerGui.MainFrames:FindFirstChild("NotificationFrame") then
+game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:Destroy() end
         spawn(function() 
             while _G.Notify do 
                 wait() 
