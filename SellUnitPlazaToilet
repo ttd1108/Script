@@ -161,7 +161,7 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:De
             return false 
         end 
 
-        local function GetUnitList()
+        
             unitlist= {}
             if #game:GetService("Players").LocalPlayer.PlayerGui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.SellUnitMenu.Inventory.Inventory:GetChildren() <= 2 then
                 repeat wait()
@@ -180,10 +180,10 @@ game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:De
                 end
                 table.sort(unitlist)
             end
-        end
+        
 
         countunitlist = 1
-        GetUnitList()
+        
         wait(2)
 
         spawn(function()
