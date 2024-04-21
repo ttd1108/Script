@@ -135,6 +135,7 @@ end
 ListRaritySell = {"Basic",
     "Uncommon" ,
     "Rare",
+    "Legendary" ,
     }
 function CheckRarity(v)
     if table.find(ListRaritySell, GetRarity(ConvertGradientToRGB(v, 1), ConvertGradientToRGB(v, 2))) then
