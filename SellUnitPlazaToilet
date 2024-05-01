@@ -134,7 +134,7 @@ function GetRarity(color1, color2)
 end
 ListRaritySell = {"Basic",
     "Uncommon" ,
-    "Rare",
+    "Rare", "Epic",
     "Legendary" ,
     }
 function CheckRarity(v)
