@@ -22,7 +22,7 @@ until plr.Character:FindFirstChild("Humanoid")
 
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
---StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 
 function ClickButton(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
