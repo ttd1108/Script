@@ -1,0 +1,45 @@
+repeat
+    wait()
+until game:IsLoaded()
+
+repeat
+    wait()
+until game.Players.LocalPlayer
+
+local plr = game.Players.LocalPlayer
+
+repeat
+    wait()
+until plr.Character
+
+repeat
+    wait()
+until plr.Character:FindFirstChild("HumanoidRootPart")
+
+repeat
+    wait()
+until plr.Character:FindFirstChild("Humanoid")
+function ClickButton(x, y)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
+end
+
+local a = game:HttpGet(_G.Code )
+local function split(str, sep)
+   local result = {}
+   local regex = ("([^%s]+)"):format(sep)
+   for each in str:gmatch(regex) do
+      table.insert(result, each)
+   end
+   return result
+end
+if not game:GetService("Players").LocalPlayer.PlayerGui.PAGES.CodesPage.Visible then
+   game:GetService("Players").LocalPlayer.PlayerGui.PAGES.CodesPage.Visible = true 
+end 
+local lines = split(a, "\n")
+for _,line in ipairs(lines) do
+game:GetService("Players").LocalPlayer.PlayerGui.PAGES.CodesPage.Frame.Main.Options.EnterCodeBox.EnterCode.Text = line 
+wait(.5)
+ClickButton(600,330)
+wait(.5)
+ end
