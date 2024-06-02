@@ -83,6 +83,7 @@ while _G.summon do  wait()
         if table.find(unitlist,v["Type"]) then
           SendWebHook(v["Type"])
           _G.summon = false 
+          break
         end
       end
     end
