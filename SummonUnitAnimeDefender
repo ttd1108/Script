@@ -1,0 +1,89 @@
+repeat
+  wait()
+until game:IsLoaded()
+repeat
+  wait()
+until game.Players.LocalPlayer
+local plr = game.Players.LocalPlayer
+repeat
+  wait()
+until plr.Character
+repeat
+  wait()
+until plr.Character:FindFirstChild("HumanoidRootPart")
+repeat
+  wait()
+until plr.Character:FindFirstChild("Humanoid")
+
+local unit = require(game:GetService("ReplicatedStorage").Modules.Bins.UnitData)
+local unitlist = {}
+local rarityunit = {}
+for i, v in pairs(unit) do 
+  if v["Rarity"] == 5 then
+    table.insert(unitlist,i)
+    rarityunit[i] = "Mythic"
+  elseif v["Rarity"] == 6 then
+    table.insert(unitlist,i)
+    rarityunit[i] = "Secret"
+  end
+end
+function SendWebHook(v)
+    local msg = {
+        ['content'] = '@everyone',
+        ["embeds"] = {{
+            ["title"] = "Anime Defender",
+            ["description"] = "Unit Summoned",
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "User",
+                    ["value"] = game.Players.LocalPlayer.Name,                                            
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Name",
+                    ["value"] = v,                                            
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Rarity",
+                    ["value"] = rarityunit[v],                                            
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Gem left",
+                    ["value"] = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Toolbar.CurrencyList.Gems.TextLabel.Text:gsub(",",""),                                            
+                    ["inline"] = false
+                },
+            }
+        }}
+    }
+    request({
+        Url = _G.Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
+while wait() do 
+  local gem_ = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Toolbar.CurrencyList.Gems.TextLabel.Text:gsub(",","")
+  local gem = tonumber(gem_)
+  --if gem/500 >= 1 then 
+    --local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",10)
+  if gem / 50 >= 1 then
+    local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",1)
+    if type(summon1) == "string" and string.find(summon1 ,"quickly") then
+      wait(.5)
+    elseif type(summon1) == "table" then
+      for i,v in pairs(summon1) do
+        if v["AutoDeleted"] == nil then 
+          if table.find(unitlist,v["Type"]) then
+            SendWebHook(v["Type"])
+            break
+          end
+        end
+      end
+    end
+  end
+end
