@@ -66,7 +66,8 @@ function SendWebHook(v)
         Body = game:GetService("HttpService"):JSONEncode(msg)
     }) 
 end
-while wait() do 
+_G.summon = true 
+while _G.summon do  wait()
   local gem_ = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Toolbar.CurrencyList.Gems.TextLabel.Text:gsub(",","")
   local gem = tonumber(gem_)
   --if gem/500 >= 1 then 
@@ -80,7 +81,7 @@ while wait() do
         if v["AutoDeleted"] == nil then 
           if table.find(unitlist,v["Type"]) then
             SendWebHook(v["Type"])
-            break
+            _G.summon = false 
           end
         end
       end
