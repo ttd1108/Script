@@ -25,6 +25,9 @@ for i, v in pairs(unit) do
   elseif v["Rarity"] == 6 then
     table.insert(unitlist,i)
     rarityunit[i] = "Secret"
+elseif v["Rarity"] == 2 then
+    table.insert(unitlist,i)
+    rarityunit[i] = "Rare"
   end
 end
 function SendWebHook(v)
