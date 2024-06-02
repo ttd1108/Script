@@ -19,9 +19,9 @@ local unit = require(game:GetService("ReplicatedStorage").Modules.Bins.UnitData)
 local unitlist = {}
 local rarityunit = {}
 for i, v in pairs(unit) do 
- if v["Rarity"] == 2 then
+ if v["Rarity"] == 4 then
     table.insert(unitlist,i)
-    rarityunit[i] = "Rare"
+    rarityunit[i] = "Legendary"
   elseif v["Rarity"] == 5 then
     table.insert(unitlist,i)
     rarityunit[i] = "Mythic"
