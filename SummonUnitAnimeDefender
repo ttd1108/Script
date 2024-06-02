@@ -70,6 +70,7 @@ function SendWebHook(v)
     }) 
 end
 _G.summon = true 
+print('start')
 while _G.summon do  wait()
   local gem_ = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Toolbar.CurrencyList.Gems.TextLabel.Text:gsub(",","")
   local gem = tonumber(gem_)
