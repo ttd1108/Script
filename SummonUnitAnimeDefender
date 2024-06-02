@@ -25,9 +25,7 @@ for i, v in pairs(unit) do
   elseif v["Rarity"] == 6 then
     table.insert(unitlist,i)
     rarityunit[i] = "Secret"
-elseif v["Rarity"] == 2 then
-    table.insert(unitlist,i)
-    rarityunit[i] = "Rare"
+
   end
 end
 function SendWebHook(v)
@@ -76,13 +74,13 @@ while _G.summon do  wait()
   local gem = tonumber(gem_)
   if gem/500 >= 1 then 
     local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",10)
-print("roll 10")
+
   elseif gem / 50 >= 1 then
     local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",1)
-print("roll 1")
+
   end
   if type(summon1) == "string" and string.find(summon1 ,"quickly") then
-  print("roll to fast,delay 0.5s")
+  
     wait(.5)
   elseif type(summon1) == "table" then
     for i,v in pairs(summon1) do
