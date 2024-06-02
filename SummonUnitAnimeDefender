@@ -69,7 +69,7 @@ function SendWebHook(v)
 end
 _G.summon = true 
 
-while _G.summon do  wait()
+while _G.summon == true do  wait()
   local gem_ = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Toolbar.CurrencyList.Gems.TextLabel.Text:gsub(",","")
   local gem = tonumber(gem_)
   if gem/500 >= 1 then 
