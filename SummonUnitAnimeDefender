@@ -79,13 +79,14 @@ while _G.summon do  wait()
     local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",1)
 
   end
-  if type(summon1) == "string" and string.find(summon1 ,"quickly") then
+  if type(summon1) == "string" then
   
     wait(.5)
   elseif type(summon1) == "table" then
     for i,v in pairs(summon1) do
       if v["AutoDeleted"] == nil then 
         if table.find(unitlist,v["Type"]) then
+print(v["Type"])
           SendWebHook(v["Type"])
           _G.summon = false 
           
