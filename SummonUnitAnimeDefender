@@ -88,6 +88,7 @@ while _G.summon == true do  wait()
   elseif type(summon1) == "table" then
     for i,v in pairs(summon1) do
       if v["AutoDeleted"] == nil then 
+print(v["Type"])
         if table.find(unitlist,v["Type"]) then
 print(v["Type"])
           SendWebHook(v["Type"])
