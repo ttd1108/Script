@@ -70,21 +70,23 @@ _G.summon = true
 while _G.summon do  wait()
   local gem_ = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Toolbar.CurrencyList.Gems.TextLabel.Text:gsub(",","")
   local gem = tonumber(gem_)
-  --if gem/500 >= 1 then 
-    --local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",10)
-  if gem / 50 >= 1 then
+  if gem/500 >= 1 then 
+    local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",10)
+  elseif gem / 50 >= 1 then
     local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",1)
-    if type(summon1) == "string" and string.find(summon1 ,"quickly") then
-      wait(.5)
-    elseif type(summon1) == "table" then
-      for i,v in pairs(summon1) do
-        if v["AutoDeleted"] == nil then 
-          if table.find(unitlist,v["Type"]) then
-            SendWebHook(v["Type"])
-            _G.summon = false 
-          end
+  end
+  if type(summon1) == "string" and string.find(summon1 ,"quickly") then
+    wait(.5)
+  elseif type(summon1) == "table" then
+    for i,v in pairs(summon1) do
+      if v["AutoDeleted"] == nil then 
+        if table.find(unitlist,v["Type"]) then
+          SendWebHook(v["Type"])
+          _G.summon = false 
         end
       end
     end
   end
+
+  wait(.5)
 end
