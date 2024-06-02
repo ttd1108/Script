@@ -91,8 +91,9 @@ while _G.summon == true do  wait()
         if table.find(unitlist,v["Type"]) then
 print(v["Type"])
           SendWebHook(v["Type"])
+          print(_G.summon)
           _G.summon = false 
-          
+          print(_G.summon)
         end
       end
     end
