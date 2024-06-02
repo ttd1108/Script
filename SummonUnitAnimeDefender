@@ -14,21 +14,16 @@ until plr.Character:FindFirstChild("HumanoidRootPart")
 repeat
   wait()
 until plr.Character:FindFirstChild("Humanoid")
-
 local unit = require(game:GetService("ReplicatedStorage").Modules.Bins.UnitData)
 local unitlist = {}
 local rarityunit = {}
 for i, v in pairs(unit) do 
- if v["Rarity"] == 2 then
-    table.insert(unitlist,i)
-    rarityunit[i] = "Rare"
-  elseif v["Rarity"] == 5 then
+  if v["Rarity"] == 5 then
     table.insert(unitlist,i)
     rarityunit[i] = "Mythic"
   elseif v["Rarity"] == 6 then
     table.insert(unitlist,i)
     rarityunit[i] = "Secret"
-
   end
 end
 function SendWebHook(v)
@@ -71,34 +66,23 @@ function SendWebHook(v)
     }) 
 end
 _G.summon = true 
-
-while _G.summon == true do  wait()
+while _G.summon do  wait()
   local gem_ = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Toolbar.CurrencyList.Gems.TextLabel.Text:gsub(",","")
   local gem = tonumber(gem_)
-  if gem/500 >= 1 then 
-    local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",10)
 
-  elseif gem / 50 >= 1 then
-    local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",1)
+ 
+  local summon,summon1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Summon"):InvokeServer("Standard",1)
 
-  end
   if type(summon1) == "string" then
-  
     wait(.5)
   elseif type(summon1) == "table" then
     for i,v in pairs(summon1) do
       if v["AutoDeleted"] == nil then 
-print(v["Type"])
         if table.find(unitlist,v["Type"]) then
-print(v["Type"])
           SendWebHook(v["Type"])
-          print(_G.summon)
           _G.summon = false 
-          print(_G.summon)
+          break
         end
       end
+wait(.4)
     end
-  end
-
-  wait(.5)
-end
