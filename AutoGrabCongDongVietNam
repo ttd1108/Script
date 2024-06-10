@@ -52,7 +52,7 @@ while _G.farm do wait()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.WorldCFrame
             fireproximityprompt(game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.ProximityPrompt)
         else 
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  workspace.Map.Delivery.Cardboard_Box.Box.CFrame*CFrame.new(0,-5,0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  workspace.Map.Delivery.Cardboard_Box.Box.CFrame
             fireproximityprompt(workspace.Map.Delivery.Cardboard_Box.Box.ProximityPrompt)
         end
     else
