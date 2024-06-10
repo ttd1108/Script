@@ -19,6 +19,8 @@ until plr.Character:FindFirstChild("HumanoidRootPart")
 repeat
     wait()
 until plr.Character:FindFirstChild("Humanoid")
+repeat wait()
+until game:GetService("Players").LocalPlayer.PlayerGui.Loading.Enabled == false 
 _G.farm = true
 print(2)
 function ClickButton(a)
@@ -50,20 +52,27 @@ while _G.farm do wait()
         if game.Players.LocalPlayer.Character:FindFirstChild("Cardboard_Box") then 
             
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.WorldCFrame
+            wait(.5)
             fireproximityprompt(game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.ProximityPrompt)
+            wait(.5)
         else 
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  workspace.Map.Delivery.Cardboard_Box.Box.CFrame
+            wait(.5)
             fireproximityprompt(workspace.Map.Delivery.Cardboard_Box.Box.ProximityPrompt)
+            wait(.5)
         end
     else
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position -workspace.Map.Delivery["Giao H\195\160ng"].Position).magnitude < 15 then 
             if game:GetService("Players").LocalPlayer.PlayerGui.Interact.Option.Visible then
-                ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Interact.Option.Yes.Button) 
+                ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Interact.Option.Yes.Button)
+                wait(.5)
             else 
                 ClickMiddle()
+                wait(.5)
             end 
         else 
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Delivery["Giao H\195\160ng"].HumanoidRootPart.CFrame
+            wait(.5)
         end
     end
 end
