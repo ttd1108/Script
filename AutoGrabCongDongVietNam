@@ -1,7 +1,10 @@
 repeat
     wait()
 until game:IsLoaded()
-
+function ClickMiddle()
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X/2,workspace.CurrentCamera.ViewportSize.Y/2,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X/2,workspace.CurrentCamera.ViewportSize.Y/2,0,false,a,1)    
+end 
 repeat
     wait()
 until game.Players.LocalPlayer
@@ -20,19 +23,15 @@ repeat
     wait()
 until plr.Character:FindFirstChild("Humanoid")
 repeat wait()
+    ClickMiddle()
 until game:GetService("Players").LocalPlayer.PlayerGui.Loading.Enabled == false 
 _G.farm = true
-print(2)
+
 function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
 end
-print(3)
-function ClickMiddle()
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X/2,workspace.CurrentCamera.ViewportSize.Y/2,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X/2,workspace.CurrentCamera.ViewportSize.Y/2,0,false,a,1)    
-end 
-print(4)
+
 
 
 game:GetService("RunService").RenderStepped:Connect(function()
