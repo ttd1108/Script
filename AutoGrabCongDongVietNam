@@ -47,6 +47,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)    
 print(1)
 while _G.farm do wait()
+pcall(function()
     if string.find(tostring(game.Players.LocalPlayer.Team),"Giao") then
         if game.Players.LocalPlayer.Character:FindFirstChild("Cardboard_Box") then 
             
@@ -73,4 +74,5 @@ while _G.farm do wait()
         
             
     end
+end)
 end
