@@ -54,7 +54,7 @@ pcall(function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.WorldCFrame
             wait(.5)
             fireproximityprompt(game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.ProximityPrompt)
-            wait(.5)
+            wait(10)
         else 
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  workspace.Map.Delivery.Cardboard_Box.Box.CFrame
             wait(.5)
@@ -62,7 +62,7 @@ pcall(function()
             wait(.5)
         end
     else
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Delivery["Giao H\195\160ng"].HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.Delivery["Giao H\195\160ng"].HumanoidRootPart.CFrame*CFrame.new(0,0,-1)
         wait(.25)
         if game:GetService("Players").LocalPlayer.PlayerGui.Interact.Option.Visible then
             ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Interact.Option.Yes.Button)
