@@ -54,7 +54,7 @@ pcall(function()
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.WorldCFrame
             wait(.5)
             fireproximityprompt(game.Players.LocalPlayer.Character.DeliveryBeam.Attachment1.ProximityPrompt)
-            wait(math.random(5,10))
+            wait(15)
         else 
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  workspace.Map.Delivery.Cardboard_Box.Box.CFrame
             wait(.5)
