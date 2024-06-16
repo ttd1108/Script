@@ -70,6 +70,7 @@ spawn(function()
                         end
                     end
                 end
+                ClickButton(HighestWorld)
             else 
                 repeat wait()
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SubStuff_DONT_DELETE.StoryPods:GetChildren()[math.random(1,6)].MatchDisplayPart.CFrame
