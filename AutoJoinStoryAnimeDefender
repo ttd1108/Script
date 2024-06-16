@@ -1,0 +1,73 @@
+--Wait game load
+repeat wait( )until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+
+
+--List World
+local ListWorld = {
+    "Windmill Village",
+    "Mob City",
+    "Cursed Academy",
+    "Blue Planet",
+    "Underwater Temple",
+    "Swordsman Dojo",
+    "Snowy Woods"
+}
+
+
+--ClickButton 
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
+end 
+
+
+--GetEmptyPod
+local function GetEmptyPod()
+
+end
+
+--get world
+local function GetWorld(NameWorld)
+    for i,v in pairs(Plrgui.PAGES.MatchPage.WorldSelectFrame.ScrollingFrame:GetChildren()) do 
+        if v.Name == "_WorldHolder" then
+            if v.ImageButton.WorldNameLabel.Text == NameWorld then 
+                return v
+            end 
+        end 
+    end 
+end
+
+
+--get Highest world
+local function GetHighestWorld()
+    local HighestWorld = ""   
+    for i,v in pairs(ListWorld) do 
+        local World = GetWorld(v)
+        if not World.ImageButton.LockedFrame.Visible then 
+             HighestWorld = World
+        end 
+    end
+    return HighestWorld
+end          
+
+
+--Main 
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if Plrgui.PAGES.MatchPage.Visible then 
+                print()
+            else 
+                repeat wait()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SubStuff_DONT_DELETE.StoryPods:GetChildren()[math.random(1,6)].MatchDisplayPart.CFrame
+                until Plrgui.PAGES.MatchPage.Visible
+            end
+        end)
+    end
+end)
