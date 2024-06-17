@@ -75,18 +75,22 @@ spawn(function()
     while wait() do 
         pcall(function()
             if Plrgui.PAGES.MatchPage.Visible then 
-                if Plrgui.PAGES.MatchPage.Frame.Main.LeftSide.Visible then
-                    ClickButton(GetHighestChapter())
+                if Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.MatchDetailsFrame.Visible then
+                    ClickButton(Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.OptionsHolder.StartButtonHolder.ConfirmButton)
                 else 
-                    local HighestWorld =GetHighestWorld()
-                    for i,v in pairs(Plrgui.PAGES.MatchPage.WorldSelectFrame.ScrollingFrame:GetChildren()) do 
-                        if v.Name == "_WorldHolder" then
-                            if v ~= HighestWorld then 
-                                v.Visible= false 
+                    if Plrgui.PAGES.MatchPage.Frame.Main.LeftSide.Visible then
+                        ClickButton(GetHighestChapter())
+                    else 
+                        local HighestWorld =GetHighestWorld()
+                        for i,v in pairs(Plrgui.PAGES.MatchPage.WorldSelectFrame.ScrollingFrame:GetChildren()) do 
+                            if v.Name == "_WorldHolder" then
+                                if v ~= HighestWorld then 
+                                    v.Visible= false 
+                                end
                             end
                         end
+                        ClickButton(HighestWorld)
                     end
-                    ClickButton(HighestWorld)
                 end
             else 
                 repeat wait()
