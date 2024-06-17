@@ -96,10 +96,10 @@ end
 spawn(function()
     while wait() do 
         pcall(function()
-            if Plrgui.PAGES.MatchPage.Visible then 
-                if Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.MatchDetailsFrame.Visible then
-                    ClickButton(Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.OptionsHolder.StartButtonHolder.ConfirmButton)
-                else 
+            if Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.MatchDetailsFrame.Visible then
+                ClickButton(Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.OptionsHolder.StartButtonHolder.ConfirmButton)
+            else 
+                if Plrgui.PAGES.MatchPage.Visible then 
                     if Plrgui.PAGES.MatchPage.Frame.Main.LeftSide.Visible then
                         local HighestChapter = GetHighestChapter()
                         if ConvertGradientToRGB(HighestChapter.ChapterButton.UIGradient,1) == Color3.fromRGB(29, 187, 255) then 
@@ -118,11 +118,11 @@ spawn(function()
                         end
                         ClickButton(HighestWorld)
                     end
+                else 
+                    repeat wait()
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SubStuff_DONT_DELETE.StoryPods:GetChildren()[math.random(1,6)].MatchDisplayPart.CFrame
+                    until Plrgui.PAGES.MatchPage.Visible
                 end
-            else 
-                repeat wait()
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SubStuff_DONT_DELETE.StoryPods:GetChildren()[math.random(1,6)].MatchDisplayPart.CFrame
-                until Plrgui.PAGES.MatchPage.Visible
             end
         end)
     end
