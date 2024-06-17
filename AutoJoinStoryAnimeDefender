@@ -70,6 +70,28 @@ local function GetHighestChapter()
 end
 
 
+--Convert Gradient to RGB
+function ConvertGradientToRGB(v, num)
+    color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+
+
+--get Confirm button
+local function GetConfirmButton()
+    for i,v in pairs(Plrgui.PAGES.MatchPage.Frame.OptionsHolder:GetChildren()) do
+        if v.Name == "_ButtonHolder" then 
+            if v:FindFirstChild("ConfirmButton") then 
+                return v 
+            end 
+        end
+    end
+end
+
+
 --Main 
 spawn(function()
     while wait() do 
@@ -79,7 +101,12 @@ spawn(function()
                     ClickButton(Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.OptionsHolder.StartButtonHolder.ConfirmButton)
                 else 
                     if Plrgui.PAGES.MatchPage.Frame.Main.LeftSide.Visible then
-                        ClickButton(GetHighestChapter())
+                        local HighestChapter = GetHighestChapter()
+                        if ConvertGradientToRGB(HighestChapter.ChapterButton.UIGradient,1) == Color3.fromRGB(0.113725, 0.733333, 1) then 
+                            ClickButton(Plrgui.PAGES.MatchPage.Frame.OptionsHolder._ButtonHolder.ConfirmButton)
+                        else 
+                            ClickButton(HighestChapter)
+                        end
                     else 
                         local HighestWorld =GetHighestWorld()
                         for i,v in pairs(Plrgui.PAGES.MatchPage.WorldSelectFrame.ScrollingFrame:GetChildren()) do 
