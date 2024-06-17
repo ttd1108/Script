@@ -102,8 +102,8 @@ spawn(function()
                 else 
                     if Plrgui.PAGES.MatchPage.Frame.Main.LeftSide.Visible then
                         local HighestChapter = GetHighestChapter()
-                        if ConvertGradientToRGB(HighestChapter.ChapterButton.UIGradient,1) == Color3.fromRGB(0.113725, 0.733333, 1) then 
-                            ClickButton(Plrgui.PAGES.MatchPage.Frame.OptionsHolder._ButtonHolder.ConfirmButton)
+                        if ConvertGradientToRGB(HighestChapter.ChapterButton.UIGradient,1) == Color3.fromRGB(29, 187, 255) then 
+                            ClickButton(GetConfirmButton())
                         else 
                             ClickButton(HighestChapter)
                         end
