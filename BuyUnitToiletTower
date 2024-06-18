@@ -83,7 +83,13 @@ local function HopServer()
         Plrgui.Lobby.ServerListFrame.Visible = true 
     end 
 end
-       
+spawn(function()
+    while wait(1) do 
+        if game:GetService'GuiService':GetErrorCode().Value == 772 then 
+            Plr:Kick()
+        end
+    end
+end)
  spawn(function()
     game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(function(newValue)
         SendWebHook()
