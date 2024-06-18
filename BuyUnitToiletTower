@@ -16,7 +16,10 @@ function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
 end 
-
+function ClickBuyButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y,0,false,a,1)
+end
 --Check Units Exist in game
 --[[ local function CheckExist(Unitname)
     for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
@@ -95,7 +98,7 @@ spawn(function()
                                         end 
                                     end 
                                 end
-                                ClickButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
+                                ClickBuyButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
                             end 
 
                         else 
