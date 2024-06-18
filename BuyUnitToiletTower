@@ -113,7 +113,10 @@ spawn(function()
                         repeat wait()
                             ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn)
                         until not  Plrgui.MainFrames.NotificationFrame.Visible
-                        HopServer()
+                        while wait() do
+                            HopServer()
+                        end
+                        
                 
                     end
                     
@@ -127,7 +130,9 @@ spawn(function()
                                     if tonumber(string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d+")) <= getgenv().Price then
                                         ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
                                     else 
-                                        HopServer()
+                                        while wait() do
+                                            HopServer()
+                                        end
                                     end
                                 else 
                                     for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
@@ -141,7 +146,9 @@ spawn(function()
                                 end 
 
                             else 
-                                HopServer()
+                                while wait() do
+                                    HopServer()
+                                end
                             end
                         else 
                             game.Players.LocalPlayer:Kick("Unit deo ton tai")
