@@ -1,0 +1,113 @@
+--Wait game load
+repeat wait( )until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+
+
+--ClickGui
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
+end 
+
+--Check Units Exist in game
+--[[ local function CheckExist(Unitname)
+    for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
+        if v.Name == "UnitFrame" then 
+            if v.Name == getgenv().UnitName or string.find(v.MainFrame.UnitInfo.UnitName.Text, getgenv().UnitName) then 
+                return true 
+            end 
+        end 
+    end
+    return false
+end]]
+
+
+--Find Unit 
+local function FindUnit(Unitname)
+    for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
+        if v.Name == "UnitFrame" then
+            if v.Name == Unitname or string.find(v.MainFrame.UnitInfo.UnitName.Text, Unitname) then 
+                return v 
+            end 
+        end 
+    end
+end
+
+--Check Stock
+local function CheckStock(Unit)
+    if not Unit.MainFrame.OutOfStock.Visible then 
+        return true 
+    end 
+    return false 
+end
+
+--HopServer
+
+local function HopServer()
+    if Plrgui.Lobby.ServerListFrame.Visible then 
+        ClickButton(Plrgui.Lobby.ServerListFrame.Main.BottomPart.JoinRandomServer)
+    else 
+        Plrgui.Lobby.ServerListFrame.Visible = true 
+    end 
+end
+       
+--[[ spawn(function()
+    game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(function(newValue)
+        SendWebHook(getgenv().UnitName)
+        wait(.2)
+        game:Shutdown()
+    end)
+end) ]]
+spawn(function()
+    while wait() do 
+        if game.GameId == 4778845442 then
+            if game.PlaceId == 13775256536 then
+                if not Plrgui.Lobby.TradingPlazaFrame.Visible then 
+                    Plrgui.Lobby.TradingPlazaFrame.Visible =true
+                else 
+                    ClickButton(Plrgui.Lobby.TradingPlazaFrame.Start)
+                end 
+            else 
+                if Plrgui.Lobby.MarketplaceFrame.Visible then 
+                    local Unit =FindUnit(getgenv().UnitName)
+                    
+                    if Unit then 
+                        if CheckStock(Unit) then 
+                            if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
+                                if tonumber(string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d+")) <= getgenv().Price then
+                                     ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
+                                else 
+                                    HopServer()
+                                end
+                            else 
+                                for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
+                                    if v.Name == "UnitFrame" then
+                                        if v ~= Unit then 
+                                            v.Visible = false 
+                                        end 
+                                    end 
+                                end
+                                ClickButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
+                            end 
+
+                        else 
+                            HopServer()
+                        end
+                    else 
+                        game.Players.LocalPlayer:Kick("Unit deo ton tai")
+                    end
+                else 
+                    Plrgui.Lobby.MarketplaceFrame.Visible = true
+                end
+            end
+        end     
+    end
+end)
