@@ -9,7 +9,35 @@ local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-
+local function SendWebHook()
+    local msg = {
+        ['content'] = 'Buy Success',
+        ["embeds"] = {{
+            ["title"] = "Toilet Tower Defense",
+            ["description"] = "TradingPlaza",
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "User:",
+                    ["value"] = game.Players.LocalPlayer.Name,                                            
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = " :gem: left:",
+                    ["value"] = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value,                                            
+                    ["inline"] = false
+                },
+            }
+        }}
+    }
+    request({
+        Url = _G.Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
 function Click(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
@@ -67,13 +95,12 @@ local function HopServer()
     end 
 end
        
---[[ spawn(function()
+ spawn(function()
     game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(function(newValue)
-        SendWebHook(getgenv().UnitName)
-        wait(.2)
-        game:Shutdown()
+        SendWebHook()
+        
     end)
-end) ]]
+end) 
 spawn(function()
     while wait() do 
         if game.GameId == 4778845442 then
