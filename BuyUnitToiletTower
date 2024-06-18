@@ -110,9 +110,13 @@ spawn(function()
                     if string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"This listing cannot be found") then
                         ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn) 
                     elseif string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"in a trade") then
+                        repeat wait()
+                            ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn)
+                        until not  Plrgui.MainFrames.NotificationFrame.Visible
                         HopServer()
                 
                     end
+                    
                 else 
                     if Plrgui.Lobby.MarketplaceFrame.Visible then 
                         local Unit =FindUnit(getgenv().UnitName)
