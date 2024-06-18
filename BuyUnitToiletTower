@@ -10,7 +10,12 @@ local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 
-
+function Click(x, y)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
+end
+wait(.5)
+Click(100,80)
 --ClickGui
 function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
