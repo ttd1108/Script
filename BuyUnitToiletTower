@@ -84,36 +84,40 @@ spawn(function()
                     ClickButton(Plrgui.Lobby.TradingPlazaFrame.Start)
                 end 
             else 
-                if Plrgui.Lobby.MarketplaceFrame.Visible then 
-                    local Unit =FindUnit(getgenv().UnitName)
-                    
-                    if Unit then 
-                        if CheckStock(Unit) then 
-                            if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
-                                if tonumber(string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d+")) <= getgenv().Price then
-                                     ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
+                if Plrgui.MainFrames.NotificationFrame.Visible and string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"This listing cannot be found") then 
+                    ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn)
+                else 
+                    if Plrgui.Lobby.MarketplaceFrame.Visible then 
+                        local Unit =FindUnit(getgenv().UnitName)
+                        
+                        if Unit then 
+                            if CheckStock(Unit) then 
+                                if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
+                                    if tonumber(string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d+")) <= getgenv().Price then
+                                        ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
+                                    else 
+                                        HopServer()
+                                    end
                                 else 
-                                    HopServer()
-                                end
-                            else 
-                                for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
-                                    if v.Name == "UnitFrame" then
-                                        if v ~= Unit then 
-                                            v.Visible = false 
+                                    for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
+                                        if v.Name == "UnitFrame" then
+                                            if v ~= Unit then 
+                                                v.Visible = false 
+                                            end 
                                         end 
-                                    end 
-                                end
-                                ClickBuyButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
-                            end 
+                                    end
+                                    ClickBuyButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
+                                end 
 
+                            else 
+                                HopServer()
+                            end
                         else 
-                            HopServer()
+                            game.Players.LocalPlayer:Kick("Unit deo ton tai")
                         end
                     else 
-                        game.Players.LocalPlayer:Kick("Unit deo ton tai")
+                        Plrgui.Lobby.MarketplaceFrame.Visible = true
                     end
-                else 
-                    Plrgui.Lobby.MarketplaceFrame.Visible = true
                 end
             end
         end     
