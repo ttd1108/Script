@@ -9,12 +9,12 @@ local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-local function SendWebHook()
+function SendWebHook()
     local msg = {
         ['content'] = 'Buy Success',
         ["embeds"] = {{
             ["title"] = "Toilet Tower Defense",
-            ["description"] = "TradingPlaza",
+            ["description"] = getgenv().UnitName,
             ["type"] = "rich",
             ["color"] = tonumber(0xbdce44),
             ["fields"] = {
@@ -32,7 +32,7 @@ local function SendWebHook()
         }}
     }
     request({
-        Url = _G.Webhook,
+        Url = getgenv().Webhook,
         Method = "POST",
         Headers = {["Content-Type"] = "application/json"},
         Body = game:GetService("HttpService"):JSONEncode(msg)
@@ -53,17 +53,6 @@ function ClickBuyButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,false,a,1)
 end
---Check Units Exist in game
---[[ local function CheckExist(Unitname)
-    for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
-        if v.Name == "UnitFrame" then 
-            if v.Name == getgenv().UnitName or string.find(v.MainFrame.UnitInfo.UnitName.Text, getgenv().UnitName) then 
-                return true 
-            end 
-        end 
-    end
-    return false
-end]]
 
 
 --Find Unit 
@@ -98,7 +87,7 @@ end
  spawn(function()
     game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(function(newValue)
         SendWebHook()
-        
+
     end)
 end) 
 spawn(function()
