@@ -19,15 +19,21 @@ function SendWebHook()
             ["color"] = tonumber(0xbdce44),
             ["fields"] = {
                 {
-                    ["name"] = "User:",
-                    ["value"] = game.Players.LocalPlayer.Name,                                            
-                    ["inline"] = false
+                    ["name"] = "Unit amount:",
+                    ["value"] = tostring(CheckAmountUnit(getgenv().UnitName)),                                            
+                    ["inline"] = true
                 },
                 {
                     ["name"] = " :gem: left:",
                     ["value"] = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value,                                            
-                    ["inline"] = false
+                    ["inline"] = true
                 },
+                {
+                    ["name"] = "User:",
+                    ["value"] = game.Players.LocalPlayer.Name,                                            
+                    ["inline"] = false
+                }
+                
             }
         }}
     }
@@ -74,6 +80,17 @@ local function CheckStock(Unit)
     return false 
 end
 
+
+--Check Amount Unit
+local function CheckAmountUnit(Unitname)
+    local nameunit = Unitname:gsub(" ","")
+    for i,v in next,getupvalues(getsenv(Plrgui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do 
+        if i == nameunit then 
+            return #v 
+        end
+    end
+    
+end
 --HopServer
 
 local function HopServer()
@@ -109,8 +126,10 @@ spawn(function()
                 if not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible then
                     if Plrgui.MainFrames.NotificationFrame.Visible  then 
                         if string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"This listing cannot be found") then
+                            print(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text)
                             ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn) 
                         elseif string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"in a trade") then
+                            print(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text)
                             repeat wait()
                                 ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn)
                             until not  Plrgui.MainFrames.NotificationFrame.Visible
@@ -161,6 +180,8 @@ spawn(function()
                             Plrgui.Lobby.MarketplaceFrame.Visible = true
                         end
                     end
+                else 
+                    print("Loading frame dang bat")
                 end
             end
         end     
