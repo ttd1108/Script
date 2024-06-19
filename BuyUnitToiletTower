@@ -1,62 +1,98 @@
 --Wait game load
-repeat wait( )until game:IsLoaded()
-repeat wait() until game.Players.LocalPlayer
+repeat
+    wait()
+until game:IsLoaded()
+repeat
+    wait()
+until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
-repeat wait() until Plr.Character
-repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
-repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
-local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+repeat
+    wait()
+until Plr.Character
+repeat
+    wait()
+until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat
+    wait()
+until Plr.Character:FindFirstChild("Humanoid")
+local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 local TeleportService = game:GetService("TeleportService")
-
+local Gem = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value
 
 function Click(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
 end
 wait(.5)
-Click(100,80)
+Click(100, 80)
 --ClickGui
 function ClickButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
-end 
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 50,
+        0,
+        true,
+        a,
+        1
+    )
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 50,
+        0,
+        false,
+        a,
+        1
+    )
+end
 function ClickBuyButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,false,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 39,
+        0,
+        true,
+        a,
+        1
+    )
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 39,
+        0,
+        false,
+        a,
+        1
+    )
 end
 
-
---Find Unit 
+--Find Unit
 local function FindUnit(Unitname)
-    for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
+    for i, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do
         if v.Name == "UnitFrame" then
-            if v.MainFrame.UnitInfo.UnitName.Text == Unitname then 
-                return v 
-            end 
-        end 
+            if v.MainFrame.UnitInfo.UnitName.Text == Unitname then
+                return v
+            end
+        end
     end
 end
 
 --Check Stock
 local function CheckStock(Unit)
-    if not Unit.MainFrame.OutOfStock.Visible then 
-        return true 
-    end 
-    return false 
+    if not Unit.MainFrame.OutOfStock.Visible then
+        return true
+    end
+    return false
 end
-
 
 --Check Amount Unit
 local function CheckAmountUnit(Unitname)
     local count = 0
-    local nameunit = Unitname:gsub(" ","")
-    for i,v in next,getupvalues(getsenv(Plrgui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do 
-        if i == nameunit then 
-            for i1,v1 in pairs(v) do  
-                count = count+1
+    local nameunit = Unitname:gsub(" ", "")
+    for i, v in next, getupvalues(getsenv(Plrgui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do
+        if i == nameunit then
+            for i1, v1 in pairs(v) do
+                count = count + 1
             end
         end
     end
@@ -65,133 +101,175 @@ end
 --HopServer
 
 local function HopServer()
-    if Plrgui.Lobby.ServerListFrame.Visible then 
+    if Plrgui.Lobby.ServerListFrame.Visible then
         ClickButton(Plrgui.Lobby.ServerListFrame.Main.BottomPart.JoinRandomServer)
-    else 
-        Plrgui.Lobby.ServerListFrame.Visible = true 
-    end 
+    else
+        Plrgui.Lobby.ServerListFrame.Visible = true
+    end
 end
-local function SendWebHook()
+local function SendWebHook(Gem, Cost)
     local msg = {
-        ['content'] = 'Buy Success',
-        ["embeds"] = {{
-            ["title"] = "Toilet Tower Defense",
-            ["description"] = getgenv().UnitName,
-            ["type"] = "rich",
-            ["color"] = tonumber(0xbdce44),
-            ["fields"] = {
-                {
-                    ["name"] = "Unit amount:",
-                    ["value"] = tostring(CheckAmountUnit(getgenv().UnitName)),                                            
-                    ["inline"] = true
-                },
-                {
-                    ["name"] = " :gem: left:",
-                    ["value"] = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value,                                            
-                    ["inline"] = true
-                },
-                {
-                    ["name"] = "User:",
-                    ["value"] = game.Players.LocalPlayer.Name,                                            
-                    ["inline"] = false
+        ["content"] = "Buy Success",
+        ["embeds"] = {
+            {
+                ["title"] = "Toilet Tower Defense",
+                ["description"] = getgenv().UnitName,
+                ["type"] = "rich",
+                ["color"] = tonumber(0xbdce44),
+                ["fields"] = {
+                    {
+                        ["name"] = "Cost:",
+                        ["value"] = Cost,
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Amount:",
+                        ["value"] = tostring(CheckAmountUnit(getgenv().UnitName)),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = " :gem: left:",
+                        ["value"] = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "User:",
+                        ["value"] = game.Players.LocalPlayer.Name,
+                        ["inline"] = false
+                    }
                 }
-                
             }
-        }}
+        }
     }
-    request({
-        Url = getgenv().Webhook,
-        Method = "POST",
-        Headers = {["Content-Type"] = "application/json"},
-        Body = game:GetService("HttpService"):JSONEncode(msg)
-    }) 
+    request(
+        {
+            Url = getgenv().Webhook,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = game:GetService("HttpService"):JSONEncode(msg)
+        }
+    )
 end
 
-spawn(function()
-    while wait(1) do 
-        if game:GetService'GuiService':GetErrorCode().Value == 772 then 
-            TeleportService:Teleport(13775256536)
+spawn(
+    function()
+        while wait(1) do
+            if game:GetService "GuiService":GetErrorCode().Value == 772 then
+                TeleportService:Teleport(13775256536)
+            end
         end
     end
-end)
- spawn(function()
-    game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(function(newValue)
-        SendWebHook()
-
-    end)
-end) 
-spawn(function()
-    while wait() do 
-        if game.GameId == 4778845442 then
-            if game.PlaceId == 13775256536 then
-                if not Plrgui.Lobby.TradingPlazaFrame.Visible then 
-                    Plrgui.Lobby.TradingPlazaFrame.Visible =true
-                else 
-                    ClickButton(Plrgui.Lobby.TradingPlazaFrame.Start)
-                end 
-            else 
-                if not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible then
-                    if Plrgui.MainFrames.NotificationFrame.Visible  then 
-                        if string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"This listing cannot be found") or string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"enough")  then
-                            print(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text)
-                            ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn) 
-                        elseif string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"in a trade") then
-                            print(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text)
-                            repeat wait()
-                                ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn)
-                            until not  Plrgui.MainFrames.NotificationFrame.Visible
-                            
-                            while wait() do
-                                HopServer()
-                            end
-                            
-                    
-                        end
-                        
-                    else 
-                        if Plrgui.Lobby.MarketplaceFrame.Visible then 
-                            local Unit =FindUnit(getgenv().UnitName)
-                            
-                            if Unit then 
-                                if CheckStock(Unit) then 
-                                    if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
-                                        if tonumber(string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d+")) <= getgenv().Price then
-                                            ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
-                                            wait(1)
-                                        else 
-                                            wait(1)
-                                            while wait() do
-                                                HopServer()
-                                            end
-                                        end
-                                    else 
-                                        for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
-                                            if v.Name == "UnitFrame" then
-                                                if v ~= Unit then 
-                                                    v.Visible = false 
-                                                end 
-                                            end 
-                                        end
-                                        ClickBuyButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
-                                    end 
-
-                                else 
-                                    
-                                    while wait() do
-                                        HopServer()
-                                    end
-                                end
-                            else 
-                                game.Players.LocalPlayer:Kick("Unit deo ton tai")
-                            end
-                        else 
-                            Plrgui.Lobby.MarketplaceFrame.Visible = true
-                        end
+)
+spawn(
+    function()
+        game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(
+            function(newGem)
+                local Cost = Gem - newGem
+                Gem = newGem
+                SendWebHook(Gem, Cost)
+            end
+        )
+    end
+)
+spawn(
+    function()
+        while wait() do
+            if game.GameId == 4778845442 then
+                if game.PlaceId == 13775256536 then
+                    if not Plrgui.Lobby.TradingPlazaFrame.Visible then
+                        Plrgui.Lobby.TradingPlazaFrame.Visible = true
+                    else
+                        ClickButton(Plrgui.Lobby.TradingPlazaFrame.Start)
                     end
-                else 
-                    print("Loading frame dang bat")
+                else
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible then
+                        if Plrgui.MainFrames.NotificationFrame.Visible then
+                            if
+                                string.find(
+                                    Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,
+                                    "cannot be found"
+                                ) or
+                                    string.find(
+                                        Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,
+                                        "enough"
+                                    )
+                             then
+                                print(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text)
+                                ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn)
+                            elseif
+                                string.find(
+                                    Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,
+                                    "in a trade"
+                                )
+                             then
+                                print(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text)
+                                repeat
+                                    wait()
+                                    ClickButton(
+                                        Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn
+                                    )
+                                until not Plrgui.MainFrames.NotificationFrame.Visible
+
+                                while wait() do
+                                    HopServer()
+                                end
+                            end
+                        else
+                            if Plrgui.Lobby.MarketplaceFrame.Visible then
+                                local Unit = FindUnit(getgenv().UnitName)
+
+                                if Unit then
+                                    if CheckStock(Unit) then
+                                        if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then
+                                            if
+                                                tonumber(
+                                                    string.match(
+                                                        Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,
+                                                        "%d+"
+                                                    )
+                                                ) <= getgenv().Price
+                                             then
+                                                ClickButton(
+                                                    Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton
+                                                )
+                                                wait(1)
+                                            else
+                                                wait(1)
+                                                while wait() do
+                                                    HopServer()
+                                                end
+                                            end
+                                        else
+                                            for i, v in pairs(
+                                                Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren(
+
+                                                )
+                                            ) do
+                                                if v.Name == "UnitFrame" then
+                                                    if v ~= Unit then
+                                                        v.Visible = false
+                                                    end
+                                                end
+                                            end
+                                            ClickBuyButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton)
+                                        end
+                                    else
+                                        while wait() do
+                                            HopServer()
+                                        end
+                                    end
+                                else
+                                    game.Players.LocalPlayer:Kick("Unit deo ton tai")
+                                end
+                            else
+                                Plrgui.Lobby.MarketplaceFrame.Visible = true
+                            end
+                        end
+                    else
+                        print("Loading frame dang bat")
+                    end
                 end
             end
-        end     
+        end
     end
-end)
+)
