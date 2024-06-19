@@ -130,7 +130,9 @@ spawn(function()
                                     if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
                                         if tonumber(string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d+")) <= getgenv().Price then
                                             ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
+                                            wait(.5)
                                         else 
+                                            
                                             while wait() do
                                                 HopServer()
                                             end
@@ -147,6 +149,7 @@ spawn(function()
                                     end 
 
                                 else 
+                                    
                                     while wait() do
                                         HopServer()
                                     end
