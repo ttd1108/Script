@@ -59,7 +59,7 @@ end
 local function FindUnit(Unitname)
     for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
         if v.Name == "UnitFrame" then
-            if v.Name == Unitname or then 
+            if v.Name == Unitname then 
                 return v 
             end 
         end 
