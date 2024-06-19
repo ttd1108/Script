@@ -51,13 +51,16 @@ end
 
 --Check Amount Unit
 local function CheckAmountUnit(Unitname)
+    local count = 0
     local nameunit = Unitname:gsub(" ","")
     for i,v in next,getupvalues(getsenv(Plrgui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do 
         if i == nameunit then 
-            return #v 
+            for i1,v1 in pairs(v) do  
+                count = count+1
+            end
         end
     end
-    
+    return count
 end
 --HopServer
 
