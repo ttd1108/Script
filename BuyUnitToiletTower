@@ -125,7 +125,7 @@ spawn(function()
             else 
                 if not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible then
                     if Plrgui.MainFrames.NotificationFrame.Visible  then 
-                        if string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"This listing cannot be found") then
+                        if string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"This listing cannot be found") or string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"enough")  then
                             print(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text)
                             ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn) 
                         elseif string.find(Plrgui.MainFrames.NotificationFrame.BigNotification.NotificationMessage.Text,"in a trade") then
