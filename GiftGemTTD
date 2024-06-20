@@ -71,7 +71,7 @@ local function Random(Length)
     end
     return string.char(table.unpack(pw))
 end
-
+print(1)
 --Main
 spawn(function()
     while wait() do 
