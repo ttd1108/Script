@@ -111,7 +111,37 @@ local function SendWebHook(Gem,Cost)
         Body = game:GetService("HttpService"):JSONEncode(msg)
     }) 
 end
-
+local function SendWebHook2(Cost)
+    local msg = {
+        ['content'] = 'Found Unit',
+        ["embeds"] = {{
+            ["title"] = "Toilet Tower Defense",
+            ["description"] = getgenv().UnitName,
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "Name Unit",
+                    ["value"] =getgenv().UnitName,                                            
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Cost",
+                    ["value"] = Cost,                                            
+                    ["inline"] = false
+                },
+               
+                
+            }
+        }}
+    }
+    request({
+        Url = getgenv().Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
 spawn(function()
     while wait(1) do 
         if game:GetService'GuiService':GetErrorCode().Value == 772 then 
@@ -164,7 +194,9 @@ spawn(function()
                                 if CheckStock(Unit) then 
                                     if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
                                         local PriceUnit =string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d[%d,]*"):gsub(",","")
+SendWebHook2(tonumber(PriceUnit))
                                         if tonumber(PriceUnit) < getgenv().Price or  tonumber(PriceUnit) == getgenv().Price then
+
                                             ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
                                             wait(1)
                                         elseif  tonumber(PriceUnit) > getgenv().Price then
