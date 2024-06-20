@@ -168,7 +168,7 @@ spawn(function()
                                             ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
                                             wait(1)
                                         else 
-                                            wait(1)
+                                            
                                             while wait() do
                                                 HopServer()
                                             end
