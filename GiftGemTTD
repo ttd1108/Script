@@ -9,7 +9,7 @@ repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
-local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+print(2)
 local function ConvertGradientToRGB(v, num)
     color = v.Color.Keypoints[num].Value
     local r = math.floor(color.R * 255)
@@ -17,7 +17,7 @@ local function ConvertGradientToRGB(v, num)
     local b = math.floor(color.B * 255)
     return Color3.fromRGB(r, g, b)
 end
-print(2)
+
 local  RarityColor = {}
 for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do
     if v:IsA("Frame") then
