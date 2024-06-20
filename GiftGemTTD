@@ -9,7 +9,7 @@ repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
-local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+print(3)
 local function ConvertGradientToRGB(v, num)
     color = v.Color.Keypoints[num].Value
     local r = math.floor(color.R * 255)
