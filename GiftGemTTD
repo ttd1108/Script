@@ -17,6 +17,7 @@ local function ConvertGradientToRGB(v, num)
     local b = math.floor(color.B * 255)
     return Color3.fromRGB(r, g, b)
 end
+print(2)
 local  RarityColor = {}
 for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do
     if v:IsA("Frame") then
