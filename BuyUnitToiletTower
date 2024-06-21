@@ -12,18 +12,25 @@ StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 local TeleportService = game:GetService("TeleportService")
 local Gem = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value
 
+
 function Click(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
-end
+end 
+
+
 wait(.5)
 Click(100,80)
+
+
 --ClickGui
-function ClickButton(a)
+local function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
 end 
-function ClickBuyButton(a)
+
+
+local function ClickBuyButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,false,a,1)
 end
@@ -39,6 +46,7 @@ local function FindUnit(Unitname)
         end 
     end
 end
+
 
 --Check Stock
 local function CheckStock(Unit)
@@ -62,8 +70,9 @@ local function CheckAmountUnit(Unitname)
     end
     return count
 end
---HopServer
 
+
+--HopServer
 local function HopServer()
     if Plrgui.Lobby.ServerListFrame.Visible then 
         ClickButton(Plrgui.Lobby.ServerListFrame.Main.BottomPart.JoinRandomServer)
@@ -71,6 +80,8 @@ local function HopServer()
         Plrgui.Lobby.ServerListFrame.Visible = true 
     end 
 end
+
+
 local function SendWebHook(Gem,Cost)
     local msg = {
         ['content'] = 'Buy Success',
@@ -111,6 +122,8 @@ local function SendWebHook(Gem,Cost)
         Body = game:GetService("HttpService"):JSONEncode(msg)
     }) 
 end
+
+
 local function SendWebHook2(Cost)
     local msg = {
         ['content'] = 'Found Unit',
@@ -142,6 +155,8 @@ local function SendWebHook2(Cost)
         Body = game:GetService("HttpService"):JSONEncode(msg)
     }) 
 end
+
+
 spawn(function()
     while wait(1) do 
         if game:GetService'GuiService':GetErrorCode().Value == 772 then 
@@ -149,15 +164,17 @@ spawn(function()
         end
     end
 end)
- spawn(function()
-    game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(function(newGem)
-        
+
+
+spawn(function()
+    game:GetService("Players").LocalPlayer.leaderstats.Gems.Changed:Connect(function(newGem)   
         local Cost = Gem-newGem
         Gem = newGem
         SendWebHook(Gem,Cost)
-
     end)
 end) 
+
+
 spawn(function()
     while wait() do 
         if game.GameId == 4778845442 then
@@ -178,25 +195,19 @@ spawn(function()
                             repeat wait()
                                 ClickButton(Plrgui.MainFrames.NotificationFrame.BigNotification.Buttons.OkButton.Btn)
                             until not  Plrgui.MainFrames.NotificationFrame.Visible
-                            
                             while wait() do
                                 HopServer()
-                            end
-                            
-                    
-                        end
-                        
+                            end       
+                        end      
                     else 
                         if Plrgui.Lobby.MarketplaceFrame.Visible then 
-                            local Unit =FindUnit(getgenv().UnitName)
-                            
+                            local Unit =FindUnit(getgenv().UnitName)  
                             if Unit then 
                                 if CheckStock(Unit) then 
                                     if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
-                                        local PriceUnit =string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d[%d,]*"):gsub(",","")
-SendWebHook2(PriceUnit)
+                                        local PriceUnit =string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"for (.*) gems"):gsub(",","")
+                                        SendWebHook2(tonumber(PriceUnit))
                                         if tonumber(PriceUnit) < getgenv().Price or  tonumber(PriceUnit) == getgenv().Price then
-
                                             ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
                                             wait(1)
                                         elseif  tonumber(PriceUnit) > getgenv().Price then
