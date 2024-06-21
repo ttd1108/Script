@@ -194,7 +194,7 @@ spawn(function()
                                 if CheckStock(Unit) then 
                                     if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
                                         local PriceUnit =string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"%d[%d,]*"):gsub(",","")
-SendWebHook2(tonumber(PriceUnit))
+SendWebHook2(PriceUnit)
                                         if tonumber(PriceUnit) < getgenv().Price or  tonumber(PriceUnit) == getgenv().Price then
 
                                             ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
