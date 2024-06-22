@@ -77,7 +77,35 @@ local function Random(Length)
     end
     return string.char(table.unpack(pw))
 end
-
+local function SendWebHook(PlayerName,Gem)
+    local msg = {
+        ['content'] = 'Send Gem Success',
+        ["embeds"] = {{
+            ["title"] = "Toilet Tower Defense",
+            ["description"] = getgenv().UnitName,
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "Player name",
+                    ["value"] = PlayerName,                                            
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Gem",
+                    ["value"] =Gem,                                            
+                    ["inline"] = false
+                }
+            }
+        }}
+    }
+    request({
+        Url = getgenv().Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
 getgenv().SendGemToggle = true 
 -- Main loop
 spawn(function()
@@ -104,7 +132,7 @@ spawn(function()
                     }
 
                     game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(gem_only))
-                    
+                    SendWebHook(game:GetService("Players"):GetNameFromUserIdAsync(v),getgenv().Gem)
                     wait(10)
                 end
                 getgenv().SendGemToggle = false 
