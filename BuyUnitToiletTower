@@ -66,7 +66,7 @@ end
 --HopServer
 local function HopServer()
     if Plrgui.Lobby.ServerListFrame.Visible then 
-        ClickButton(Plrgui.Lobby.ServerListFrame.Main.BottomPart.JoinRandomServer)
+        ClickButton(Plrgui.Lobby.ServerListFrame.Main.BottomPart.JoinRandomServer.JoinButton)
     else 
         Plrgui.Lobby.ServerListFrame.Visible = true 
     end 
