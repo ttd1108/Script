@@ -13,27 +13,18 @@ local TeleportService = game:GetService("TeleportService")
 local Gem = game:GetService("Players").LocalPlayer.leaderstats.Gems.Value
 
 
-function Click(x, y)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, true, game, 1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x, y, 0, false, game, 1)
-end 
 
-
-wait(.5)
-Click(100,80)
 
 
 --ClickGui
 local function ClickButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
-end 
-
-
-local function ClickBuyButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+39,0,false,a,1)
+    game:GetService("GuiService").SelectedObject = a
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
 end
+
+
+
 
 
 --Find Unit 
@@ -124,38 +115,6 @@ local function SendWebHook(Gem,Cost)
 end
 
 
-local function SendWebHook2(Cost)
-    local msg = {
-        ['content'] = 'Found Unit',
-        ["embeds"] = {{
-            ["title"] = "Toilet Tower Defense",
-            ["description"] = getgenv().UnitName,
-            ["type"] = "rich",
-            ["color"] = tonumber(0xbdce44),
-            ["fields"] = {
-                {
-                    ["name"] = "Name Unit",
-                    ["value"] =getgenv().UnitName,                                            
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Cost",
-                    ["value"] = Cost,                                            
-                    ["inline"] = false
-                },
-               
-                
-            }
-        }}
-    }
-    request({
-        Url = getgenv().Webhook,
-        Method = "POST",
-        Headers = {["Content-Type"] = "application/json"},
-        Body = game:GetService("HttpService"):JSONEncode(msg)
-    }) 
-end
-
 
 spawn(function()
     while wait(1) do 
@@ -206,7 +165,6 @@ spawn(function()
                                 if CheckStock(Unit) then 
                                     if Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Visible then 
                                         local PriceUnit =string.match(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.ConfirmInfo.Text,"for (.*) gems"):gsub(",","")
-                                        SendWebHook2(tonumber(PriceUnit))
                                         if tonumber(PriceUnit) < getgenv().Price or  tonumber(PriceUnit) == getgenv().Price then
                                             ClickButton(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.ConfirmPopup.Options.Confirm.ConfirmButton)
                                             wait(1)
@@ -217,14 +175,8 @@ spawn(function()
                                             end
                                         end
                                     else 
-                                        for i,v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.AllUnits:GetChildren()) do 
-                                            if v.Name == "UnitFrame" then
-                                                if v ~= Unit then 
-                                                    v.Visible = false 
-                                                end 
-                                            end 
-                                        end
-                                        ClickBuyButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
+                                        
+                                        ClickButton(Unit.MainFrame.UnitInfo.Buttons.BuyUnit.BuyButton) 
                                     end 
 
                                 else 
