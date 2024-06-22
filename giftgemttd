@@ -152,10 +152,14 @@ spawn(function()
                                     ClickButton(Unit.TroopPicture.InteractiveButton)
                                 end
                             else 
-                                    
+                                ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount)
+                                wait()
                                 Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:CaptureFocus()
+                                wait()
                                 Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text =  "1000"
+                                wait()
                                 Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:ReleaseFocus()
+                                wait()
                                 if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
                                     ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
                                 else 
