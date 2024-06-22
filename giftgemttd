@@ -69,7 +69,7 @@ local function InputTextBox(textbox, text)
     textbox:CaptureFocus()
     wait(0.1)
     textbox.Text = text
-    textbox:ReleaseFocus()
+    
 end
 
 -- Function to generate a random string
