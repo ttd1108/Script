@@ -152,22 +152,16 @@ spawn(function()
                                     ClickButton(Unit.TroopPicture.InteractiveButton)
                                 end
                             else 
-                                if Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text ~=  "1000" then
-                                    Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:CaptureFocus()
-                                    Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text =  "1000"
-                                    Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:ReleaseFocus()
-                                    if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
-                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
-                                    else 
-                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
-                                    end
+                                    
+                                Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:CaptureFocus()
+                                Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text =  "1000"
+                                Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:ReleaseFocus()
+                                if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
+                                    ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
                                 else 
-                                    if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
-                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
-                                    else 
-                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
-                                    end
+                                    ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
                                 end
+                                
                             end         
                         else
                             Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
