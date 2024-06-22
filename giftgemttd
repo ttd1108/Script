@@ -115,22 +115,28 @@ spawn(function()
                         if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then
                             local Unit = GetRandomUnit()
                             if Unit then
-                                if not Unit.TroopPicture.IsInTrade.Visible then
+                                if  Unit.TroopPicture.IsInTrade.Visible then
+                                    if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
+                                    else 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                                    end
+                                else 
                                     ClickButton(Unit.TroopPicture.InteractiveButton)
                                 end
                             else 
-                                if Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text ~=  "1000" then
+                                if Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text ==  "1000" then
+                                    if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
+                                    else 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                                    end
+                                else 
                                     Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:CaptureFocus()
                                     Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text =  "1000"
                                     Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:ReleaseFocus()
                                 end
-                            end
-                            wait(.5)
-                            if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
-                                ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
-                            else 
-                                ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
-                            end
+                            end         
                         else
                             Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
                         end
