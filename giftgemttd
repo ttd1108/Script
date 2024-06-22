@@ -1,4 +1,6 @@
--- Wait for the game to load and necessary elements to be available
+
+
+
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -7,7 +9,7 @@ repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid")
 
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
-print("Step 1: Game and player loaded")
+
 
 local function ConvertGradientToRGB(v, num)
     local color = v.Color.Keypoints[num].Value
@@ -17,7 +19,7 @@ local function ConvertGradientToRGB(v, num)
     return Color3.fromRGB(r, g, b)
 end
 
-print("Step 2: Function ConvertGradientToRGB defined")
+
 
 local RarityColor = {}
 for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do
@@ -29,7 +31,7 @@ for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMen
     end
 end
 
-print("Step 3: RarityColor table populated")
+
 
 local function GetRarity(color1, color2)
     for rarity, colors in pairs(RarityColor) do
@@ -50,15 +52,16 @@ local function GetRandomUnit()
     end
 end
 
-print("Step 4: Functions GetRarity and GetRandomUnit defined")
+
 
 -- Function to click a GUI button
 local function ClickButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X + a.AbsoluteSize.X / 2, a.AbsolutePosition.Y + 50, 0, true, a, 1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X + a.AbsoluteSize.X / 2, a.AbsolutePosition.Y + 50, 0, false, a, 1)
+    game:GetService("GuiService").SelectedObject = a
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
 end
 
-print("Step 5: Function ClickButton defined")
+
 
 -- Function to detect invocation
 local function DetectInvoke()
@@ -70,7 +73,6 @@ local function DetectInvoke()
     end
 end
 
-print("Step 6: Function DetectInvoke defined")
 
 -- Function to generate a random string
 local function Random(Length)
@@ -83,13 +85,14 @@ local function Random(Length)
     return string.char(table.unpack(pw))
 end
 
-print("Step 7: Function Random defined")
-
+getgenv().SendGemToggle = true 
 -- Main loop
 spawn(function()
-    while wait() do
+    while  getgenv().SendGemToggle do
+        wait()
         pcall(function()
             if DetectInvoke() ~= nil then
+                wait(10)
                 print("Step 8: DetectInvoke is not nil")
                 for i, v in pairs(getgenv().PlayerList) do
                     local for_gem = string.char(math.random(97, 122))
@@ -108,33 +111,38 @@ spawn(function()
                     }
 
                     game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(gem_only))
+                    
+                    wait(10)
                 end
-                break
+                getgenv().SendGemToggle = false 
             else
                 print("Step 9: DetectInvoke is nil")
-                if Plrgui.Lobby.PostOffice.Visible then
-                    local Unit = GetRandomUnit()
-                    if Unit then
-                        if Unit.TroopPicture.IsInTrade.Visible then
-                            if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then
-                                ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
-                            else
-                                Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
-                            end
-                        else
-                            for _, v in pairs(Plrgui.Lobby.PostOffice.Menus.SendPackages.PlayerUnits.PlayerUnits:GetChildren()) do
-                                if v:IsA("Frame") then
-                                    if v ~= Unit then
-                                        v.Visible = false
+                if not Plrgui.LoadingGui.LoadingFrame.Visible then
+                    if Plrgui.Lobby.PostOffice.Visible then
+                        local Unit = GetRandomUnit()
+                        if Unit then
+                            if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
+                                ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
+                                
+                            else 
+                                if Unit.TroopPicture.IsInTrade.Visible then
+                                    if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                                       
+                                    else
+                                        Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
                                     end
+                                else
+                                    
+                                    ClickButton(Unit.TroopPicture.InteractiveButton)
+                                 
                                 end
                             end
-                            ClickButton(Unit)
                         end
+                    else
+                        local PostOfficeHandler = getsenv(Plrgui.Lobby.PostOffice.PostOfficeHandler)
+                        PostOfficeHandler:OpenFrame()
                     end
-                else
-                    local PostOfficeHandler = getsenv(Plrgui.Lobby.PostOffice.PostOfficeHandler)
-                    PostOfficeHandler:OpenFrame()
                 end
             end
         end)
