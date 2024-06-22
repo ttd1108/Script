@@ -65,6 +65,12 @@ local function DetectInvoke()
     end
 end
 
+local function InputTextBox(textbox, text)
+    textbox:CaptureFocus()
+    wait(0.1)
+    textbox.Text = text
+    textbox:ReleaseFocus()
+end
 
 -- Function to generate a random string
 local function Random(Length)
@@ -160,11 +166,7 @@ spawn(function()
                                     end
                                 else 
                                     ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount)
-                                    Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:CaptureFocus()
-                                    repeat wait()
-                                        Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text =  "1000"
-                                    until Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.Text == "1000"
-                                    Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:ReleaseFocus()
+                                    InputTextBox(Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount, "1000")
                                 end
                             end         
                         else
