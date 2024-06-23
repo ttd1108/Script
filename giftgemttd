@@ -166,7 +166,6 @@ spawn(function()
                                         ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
                                     end
                                 else 
-                                    
                                     InputTextBox(Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount, "1000")
                                 end
                             end         
