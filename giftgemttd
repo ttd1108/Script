@@ -162,7 +162,7 @@ spawn(function()
                                     if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
                                         ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
                                     else 
-                                        Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text:ReleaseFocus()
+                                        Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount:ReleaseFocus()
                                         ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
                                     end
                                 else 
@@ -171,7 +171,7 @@ spawn(function()
                                 end
                             end         
                         else
-                             = "ttd0968"
+                            Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
                         end
                     else
                         local PostOfficeHandler = getsenv(Plrgui.Lobby.PostOffice.PostOfficeHandler)
