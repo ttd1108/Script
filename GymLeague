@@ -75,10 +75,12 @@ end
 spawn(function()
     while wait() do     
         if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
-            repeat wait()
-                Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.hitbox.CFrame
-                wait(.1)
-            until string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") 
+            if  (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.Base.CFrame.Position).magnitude > 6 then 
+                repeat wait()
+                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.Base.CFrame
+                    wait(.1)
+                until (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.Base.CFrame.Position).magnitude <= 6 
+            end
         elseif string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") then
             if Plrgui.Podium.padding.Bar.Visible then 
                 game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PodiumService"):WaitForChild("RE"):WaitForChild("Event"):FireServer()
