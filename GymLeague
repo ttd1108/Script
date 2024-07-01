@@ -171,6 +171,7 @@ spawn(function()
                             Plr.Backpack[v].Parent = Plr.Character
                         until Plr.Character:FindFirstChild(v)
                         repeat wait()
+                            ClickScreen()
                         until not Plr.Character:FindFirstChild(v)
                     else 
                         repeat wait() 
@@ -204,3 +205,4 @@ spawn(function()
         end 
     end
 end)
+
