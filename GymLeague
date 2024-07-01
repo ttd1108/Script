@@ -19,6 +19,7 @@ local machinelist ={
     ["Back"] = "pulldown",
 
 }
+print(1)
 local function getStatProgress()
     local statprogress = {}
     statprogress["Stamina"] = game:GetService("Players").LocalPlayer.PlayerGui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text
@@ -52,6 +53,7 @@ local function getEmptyMachine(stats)
     end
     return 
 end 
+print(2)
 spawn(function()
     while wait() do     
         local statprogress =getStatProgress()
@@ -73,3 +75,4 @@ spawn(function()
         end
     end
 end)
+print(3)
