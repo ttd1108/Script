@@ -152,3 +152,13 @@ spawn(function()
         end
     end 
 end)
+spawn(function()
+    while wait() do 
+        if Plrgui.Podium.RewardsFrame.Visible then 
+            ClickButton(Plrgui.Podium.RewardsFrame.CanvasGroup.Continue)
+        end 
+        if game:GetService("Players").LocalPlayer.PlayerGui.Podium.winners.Visible then 
+            ClickButton(Plrgui.Podium.winners.ok)
+        end 
+    end
+end)
