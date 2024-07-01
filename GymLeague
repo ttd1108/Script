@@ -48,6 +48,7 @@ local function getItemShopUnlock()
             end 
         end 
     end 
+    return itemlist
 end 
 local function checkOtherPlayerUseMachine(machine)
     for i,v in pairs(game.Players:GetChildren()) do 
