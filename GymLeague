@@ -123,27 +123,26 @@ spawn(function()
 end)
 spawn(function()
     while wait() do
-        local itemlist = getItemShopUnlock()
-        for i, v in pairs(itemlist) do
-            if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
-                local backpackItem = Plr.Backpack:FindFirstChild(v)
-                if backpackItem then
-                    repeat
-                        wait()
-                        backpackItem.Parent = Plr.Character
-                        wait(0.5)
-                    until Plrgui.Main.BottomCenter.Boosts[v].Visible
-                else
-                    repeat
-                        wait()
-                        local powerUpsService = ReplicatedStorage:WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService")
-                        local buy = powerUpsService:WaitForChild("RF"):WaitForChild("Buy")
-                        buy:InvokeServer(v)
-                        wait(0.5)
-                    until Plr.Backpack:FindFirstChild(v)
+        pcall(function()
+            local itemlist = getItemShopUnlock()
+            for i, v in pairs(itemlist) do
+                if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
+                    local backpackItem = Plr.Backpack:FindFirstChild(v)
+                    if backpackItem then
+                        repeat
+                            wait()
+                            backpackItem.Parent = Plr.Character
+                            wait(0.5)
+                        until Plrgui.Main.BottomCenter.Boosts[v].Visible
+                    else
+                        repeat
+                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
+                            wait(0.5)
+                        until Plr.Backpack:FindFirstChild(v)
+                    end
                 end
             end
-        end
+        end)
     end
 end)
 spawn(function()
