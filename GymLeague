@@ -19,7 +19,6 @@ local machinelist ={
     ["Back"] = "pulldown",
 
 }
-print(1)
 local function getStatProgress()
     local statprogress = {}
     statprogress["Stamina"] = game:GetService("Players").LocalPlayer.PlayerGui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text
@@ -53,16 +52,13 @@ local function getEmptyMachine(stats)
     end
     return 
 end 
-print(2)
 spawn(function()
     while wait() do     
         local statprogress =getStatProgress()
         for i,v in pairs(statprogress) do 
             if v ~= "100%" then 
-print(v)
                 repeat wait()
-                    local machine = getEmptyMachine(machinelist[i])
-print(machine)
+                    local machine = getEmptyMachine(i)
                     if machine then 
                         if Plrgui.Main.RightCenter.click.Visible then 
                             print()
@@ -77,4 +73,3 @@ print(machine)
         end
     end
 end)
-print(3)
