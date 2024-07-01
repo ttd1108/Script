@@ -139,7 +139,7 @@ spawn(function()
                     repeat wait()
                         game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
                         wait(.5)
-                    until not Plr.Backpack:FindFirstChild(v)
+                    until Plr.Backpack:FindFirstChild(v)
                 end
             end        
         end 
