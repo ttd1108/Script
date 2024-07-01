@@ -96,13 +96,14 @@ spawn(function()
             for i,v in pairs(statprogress) do 
                 if v ~= "100%" then 
                     repeat wait()
+                        
                         if Plrgui.Main.RightCenter.click.Visible then 
                             if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
                                 repeat wait()
-                                    print("wait full stamina")
+                                    
                                 until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
                             elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
-                                print("dang click")
+                               
                                 ClickScreen() 
                             end
                             statprogress = getStatProgress()
@@ -111,6 +112,7 @@ spawn(function()
                             end
                         else
                             local machine = getEmptyMachine(i)
+                            print(machine)
                             if machine then
                                 repeat wait()
                                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
