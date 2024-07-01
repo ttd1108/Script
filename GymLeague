@@ -64,11 +64,13 @@ spawn(function()
                     local machine = getEmptyMachine(i)
                     if machine then 
                         if Plrgui.Main.RightCenter.click.Visible then 
-                            if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) > tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
+                            if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) >= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
                                 ClickScreen() 
-                            else 
+                            elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
                                 repeat wait()
+                                print("wait full stamina")
                                 until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
+                                
                             end 
                         else 
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
