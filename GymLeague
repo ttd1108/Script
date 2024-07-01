@@ -1,0 +1,75 @@
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid")
+local TeleportService = game:GetService("TeleportService")
+local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
+local machinelist ={
+    ["Stamina"] = "treadmill",
+    ["Abs"] ="crunch",
+    ["Biceps"] ="hammercurl",
+    ["Legs"] = "legpress",
+    ["Calves"] = "frontsquat",
+    ["Triceps"] = "tricepscurl",
+    ["Forearm"] = "wristcurl",
+    ["Shoulders"] = "pushpress",
+    ["Chest"] ="benchpress",
+    ["Back"] = "pulldown",
+
+}
+local function getStatProgress()
+    local statprogress = {}
+    statprogress["Stamina"] = game:GetService("Players").LocalPlayer.PlayerGui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text
+    for i,v in pairs(Plrgui.Frames.Stats.Main.MuscleList.Stats:GetChildren()) do 
+        if v:IsA("ImageButton") then 
+            statprogress[v.Name] = v.Frame.APercentage.Text 
+        end 
+    end 
+    return statprogress
+end 
+
+local function checkOtherPlayerUseMachine(machine)
+    for i,v in pairs(game.Players:GetChildren()) do 
+        if v.Name ~= Plr.Name then 
+            if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then 
+                if (v.Character:FindFirstChild("HumanoidRootPart").Position-machine.root.CFrame.Position).magnitude < 1 then 
+                    return true 
+                end 
+            end 
+        end 
+    end
+    return false 
+end
+local function getEmptyMachine(stats)
+    for i,v in pairs(workspace.Equipments:GetChildren()) do
+        if v.Name == machinelist[stats] then 
+            if checkOtherPlayerUseMachine(v) ==false and v.root.ProximityPrompt.Enabled  then 
+                return v 
+            end 
+        end 
+    end
+    return 
+end 
+spawn(function()
+    while wait() do     
+        local statprogress =getStatProgress()
+        for i,v in pairs(statprogress) do 
+            if v ~= "100%" then 
+                repeat wait()
+                    local machine = getEmptyMachine(machinelist[i])
+                    if machine then 
+                        if Plrgui.Main.RightCenter.click.Visible then 
+                            print()
+                        else 
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
+                            fireproximityprompt(machine.root.ProximityPrompt)
+                        end 
+                    end 
+
+                until statprogress[i] == "100%" 
+            end
+        end
+    end
+end)
