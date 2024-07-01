@@ -133,10 +133,14 @@ spawn(function()
                             game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
                             wait(0.5)
                         until Plr.Backpack:FindFirstChild(v)
-                        wait(2)
+                        
 
-                        Plr.Backpack[v].Parent = Plr.Character
-                        wait(2)
+                        
+                        repeat wait() 
+                            Plr.Backpack[v].Parent = Plr.Character
+                        until Plr.Character:FindFirstChild(v)
+                        repeat wait()
+                        until not Plr.Character:FindFirstChild(v)
                     end
                 end
             end
