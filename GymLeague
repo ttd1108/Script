@@ -59,8 +59,10 @@ spawn(function()
         local statprogress =getStatProgress()
         for i,v in pairs(statprogress) do 
             if v ~= "100%" then 
+print(v)
                 repeat wait()
                     local machine = getEmptyMachine(machinelist[i])
+print(machine)
                     if machine then 
                         if Plrgui.Main.RightCenter.click.Visible then 
                             print()
