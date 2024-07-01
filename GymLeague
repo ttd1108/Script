@@ -71,6 +71,9 @@ spawn(function()
                             ClickScreen() 
                         end
                         statprogress = getStatProgress()
+                        if statprogress[i] == "100%" then 
+                            game.Players.LocalPlayer.Character.Humanoid.Jump = true
+                        end
                     else
                         local machine = getEmptyMachine(i)
                         if machine then
@@ -81,6 +84,7 @@ spawn(function()
                         end 
                     end
                 until statprogress[i] == "100%" 
+                
             end
         end
     end
