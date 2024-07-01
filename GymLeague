@@ -66,6 +66,9 @@ spawn(function()
                         if Plrgui.Main.RightCenter.click.Visible then 
                             if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) > tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
                                 ClickScreen() 
+                            else 
+                                repeat wait()
+                                until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
                             end 
                         else 
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
