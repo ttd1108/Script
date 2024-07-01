@@ -76,12 +76,12 @@ spawn(function()
         
         if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
             
-            if  (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.Base.CFrame.Position).magnitude > 6 then 
+            if  (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.CFrame.Position).magnitude > 6 then 
                 repeat wait()
                     game.Players.LocalPlayer.Character.Humanoid.Jump = true
-                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.Base.CFrame
+                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,1,0)
                     wait(.1)
-                until (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.Base.CFrame.Position).magnitude <= 6 
+                until (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.CFrame.Position).magnitude <= 6 
             end
         elseif string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") then
             if Plrgui.Podium.padding.Bar.Visible then 
