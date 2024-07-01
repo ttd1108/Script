@@ -14,7 +14,7 @@ local machinelist ={
     ["Calves"] = "frontsquat",
     ["Triceps"] = "tricepscurl",
     ["Forearm"] = "wristcurl",
-    ["Shoulders"] = "pushpress",
+    ["Shoulder"] = "pushpress",
     ["Chest"] ="benchpress",
     ["Back"] = "pulldown",
 
