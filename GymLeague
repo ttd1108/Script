@@ -73,83 +73,84 @@ local function getEmptyMachine(stats)
 end 
 spawn(function()
     while wait() do     
-        
-        if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
-            
-            if  workspace.Podium.entrance.Color ~= Color3.fromRGB(141,255,87) then 
-                repeat wait()
-                    game.Players.LocalPlayer.Character.Humanoid.Jump = true
-                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,6.5,0)
-                   
-                until workspace.Podium.entrance.Color == Color3.fromRGB(141,255,87) 
-            end
-        elseif string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") then
-            if Plrgui.Podium.padding.Bar.Visible then 
-                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PodiumService"):WaitForChild("RE"):WaitForChild("Event"):FireServer()
-            end 
-        else 
-            if getgenv().StaminaFarm  then
-                if Plrgui.Main.RightCenter.click.Visible then 
-                  
-                    
-                    
-                    if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
+        pcall(function()
+            if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
+                
+                if  workspace.Podium.entrance.BrickColor ~= BrickColor.new("Br. yellowish green") then 
+                    repeat wait()
                         game.Players.LocalPlayer.Character.Humanoid.Jump = true
-                        repeat wait()
-                            
-                        until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
-                    elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
-                        
-                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("ChangeSpeed"):InvokeServer(true)
-                        ClickScreen() 
-                    end
-                    
-                    
-                else
-                    local machine = getEmptyMachine("Stamina")
-                  
-                    if machine then
-                        repeat wait()
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
-                            fireproximityprompt(machine.root.ProximityPrompt)
-                        until Plrgui.Main.RightCenter.click.Visible 
-                    end 
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.Podium.entrance.CFrame.X,game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y,workspace.Podium.entrance.CFrame.Z )
+                        wait(.1)
+                    until workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green")
+                end
+            elseif string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") then
+                if Plrgui.Podium.padding.Bar.Visible then 
+                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PodiumService"):WaitForChild("RE"):WaitForChild("Event"):FireServer()
                 end 
             else 
-                local statprogress =getStatProgress()
-                for i,v in pairs(statprogress) do 
-                    if v ~= "100%" then 
-                        repeat wait()
-                            
-                            if Plrgui.Main.RightCenter.click.Visible then 
-                                if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
-                                    repeat wait()
-                                        
-                                    until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
-                                elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
+                if getgenv().StaminaFarm  then
+                    if Plrgui.Main.RightCenter.click.Visible then 
+                    
+                        
+                        
+                        if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
+                            game.Players.LocalPlayer.Character.Humanoid.Jump = true
+                            repeat wait()
                                 
-                                    ClickScreen() 
+                            until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
+                        elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
+                            
+                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("ChangeSpeed"):InvokeServer(true)
+                            ClickScreen() 
+                        end
+                        
+                        
+                    else
+                        local machine = getEmptyMachine("Stamina")
+                    
+                        if machine then
+                            repeat wait()
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
+                                fireproximityprompt(machine.root.ProximityPrompt)
+                            until Plrgui.Main.RightCenter.click.Visible 
+                        end 
+                    end 
+                else 
+                    local statprogress =getStatProgress()
+                    for i,v in pairs(statprogress) do 
+                        if v ~= "100%" then 
+                            repeat wait()
+                                
+                                if Plrgui.Main.RightCenter.click.Visible then 
+                                    if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
+                                        repeat wait()
+                                            
+                                        until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
+                                    elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
+                                    
+                                        ClickScreen() 
+                                    end
+                                    statprogress = getStatProgress()
+                                    if statprogress[i] == "100%" or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
+                                        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+                                    end
+                                else
+                                    local machine = getEmptyMachine(i)
+                                    print(machine)
+                                    if machine then
+                                        repeat wait()
+                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
+                                            fireproximityprompt(machine.root.ProximityPrompt)
+                                        until Plrgui.Main.RightCenter.click.Visible 
+                                    end 
                                 end
-                                statprogress = getStatProgress()
-                                if statprogress[i] == "100%" or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
-                                    game.Players.LocalPlayer.Character.Humanoid.Jump = true
-                                end
-                            else
-                                local machine = getEmptyMachine(i)
-                                print(machine)
-                                if machine then
-                                    repeat wait()
-                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
-                                        fireproximityprompt(machine.root.ProximityPrompt)
-                                    until Plrgui.Main.RightCenter.click.Visible 
-                                end 
-                            end
-                        until statprogress[i] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
-                        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+                            until statprogress[i] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
+                            game.Players.LocalPlayer.Character.Humanoid.Jump = true
+                        end
                     end
                 end
             end
-        end
+        end)
     end
 end)
 spawn(function()
@@ -190,19 +191,23 @@ end)
 
 spawn(function()
     while wait(1) do 
-        if game:GetService("Players").LocalPlayer.PlayerGui.Main.RightCenter.weight.Visible then 
-            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("AutoLoad"):InvokeServer()
-        end
+        pcall(function()
+            if game:GetService("Players").LocalPlayer.PlayerGui.Main.RightCenter.weight.Visible then 
+                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("AutoLoad"):InvokeServer()
+            end
+        end)
     end 
 end)
 spawn(function()
     while wait() do 
-        if Plrgui.Podium.RewardsFrame.Visible then 
-            ClickButton(Plrgui.Podium.RewardsFrame.CanvasGroup.Continue)
-        end 
-        if game:GetService("Players").LocalPlayer.PlayerGui.Podium.winners.Visible then 
-            ClickButton(Plrgui.Podium.winners.ok)
-        end 
+        pcall(function()
+            if Plrgui.Podium.RewardsFrame.Visible then 
+                ClickButton(Plrgui.Podium.RewardsFrame.CanvasGroup.Continue)
+            end 
+            if game:GetService("Players").LocalPlayer.PlayerGui.Podium.winners.Visible then 
+                ClickButton(Plrgui.Podium.winners.ok)
+            end 
+        end)
     end
 end)
 
