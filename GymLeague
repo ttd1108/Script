@@ -79,8 +79,8 @@ spawn(function()
             if  workspace.Podium.entrance.Color ~= Color3.fromRGB(141,255,87) then 
                 repeat wait()
                     game.Players.LocalPlayer.Character.Humanoid.Jump = true
-                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,5,0)
-                    wait(.1)
+                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,6.5,0)
+                   
                 until workspace.Podium.entrance.Color == Color3.fromRGB(141,255,87) 
             end
         elseif string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") then
