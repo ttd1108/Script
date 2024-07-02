@@ -76,12 +76,12 @@ spawn(function()
         
         if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
             
-            if  (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.CFrame.Position).magnitude > 6 then 
+            if  workspace.Podium.entrance.Color ~= Color3.fromRGB(141,255,87) then 
                 repeat wait()
                     game.Players.LocalPlayer.Character.Humanoid.Jump = true
-                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,7,0)
+                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,5,0)
                     wait(.1)
-                until (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.CFrame.Position).magnitude <= 6 
+                until workspace.Podium.entrance.Color == Color3.fromRGB(141,255,87) 
             end
         elseif string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") then
             if Plrgui.Podium.padding.Bar.Visible then 
@@ -131,7 +131,7 @@ spawn(function()
                                     ClickScreen() 
                                 end
                                 statprogress = getStatProgress()
-                                if statprogress[i] == "100%" then 
+                                if statprogress[i] == "100%" or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
                                     game.Players.LocalPlayer.Character.Humanoid.Jump = true
                                 end
                             else
