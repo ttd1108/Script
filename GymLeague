@@ -79,7 +79,7 @@ spawn(function()
             if  (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.CFrame.Position).magnitude > 6 then 
                 repeat wait()
                     game.Players.LocalPlayer.Character.Humanoid.Jump = true
-                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,3,0)
+                    Plr.Character.HumanoidRootPart.CFrame = workspace.Podium.entrance.CFrame*CFrame.new(0,7,0)
                     wait(.1)
                 until (Plr.Character.HumanoidRootPart.Position - workspace.Podium.entrance.CFrame.Position).magnitude <= 6 
             end
