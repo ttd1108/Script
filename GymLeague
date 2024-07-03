@@ -87,7 +87,7 @@ local function checkallstatdone()
             return false 
         end 
     end 
-    return false 
+    return true 
 end
 local function getNextbodyatler()
     for i,v in pairs(Plrgui.Frames.GymStore.BodyAlters.CanvasGroup.List:GetChildren()) do 
@@ -257,7 +257,7 @@ spawn(function()
     while wait() do 
         pcall(function()
             while wait() do 
-                if checkallstatdone() then 
+                if checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%" then 
                     game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("CharacterService"):WaitForChild("RF"):WaitForChild("NextAlter"):InvokeServer(getNextbodyatler())
                 end
             end 
