@@ -228,7 +228,7 @@ spawn(function()
         pcall(function()
             local itemlist = getItemShopUnlock()
             if getgenv().NextWorld==true then 
-                print(3)
+            
                 for i, v in pairs(itemlist) do
                     if v == "Cheap Body Oil" or v == "Average Body Oil" or v == "Premium Body Oil" or v == "Small Money Potion"  then 
                         if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
@@ -251,7 +251,7 @@ spawn(function()
                     end
                 end
             elseif (checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%")  then 
-                print(2)
+         
                 for i, v in pairs(itemlist) do
                     if v == "Cheap Body Oil" or v == "Average Body Oil" or v == "Premium Body Oil" or v == "Small Money Potion" then 
                         if not Plrgui.Main.BottomCenter.Boosts[v].Visible  then
@@ -274,9 +274,9 @@ spawn(function()
                     end
                 end
             else 
-                print(1)
+             
                 for i, v in pairs(itemlist) do
-                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible or ( Plrgui.Main.BottomCenter.Boosts[v].Visible and Plrgui.Main.BottomCenter.Boosts[v].Timer.TextColor3 ~= Color3.fromRGB(255, 255, 255)) then 
+                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible  then -- ( Plrgui.Main.BottomCenter.Boosts[v].Visible and Plrgui.Main.BottomCenter.Boosts[v].Timer.TextColor3 ~= Color3.fromRGB(255, 255, 255))
                         local backpackItem = Plr.Backpack:FindFirstChild(v)
                         if not backpackItem then
                             repeat wait()
