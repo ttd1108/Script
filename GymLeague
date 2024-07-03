@@ -11,9 +11,9 @@ getgenv().NextWorld = false
 local staminaeachworld = {
     ["Beach GYM"] = 1000,
     ["Underground GYM"]=100000,
-    ["The GYM"]=3000000,
+    ["The GYM"]=10000000,
     ["Golden GYM"]=500000000,
-    ["Cyber GYM"]=20000000000,
+    ["Cyber GYM"]=30000000000,
     ["Gravity GYM"]=1000000000,
 }
 
@@ -279,7 +279,6 @@ spawn(function()
                     end
                 end
             else 
-             
                 for i, v in pairs(itemlist) do
                     if not Plrgui.Main.BottomCenter.Boosts[v].Visible  then -- ( Plrgui.Main.BottomCenter.Boosts[v].Visible and Plrgui.Main.BottomCenter.Boosts[v].Timer.TextColor3 ~= Color3.fromRGB(255, 255, 255))
                         local backpackItem = Plr.Backpack:FindFirstChild(v)
