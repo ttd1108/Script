@@ -209,7 +209,7 @@ spawn(function()
     while wait() do
         pcall(function()
             local itemlist = getItemShopUnlock()
-            if getgenv.NextWorld then 
+            if getgenv().NextWorld==true then 
                 for i, v in pairs(itemlist) do
                     if v == "Cheap Body Oil" or v == "Average Body Oil" or v == "Premium Body Oil" or v == "Small Money Potion"  then 
                         if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
