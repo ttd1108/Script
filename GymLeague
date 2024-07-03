@@ -258,7 +258,7 @@ spawn(function()
             else 
                 print(1)
                 for i, v in pairs(itemlist) do
-                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible then -- and not Plrgui.Main.BottomCenter.Boosts[v].Timer.TextColor3 == Color3.fromRGB(255, 255, 255) 
+                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible or ( Plrgui.Main.BottomCenter.Boosts[v].Visible and Plrgui.Main.BottomCenter.Boosts[v].Timer.TextColor3 ~= Color3.fromRGB(255, 255, 255)) then 
                         local backpackItem = Plr.Backpack:FindFirstChild(v)
                         if not backpackItem then
                             repeat wait()
