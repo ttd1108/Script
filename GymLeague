@@ -4,6 +4,7 @@ local Plr = game.Players.LocalPlayer
 repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid")
+repeat wait() until not game:GetService("Players").LocalPlayer.PlayerGui.Loading.Enabled 
 local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 
@@ -208,10 +209,32 @@ spawn(function()
     while wait() do
         pcall(function()
             local itemlist = getItemShopUnlock()
-            if (checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%") or getgenv.NextWorld then 
+            if getgenv.NextWorld then 
                 for i, v in pairs(itemlist) do
-                    if v == "Cheap Body Oil" or v == "Average Body Oil" then 
+                    if v == "Cheap Body Oil" or v == "Average Body Oil" or v == "Premium Body Oil" or v == "Small Money Potion"  then 
                         if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
+                            local backpackItem = Plr.Backpack:FindFirstChild(v)
+                            if not backpackItem then
+                                repeat wait()
+                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
+                                    wait(0.5)
+                                until Plr.Backpack:FindFirstChild(v)     
+                                repeat wait() 
+                                    Plr.Backpack[v].Parent = Plr.Character
+                                until Plr.Character:FindFirstChild(v)                       
+                            else 
+                                repeat wait() 
+                                    Plr.Backpack[v].Parent = Plr.Character 
+                                until Plr.Character:FindFirstChild(v)
+                            end
+                            wait(.5)
+                        end
+                    end
+                end
+            elseif (checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%")  then 
+                for i, v in pairs(itemlist) do
+                    if v == "Cheap Body Oil" or v == "Average Body Oil" or v == "Premium Body Oil" or v == "Small Money Potion" then 
+                        if not Plrgui.Main.BottomCenter.Boosts[v].Visible  then
                             local backpackItem = Plr.Backpack:FindFirstChild(v)
                             if not backpackItem then
                                 repeat wait()
@@ -232,7 +255,7 @@ spawn(function()
                 end
             else 
                 for i, v in pairs(itemlist) do
-                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
+                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible and not Plrgui.Main.BottomCenter.Boosts[v].Timer.TextColor3 == Color3.fromRGB(255, 255, 255) then
                         local backpackItem = Plr.Backpack:FindFirstChild(v)
                         if not backpackItem then
                             repeat wait()
