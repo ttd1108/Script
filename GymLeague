@@ -1,30 +1,22 @@
-repeat
-    wait(4)
-until game:IsLoaded()
-repeat
-    wait()
-until game.Players.LocalPlayer
+repeat wait(4) until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
-repeat
-    wait()
-until Plr.Character
-repeat
-    wait()
-until Plr.Character:FindFirstChild("HumanoidRootPart")
-repeat
-    wait()
-until Plr.Character:FindFirstChild("Humanoid")
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid")
 local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 
+
 local staminaeachworld = {
     ["Beach GYM"] = 1000,
-    ["Underground GYM"] = 100000,
-    ["The GYM"] = 10000000,
-    ["Golden GYM"] = 500000000,
-    ["Cyber GYM"] = 20000000000,
-    ["Gravity GYM"] = 1000000000
+    ["Underground GYM"]=100000,
+    ["The GYM"]=10000000,
+    ["Golden GYM"]=500000000,
+    ["Cyber GYM"]=20000000000,
+    ["Gravity GYM"]=1000000000,
 }
+
 
 local gymworldid = {
     [17450551531] = "Beach GYM",
@@ -32,445 +24,284 @@ local gymworldid = {
     [17593439780] = "The GYM",
     [17593439630] = "Golden GYM",
     [17593441072] = "Cyber GYM",
-    [17450551536] = "Gravity GYM"
+    [17450551536] = "Gravity GYM",
 }
 
-local machinelist = {
+
+local machinelist ={
     ["Stamina"] = "treadmill",
-    ["Abs"] = "crunch",
-    ["Biceps"] = "hammercurl",
+    ["Abs"] ="crunch",
+    ["Biceps"] ="hammercurl",
     ["Legs"] = "legpress",
     ["Calves"] = "frontsquat",
     ["Triceps"] = "tricepscurl",
     ["Forearm"] = "wristcurl",
     ["Shoulder"] = "pushpress",
-    ["Chest"] = "benchpress",
-    ["Back"] = "pulldown"
+    ["Chest"] ="benchpress",
+    ["Back"] = "pulldown",
 }
 
 local function getNextWorld()
-    local c = 0
-    for i, v in pairs(gymworldid) do
-        c = c + 1
-        if v == gymworldid[game.PlaceId] then
-            break
-        end
-    end
-    local c1 = 0
-    for i, v in pairs(gymworldid) do
-        c1 = c1 + 1
-        if c1 == c + 1 then
+    local c=  0
+    for i,v in pairs(gymworldid) do
+        c=c+1
+        if v ==  gymworldid[game.PlaceId] then 
+            break 
+        end 
+    end 
+    local c1= 0 
+    for i,v in pairs(gymworldid) do
+        c1= c1+1
+        if c1 == c+1 then 
             return v
-        end
-    end
-end
+        end 
+    end 
+end 
 local function ClickButton(a)
     game:GetService("GuiService").SelectedObject = a
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
-    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
 end
+
 
 local function getStatProgress()
     local statprogress = {}
-    for i, v in pairs(Plrgui.Frames.Stats.Main.MuscleList.Stats:GetChildren()) do
-        if v:IsA("ImageButton") then
-            statprogress[v.Name] = v.Frame.APercentage.Text
-        end
-    end
+    for i,v in pairs(Plrgui.Frames.Stats.Main.MuscleList.Stats:GetChildren()) do 
+        if v:IsA("ImageButton") then 
+            statprogress[v.Name] = v.Frame.APercentage.Text 
+        end 
+    end 
     return statprogress
-end
+end 
+
 
 local function ClickScreen(x, y)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
-        workspace.CurrentCamera.ViewportSize.X / 2,
-        workspace.CurrentCamera.ViewportSize.Y / 2,
-        0,
-        true,
-        game,
-        1
-    )
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
-        workspace.CurrentCamera.ViewportSize.X / 2,
-        workspace.CurrentCamera.ViewportSize.Y / 2,
-        0,
-        false,
-        game,
-        1
-    )
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2, 0, true, game, 1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2, 0, false, game, 1)
 end
+
 
 local function getItemShopUnlock()
     local itemlist = {}
-    for i, v in pairs(Plrgui.Frames.GymStore.PowerUps.CanvasGroup.List:GetChildren()) do
-        if v:IsA("Frame") and v.Name ~= "Milk" and v.Name ~= "Random Potion" and v.Name ~= "Death Potion" then
-            if not v.Main.Locked.Visible then
-                table.insert(itemlist, v.Name)
-            end
-        end
-    end
+    for i,v in pairs(Plrgui.Frames.GymStore.PowerUps.CanvasGroup.List:GetChildren()) do 
+        if v:IsA("Frame") and v.Name ~= "Milk" and v.Name ~= "Random Potion" and v.Name ~= "Death Potion" then 
+            if not v.Main.Locked.Visible then 
+                table.insert(itemlist,v.Name)
+            end 
+        end 
+    end 
     return itemlist
-end
+end 
+
 
 local function getEmptyMachine(stats)
-    for i, v in pairs(workspace.Equipments:GetChildren()) do
-        if v.Name == machinelist[stats] then
-            if v.root.ProximityPrompt.Enabled then
-                return v
-            end
-        end
+    for i,v in pairs(workspace.Equipments:GetChildren()) do
+        if v.Name == machinelist[stats] then 
+            if  v.root.ProximityPrompt.Enabled  then 
+                return v 
+            end 
+        end 
     end
-    return
-end
+    return 
+end 
+
 
 local function checkallstatdone()
-    local statprogress = getStatProgress()
-    for i, v in pairs(statprogress) do
+    local statprogress =getStatProgress()
+    for i,v in pairs(statprogress) do 
         if v ~= "100%" then
-            return false
-        end
-    end
-    return true
+            return false 
+        end 
+    end 
+    return true 
 end
+
 
 local function getNextbodyatler()
-    for i, v in pairs(Plrgui.Frames.GymStore.BodyAlters.CanvasGroup.List:GetChildren()) do
+    for i,v in pairs(Plrgui.Frames.GymStore.BodyAlters.CanvasGroup.List:GetChildren()) do 
         if v:IsA("Frame") then
-            if v.Name ~= "0" and v.Name ~= "1" then
-                if not v.Main.Locked.Visible and v.Main.altText.Owned.Text ~= "Owned" then
+            if v.Name ~= "0" and v.Name ~= "1" then 
+                if not v.Main.Locked.Visible and v.Main.altText.Owned.Text ~= "Owned" then 
                     return tonumber(v.Name)
                 end
-            end
+            end 
         end
     end
 end
 
-spawn(
-    function()
-        while wait() do
-            pcall(
-                function()
-                    if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text, "Starts") then
-                        if workspace.Podium.entrance.BrickColor ~= BrickColor.new("Br. yellowish green") then
-                            repeat
-                                wait()
-                                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                                    "_Index"
-                                ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                                    "EquipmentService"
-                                ):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                                    CFrame.new(
-                                    workspace.Podium.entrance.CFrame.X,
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y,
-                                    workspace.Podium.entrance.CFrame.Z
-                                )
-                                wait(.1)
-                            until workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green") or
-                                string.find(
-                                    workspace.Podium.entrance.billboard.billboard.labelTimer.Text,
-                                    "is starting"
-                                ) or
-                                string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text, "cooldown")
-                        end
-                    elseif
-                        (string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text, "is starting") and
-                            Plrgui.Podium.padding.Bar.Visible) or
-                            (string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text, "is starting") and
-                                workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green"))
-                     then
-                        if Plrgui.Podium.padding.Bar.Visible then
-                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                                "_Index"
-                            ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                                "PodiumService"
-                            ):WaitForChild("RE"):WaitForChild("Event"):FireServer()
-                        end
-                    else
-                        if
-                            tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "/(.*)")) <
-                                staminaeachworld[gymworldid[game.PlaceId]]
-                         then
-                            repeat
-                                wait()
-                                if Plrgui.Main.RightCenter.click.Visible then
-                                    if
-                                        tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "(.*)/")) <
-                                            tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "/(.*)")) *
-                                                (getgenv().StaminaStopFarm / 100)
-                                     then
-                                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild(
-                                            "packages"
-                                        ):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild(
-                                            "knit"
-                                        ):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild(
-                                            "Leave"
-                                        ):InvokeServer()
-                                        repeat
-                                            wait()
-                                        until tonumber(
-                                            string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "(.*)/")
-                                        ) ==
-                                            tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "/(.*)"))
-                                    elseif
-                                        tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "(.*)/")) <=
-                                            tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "/(.*)"))
-                                     then
-                                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild(
-                                            "packages"
-                                        ):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild(
-                                            "knit"
-                                        ):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild(
-                                            "ChangeSpeed"
-                                        ):InvokeServer(true)
-                                        ClickScreen()
+
+spawn(function()
+    while wait() do     
+        pcall(function()
+            if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
+                if  workspace.Podium.entrance.BrickColor ~= BrickColor.new("Br. yellowish green") then 
+                    repeat wait()
+                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.Podium.entrance.CFrame.X,game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y,workspace.Podium.entrance.CFrame.Z )
+                        wait(.1)
+                    until workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green") or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"cooldown")
+                end
+            elseif (string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") and Plrgui.Podium.padding.Bar.Visible) or ((string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") and workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green"))) then
+                if Plrgui.Podium.padding.Bar.Visible then 
+                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PodiumService"):WaitForChild("RE"):WaitForChild("Event"):FireServer()
+                end 
+            else 
+                if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) < staminaeachworld[gymworldid[game.PlaceId]] then
+                    repeat wait()
+                        if Plrgui.Main.RightCenter.click.Visible then 
+                            if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
+                                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
+                                repeat wait()
+                                until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
+                            elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
+                                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("ChangeSpeed"):InvokeServer(true)
+                                ClickScreen() 
+                            end
+                        else
+                            local machine = getEmptyMachine("Stamina")
+                            if machine then
+                                repeat wait()
+                                    Plr.Character.HumanoidRootPart.CFrame = machine.root.CFrame
+                                    fireproximityprompt(machine.root.ProximityPrompt)
+                                until Plrgui.Main.RightCenter.click.Visible 
+                            end 
+                        end 
+                    until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
+                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
+                else 
+                    local statprogress =getStatProgress()
+                    for i,v in pairs(statprogress) do 
+                        if v ~= "100%" then 
+                            repeat wait()       
+                                if Plrgui.Main.RightCenter.click.Visible then 
+                                    if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
+                                        repeat wait()
+                                        until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
+                                    elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
+                                        ClickScreen() 
+                                    end
+                                    statprogress = getStatProgress()
+                                    if statprogress[i] == "100%" or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
+                                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                                     end
                                 else
-                                    local machine = getEmptyMachine("Stamina")
+                                    local machine = getEmptyMachine(i)
                                     if machine then
-                                        repeat
-                                            wait()
-                                            Plr.Character.HumanoidRootPart.CFrame = machine.root.CFrame
+                                        repeat wait()
+                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
                                             fireproximityprompt(machine.root.ProximityPrompt)
-                                        until Plrgui.Main.RightCenter.click.Visible
-                                    end
+                                        until Plrgui.Main.RightCenter.click.Visible 
+                                    end 
                                 end
-                            until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "/(.*)")) >=
-                                staminaeachworld[gymworldid[game.PlaceId]] or
-                                string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text, "Starts")
-                        else
-                            local statprogress = getStatProgress()
-                            for i, v in pairs(statprogress) do
-                                if v ~= "100%" then
-                                    repeat
-                                        wait()
-                                        if Plrgui.Main.RightCenter.click.Visible then
-                                            if
-                                                tonumber(
-                                                    string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "(.*)/")
-                                                ) <
-                                                    tonumber(
-                                                        string.match(
-                                                            Plrgui.Main.BottomCenter.Stamina.Title.Text,
-                                                            "/(.*)"
-                                                        )
-                                                    ) *
-                                                        (getgenv().StaminaStopFarm / 100)
-                                             then
-                                                repeat
-                                                    wait()
-                                                until tonumber(
-                                                    string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "(.*)/")
-                                                ) ==
-                                                    tonumber(
-                                                        string.match(
-                                                            Plrgui.Main.BottomCenter.Stamina.Title.Text,
-                                                            "/(.*)"
-                                                        )
-                                                    )
-                                            elseif
-                                                tonumber(
-                                                    string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text, "(.*)/")
-                                                ) <=
-                                                    tonumber(
-                                                        string.match(
-                                                            Plrgui.Main.BottomCenter.Stamina.Title.Text,
-                                                            "/(.*)"
-                                                        )
-                                                    )
-                                             then
-                                                ClickScreen()
-                                            end
-                                            statprogress = getStatProgress()
-                                            if
-                                                statprogress[i] == "100%" or
-                                                    string.find(
-                                                        workspace.Podium.entrance.billboard.billboard.labelTimer.Text,
-                                                        "Starts"
-                                                    )
-                                             then
-                                                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild(
-                                                    "packages"
-                                                ):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild(
-                                                    "knit"
-                                                ):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild(
-                                                    "RF"
-                                                ):WaitForChild("Leave"):InvokeServer()
-                                            end
-                                        else
-                                            local machine = getEmptyMachine(i)
-                                            if machine then
-                                                repeat
-                                                    wait()
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                                                        machine.root.CFrame
-                                                    fireproximityprompt(machine.root.ProximityPrompt)
-                                                until Plrgui.Main.RightCenter.click.Visible
-                                            end
-                                        end
-                                    until statprogress[i] == "100%" or
-                                        string.find(
-                                            workspace.Podium.entrance.billboard.billboard.labelTimer.Text,
-                                            "Starts"
-                                        )
-                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                                        "_Index"
-                                    ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                                        "EquipmentService"
-                                    ):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-                                end
-                            end
+                            until statprogress[i] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
+                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                         end
                     end
                 end
-            )
-        end
-    end
-)
-
-spawn(
-    function()
-        while wait() do
-            pcall(
-                function()
-                    local itemlist = getItemShopUnlock()
-                    for i, v in pairs(itemlist) do
-                        if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
-                            local backpackItem = Plr.Backpack:FindFirstChild(v)
-                            if not backpackItem then
-                                repeat
-                                    wait()
-                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                                        "_Index"
-                                    ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                                        "PowerUpsService"
-                                    ):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
-                                    wait(0.5)
-                                until Plr.Backpack:FindFirstChild(v)
-                                repeat
-                                    wait()
-                                    Plr.Backpack[v].Parent = Plr.Character
-                                until Plr.Character:FindFirstChild(v)
-                            else
-                                repeat
-                                    wait()
-                                    Plr.Backpack[v].Parent = Plr.Character
-                                until Plr.Character:FindFirstChild(v)
-                            end
-                            wait(.5)
-                        end
-                    end
-                end
-            )
-        end
-    end
-)
-
-spawn(
-    function()
-        while wait(1) do
-            pcall(
-                function()
-                    if Plrgui.Main.RightCenter.weight.Visible then
-                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                            "_Index"
-                        ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                            "EquipmentService"
-                        ):WaitForChild("RF"):WaitForChild("AutoLoad"):InvokeServer()
-                    end
-                end
-            )
-        end
-    end
-)
-
-spawn(
-    function()
-        while wait() do
-            pcall(
-                function()
-                    if Plrgui.Podium.RewardsFrame.Visible then
-                        ClickButton(Plrgui.Podium.RewardsFrame.CanvasGroup.Continue)
-                    end
-                    if Plrgui.Podium.winners.Visible then
-                        ClickButton(Plrgui.Podium.winners.ok)
-                    end
-                end
-            )
-        end
-    end
-)
-
-spawn(
-    function()
-        while wait() do
-            pcall(
-                function()
-                    while wait() do
-                        for i, v in pairs(Plr.Character:GetChildren()) do
-                            if v:IsA("Tool") then
-                                v:Activate()
-                            end
-                        end
-                    end
-                end
-            )
-        end
-    end
-)
-
-spawn(
-    function()
-        while wait() do
-            pcall(
-                function()
-                    while wait() do
-                        if
-                            checkallstatdone() and
-                                Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%"
-                         then
-                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                                "_Index"
-                            ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                                "CharacterService"
-                            ):WaitForChild("RF"):WaitForChild("NextAlter"):InvokeServer(getNextbodyatler())
-                        end
-                    end
-                end
-            )
-        end
-    end
-)
-
-spawn(
-    function()
-        Plrgui.Notifications.Frame.ChildAdded:Connect(
-            function(nofi)
-                pcall(
-                    function()
-                        if string.find(nofi.text, "tutorial") then
-                            game.Players.LocalPlayer:Kick("Done tutorial pls")
-                        elseif string.find(nofi.text, "next world") then
-                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                                "_Index"
-                            ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                                "WorldService"
-                            ):WaitForChild("RF"):WaitForChild("unlock"):InvokeServer()
-                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild(
-                                "_Index"
-                            ):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild(
-                                "WorldService"
-                            ):WaitForChild("RF"):WaitForChild("teleport"):InvokeServer(getNextWorld())
-                        elseif string.find(nofi.text, "(5)") then
-                            for i, v in pairs(Plr.Backpack:GetChildren()) do
-                                if v.Name ~= "Milk" then
-                                    v.Parent = Plr.Character
-                                    wait()
-                                end
-                            end
-                        end
-                    end
-                )
             end
-        )
+        end)
     end
-)
+end)
+
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            local itemlist = getItemShopUnlock()
+            for i, v in pairs(itemlist) do
+                if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
+                    local backpackItem = Plr.Backpack:FindFirstChild(v)
+                    if not backpackItem then
+                        repeat wait()
+                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
+                            wait(0.5)
+                        until Plr.Backpack:FindFirstChild(v)     
+                        repeat wait() 
+                            Plr.Backpack[v].Parent = Plr.Character
+                        until Plr.Character:FindFirstChild(v)                       
+                    else 
+                        repeat wait() 
+                            Plr.Backpack[v].Parent = Plr.Character 
+                        until Plr.Character:FindFirstChild(v)
+                    end
+                    wait(.5)
+                end
+            end
+        end)
+    end
+end)
+
+
+spawn(function()
+    while wait(1) do 
+        pcall(function()
+            if Plrgui.Main.RightCenter.weight.Visible then 
+                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("AutoLoad"):InvokeServer()
+            end
+        end)
+    end 
+end)
+
+
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if Plrgui.Podium.RewardsFrame.Visible then 
+                ClickButton(Plrgui.Podium.RewardsFrame.CanvasGroup.Continue)
+            end 
+            if Plrgui.Podium.winners.Visible then 
+                ClickButton(Plrgui.Podium.winners.ok)
+            end 
+        end)
+    end
+end)
+
+
+spawn(function()
+    while wait() do 
+        pcall(function()
+            while wait() do 
+                for i,v in pairs(Plr.Character:GetChildren()) do 
+                    if v:IsA("Tool") then 
+                        v:Activate()
+                    end 
+                end 
+            end 
+        end)
+    end
+end)
+
+
+spawn(function()
+    while wait() do 
+        pcall(function()
+            while wait() do 
+                if checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%" then 
+                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("CharacterService"):WaitForChild("RF"):WaitForChild("NextAlter"):InvokeServer(getNextbodyatler())
+                end
+            end 
+        end)
+    end
+end)
+
+
+spawn(function()
+    Plrgui.Notifications.Frame.ChildAdded:Connect(function(nofi)
+        pcall(function()
+            if string.find(nofi.text,"tutorial") then 
+                game.Players.LocalPlayer:Kick("Done tutorial pls")
+            elseif string.find(nofi.text,"next world") then 
+                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("unlock"):InvokeServer()
+                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("teleport"):InvokeServer(getNextWorld())
+            elseif string.find(nofi.text,"(5)") then
+                for i ,v in pairs(Plr.Backpack:GetChildren()) do 
+                    if v.Name ~= "Milk" then 
+                        v.Parent= Plr.Character
+                        wait()
+                    end 
+                end 
+            end
+        end)
+    end)
+end)
+
