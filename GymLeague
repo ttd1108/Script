@@ -7,7 +7,7 @@ repeat wait() until Plr.Character:FindFirstChild("Humanoid")
 local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 
-
+getgenv().NextWorld = false 
 local staminaeachworld = {
     ["Beach GYM"] = 1000,
     ["Underground GYM"]=100000,
@@ -208,23 +208,47 @@ spawn(function()
     while wait() do
         pcall(function()
             local itemlist = getItemShopUnlock()
-            for i, v in pairs(itemlist) do
-                if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
-                    local backpackItem = Plr.Backpack:FindFirstChild(v)
-                    if not backpackItem then
-                        repeat wait()
-                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
-                            wait(0.5)
-                        until Plr.Backpack:FindFirstChild(v)     
-                        repeat wait() 
-                            Plr.Backpack[v].Parent = Plr.Character
-                        until Plr.Character:FindFirstChild(v)                       
-                    else 
-                        repeat wait() 
-                            Plr.Backpack[v].Parent = Plr.Character 
-                        until Plr.Character:FindFirstChild(v)
+            if (checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%") or getgenv.NextWorld then 
+                for i, v in pairs(itemlist) do
+                    if v == "Cheap Body Oil" or v == "Average Body Oil" then 
+                        if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
+                            local backpackItem = Plr.Backpack:FindFirstChild(v)
+                            if not backpackItem then
+                                repeat wait()
+                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
+                                    wait(0.5)
+                                until Plr.Backpack:FindFirstChild(v)     
+                                repeat wait() 
+                                    Plr.Backpack[v].Parent = Plr.Character
+                                until Plr.Character:FindFirstChild(v)                       
+                            else 
+                                repeat wait() 
+                                    Plr.Backpack[v].Parent = Plr.Character 
+                                until Plr.Character:FindFirstChild(v)
+                            end
+                            wait(.5)
+                        end
                     end
-                    wait(.5)
+                end
+            else 
+                for i, v in pairs(itemlist) do
+                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
+                        local backpackItem = Plr.Backpack:FindFirstChild(v)
+                        if not backpackItem then
+                            repeat wait()
+                                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
+                                wait(0.5)
+                            until Plr.Backpack:FindFirstChild(v)     
+                            repeat wait() 
+                                Plr.Backpack[v].Parent = Plr.Character
+                            until Plr.Character:FindFirstChild(v)                       
+                        else 
+                            repeat wait() 
+                                Plr.Backpack[v].Parent = Plr.Character 
+                            until Plr.Character:FindFirstChild(v)
+                        end
+                        wait(.5)
+                    end
                 end
             end
         end)
@@ -291,6 +315,7 @@ spawn(function()
             if string.find(nofi.text,"tutorial") then 
                 game.Players.LocalPlayer:Kick("Done tutorial pls")
             elseif string.find(nofi.text,"next world") then 
+                getgenv().NextWorld = true 
                 game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("unlock"):InvokeServer()
                 game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("teleport"):InvokeServer(getNextWorld())
             elseif string.find(nofi.text,"(5)") then
