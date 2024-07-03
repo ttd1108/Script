@@ -92,7 +92,7 @@ end
 local function getNextbodyatler()
     for i,v in pairs(Plrgui.Frames.GymStore.BodyAlters.CanvasGroup.List:GetChildren()) do 
         if v:IsA("Frame") then
-            if v.Name ~= "0" then 
+            if v.Name ~= "0" and v.Name ~= "1" then 
                 if not v.Main.Locked.Visible and v.Main.altText.Owned.Text ~= "Owned" then 
                     return tonumber(v.Name)
                 end
@@ -119,7 +119,7 @@ spawn(function()
                     game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PodiumService"):WaitForChild("RE"):WaitForChild("Event"):FireServer()
                 end 
             else 
-                if getgenv().StaminaFarm  then
+                if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) < staminaeachworld[gymworldid[game.PlaceId]] then
                     if Plrgui.Main.RightCenter.click.Visible then 
                     
                         
