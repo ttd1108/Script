@@ -6,25 +6,28 @@ repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid")
 local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
+
+
 local staminaeachworld = {
-    ["Beach GYM"] = 1500,
-    ["Underground GYM"]=10000,
-    ["The GYM"]=100000,
-    ["Golden GYM"]=1000000,
-    ["Cyber GYM"]=10000000,
-    ["Gravity GYM"]=100000000,
-    
+    ["Beach GYM"] = 1000,
+    ["Underground GYM"]=100000,
+    ["The GYM"]=1000000,
+    ["Golden GYM"]=10000000,
+    ["Cyber GYM"]=100000000,
+    ["Gravity GYM"]=1000000000,
 }
+
+
 local gymworldid = {
     [17450551531] = "Beach GYM",
-    [17450551532] = "Underground GYM",
-    [17450551533] = "The GYM",
-    [17450551534] = "Golden GYM",
-    [17450551535] = "Cyber GYM",
+    [17593437943] = "Underground GYM",
+    [17593439780] = "The GYM",
+    [17593439630] = "Golden GYM",
+    [17593441072] = "Cyber GYM",
     [17450551536] = "Gravity GYM",
-    
-
 }
+
+
 local machinelist ={
     ["Stamina"] = "treadmill",
     ["Abs"] ="crunch",
@@ -36,13 +39,30 @@ local machinelist ={
     ["Shoulder"] = "pushpress",
     ["Chest"] ="benchpress",
     ["Back"] = "pulldown",
-
 }
+
+local function getNextWorld()
+    local c=  0
+    for i,v in pairs(gymworldid) do
+        c=c+1
+        if i == game.PlaceId then 
+            break 
+        end 
+    end 
+    local c1= 0 
+    for i,v in pairs(gymworldid) do
+        c1= c1+1
+        if c1 == c+1 then 
+            return i 
+        end 
+    end 
+end 
 local function ClickButton(a)
     game:GetService("GuiService").SelectedObject = a
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
 end
+
 
 local function getStatProgress()
     local statprogress = {}
@@ -53,10 +73,14 @@ local function getStatProgress()
     end 
     return statprogress
 end 
+
+
 local function ClickScreen(x, y)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2, 0, true, game, 1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2, 0, false, game, 1)
 end
+
+
 local function getItemShopUnlock()
     local itemlist = {}
     for i,v in pairs(Plrgui.Frames.GymStore.PowerUps.CanvasGroup.List:GetChildren()) do 
@@ -69,6 +93,7 @@ local function getItemShopUnlock()
     return itemlist
 end 
 
+
 local function getEmptyMachine(stats)
     for i,v in pairs(workspace.Equipments:GetChildren()) do
         if v.Name == machinelist[stats] then 
@@ -80,6 +105,7 @@ local function getEmptyMachine(stats)
     return 
 end 
 
+
 local function checkallstatdone()
     local statprogress =getStatProgress()
     for i,v in pairs(statprogress) do 
@@ -89,6 +115,8 @@ local function checkallstatdone()
     end 
     return true 
 end
+
+
 local function getNextbodyatler()
     for i,v in pairs(Plrgui.Frames.GymStore.BodyAlters.CanvasGroup.List:GetChildren()) do 
         if v:IsA("Frame") then
@@ -99,17 +127,16 @@ local function getNextbodyatler()
             end 
         end
     end
-
 end
+
+
 spawn(function()
     while wait() do     
         pcall(function()
             if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
-                
                 if  workspace.Podium.entrance.BrickColor ~= BrickColor.new("Br. yellowish green") then 
                     repeat wait()
                         game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.Podium.entrance.CFrame.X,game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y,workspace.Podium.entrance.CFrame.Z )
                         wait(.1)
                     until workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green") or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"cooldown")
@@ -121,25 +148,16 @@ spawn(function()
             else 
                 if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) < staminaeachworld[gymworldid[game.PlaceId]] then
                     if Plrgui.Main.RightCenter.click.Visible then 
-                    
-                        
-                        
                         if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
                             game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-
                             repeat wait()
-                                
                             until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
                         elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
-                            
                             game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("ChangeSpeed"):InvokeServer(true)
                             ClickScreen() 
                         end
-                        
-                        
                     else
                         local machine = getEmptyMachine("Stamina")
-                    
                         if machine then
                             repeat wait()
                                 Plr.Character.HumanoidRootPart.CFrame = machine.root.CFrame
@@ -151,24 +169,20 @@ spawn(function()
                     local statprogress =getStatProgress()
                     for i,v in pairs(statprogress) do 
                         if v ~= "100%" then 
-                            repeat wait()
-                                
+                            repeat wait()       
                                 if Plrgui.Main.RightCenter.click.Visible then 
                                     if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
                                         repeat wait()
-                                            
                                         until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
                                     elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
-                                    
                                         ClickScreen() 
                                     end
                                     statprogress = getStatProgress()
                                     if statprogress[i] == "100%" or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
-                                        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+                                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                                     end
                                 else
                                     local machine = getEmptyMachine(i)
-                                    
                                     if machine then
                                         repeat wait()
                                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
@@ -178,7 +192,6 @@ spawn(function()
                                 end
                             until statprogress[i] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
                             game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-
                         end
                     end
                 end
@@ -186,6 +199,8 @@ spawn(function()
         end)
     end
 end)
+
+
 spawn(function()
     while wait() do
         pcall(function()
@@ -197,26 +212,21 @@ spawn(function()
                         repeat wait()
                             game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
                             wait(0.5)
-                        until Plr.Backpack:FindFirstChild(v)
-                        
-
-                        
+                        until Plr.Backpack:FindFirstChild(v)     
                         repeat wait() 
                             Plr.Backpack[v].Parent = Plr.Character
-                        until Plr.Character:FindFirstChild(v)
-                        
+                        until Plr.Character:FindFirstChild(v)                       
                     else 
                         repeat wait() 
-                            Plr.Backpack[v].Parent = Plr.Character
-                             
+                            Plr.Backpack[v].Parent = Plr.Character 
                         until Plr.Character:FindFirstChild(v)
-                        
                     end
                 end
             end
         end)
     end
 end)
+
 
 spawn(function()
     while wait(1) do 
@@ -227,6 +237,8 @@ spawn(function()
         end)
     end 
 end)
+
+
 spawn(function()
     while wait() do 
         pcall(function()
@@ -239,6 +251,7 @@ spawn(function()
         end)
     end
 end)
+
 
 spawn(function()
     while wait() do 
@@ -253,6 +266,8 @@ spawn(function()
         end)
     end
 end)
+
+
 spawn(function()
     while wait() do 
         pcall(function()
@@ -264,10 +279,15 @@ spawn(function()
         end)
     end
 end)
+
+
 spawn(function()
     Plrgui.Notifications.Frame.ChildAdded:Connect(function(nofi)
         if string.find(nofi.text,"tutorial") then 
             game.Players.LocalPlayer:Kick("Done tutorial pls")
+        elseif string.find(nofi.text,"next world") then 
+            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("unlock"):InvokeServer()
+            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("teleport"):InvokeServer(gymworldid[getNextWorld])
         end
     end)
 end)
