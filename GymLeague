@@ -19,14 +19,7 @@ local staminaeachworld = {
 }
 
 
-local gymworldid = {
-    [17450551531] = "Beach GYM",
-    [17593437943] = "Underground GYM",
-    [17593439780] = "The GYM",
-    [17593439630] = "Golden GYM",
-    [17593441072] = "Cyber GYM",
-    [17450551536] = "Gravity GYM",
-}
+
 
 
 local machinelist ={
@@ -41,23 +34,49 @@ local machinelist ={
     ["Chest"] ="benchpress",
     ["Back"] = "pulldown",
 }
+local gymworldid = {
+    [17450551531] = "Beach GYM",
+    [17593437943] = "Underground GYM",
+    [17593439780] = "The GYM",
+    [17593439630] = "Golden GYM",
+    [17593441072] = "Cyber GYM",
+    [17450551536] = "Gravity GYM",
+}
+
+local gymOrder = {
+    17450551531,
+    17593437943,
+    17593439780,
+    17593439630,
+    17593441072,
+    17450551536,
+}
 
 local function getNextWorld()
-    local c=  0
-    for i,v in pairs(gymworldid) do
-        c=c+1
-        if v ==  gymworldid[game.PlaceId] then 
-            break 
-        end 
-    end 
-    local c1= 0 
-    for i,v in pairs(gymworldid) do
-        c1= c1+1
-        if c1 == c+1 then 
-            return v
-        end 
-    end 
-end 
+    local currentPlaceId = game.PlaceId
+    local currentIndex = nil
+
+    for index, placeId in ipairs(gymOrder) do
+        if placeId == currentPlaceId then
+            currentIndex = index
+            break
+        end
+    end
+
+    if currentIndex then
+        local nextIndex = currentIndex + 1
+        if nextIndex <= #gymOrder then
+            local nextPlaceId = gymOrder[nextIndex]
+            return gymworldid[nextPlaceId]
+        end
+    end
+
+    return nil
+end
+
+
+
+
 local function ClickButton(a)
     game:GetService("GuiService").SelectedObject = a
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
@@ -342,8 +361,10 @@ spawn(function()
                 game.Players.LocalPlayer:Kick("Done tutorial pls")
             elseif string.find(nofi.text,"next world") then 
                 getgenv().NextWorld = true 
-                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("unlock"):InvokeServer()
-                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("teleport"):InvokeServer(getNextWorld())
+                if getNextWorld() ~= nil then 
+                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("unlock"):InvokeServer()
+                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("teleport"):InvokeServer(getNextWorld())
+                end
             elseif string.find(nofi.text,"(5)") then
                 for i ,v in pairs(Plr.Backpack:GetChildren()) do 
                     if v.Name ~= "Milk" then 
