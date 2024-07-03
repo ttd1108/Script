@@ -175,7 +175,8 @@ spawn(function()
                             elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
                                 repeat task.wait()
                                     ClickScreen() 
-                                until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") or not Plrgui.Main.RightCenter.click.Visible
+                                until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") or not Plrgui.Main.RightCenter.click.Visible or tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) 
+                                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                             end
                         else
                             local machine = getEmptyMachine("Stamina")
