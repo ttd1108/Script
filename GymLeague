@@ -14,7 +14,7 @@ local staminaeachworld = {
     ["The GYM"]=10000000,
     ["Golden GYM"]=500000000,
     ["Cyber GYM"]=25000000000,
-    ["Gravity GYM"]=1000000000,
+    ["Gravity GYM"]=2000000000000,
 }
 
 
@@ -36,7 +36,7 @@ local gymworldid = {
     [17593439780] = "The GYM",
     [17593439630] = "Golden GYM",
     [17593441072] = "Cyber GYM",
-    [17450551536] = "Gravity GYM",
+    [17883015202] = "Gravity GYM",
 }
 
 local gymOrder = {
@@ -45,7 +45,7 @@ local gymOrder = {
     17593439780,
     17593439630,
     17593441072,
-    17450551536,
+    17883015202,
 }
 
 local function getNextWorld()
