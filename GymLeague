@@ -13,12 +13,9 @@ local staminaeachworld = {
     ["Underground GYM"]=100000,
     ["The GYM"]=10000000,
     ["Golden GYM"]=500000000,
-    ["Cyber GYM"]=30000000000,
+    ["Cyber GYM"]=25000000000,
     ["Gravity GYM"]=1000000000,
 }
-
-
-
 
 
 local machinelist ={
