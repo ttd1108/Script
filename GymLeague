@@ -14,7 +14,7 @@ local staminaeachworld = {
     ["The GYM"]=10000000,
     ["Golden GYM"]=500000000,
     ["Cyber GYM"]=25000000000,
-    ["Gravity GYM"]=2000000000000,
+    ["Gravity GYM"]=2500000000000,
 }
 
 
@@ -100,7 +100,7 @@ end
 local function getItemShopUnlock()
     local itemlist = {}
     for i,v in pairs(Plrgui.Frames.GymStore.PowerUps.CanvasGroup.List:GetChildren()) do 
-        if v:IsA("Frame") and v.Name ~= "Milk" and v.Name ~= "Random Potion" and v.Name ~= "Death Potion" then 
+        if v:IsA("Frame") and v.Name ~= "Milk" then 
             if not v.Main.Locked.Visible then 
                 table.insert(itemlist,v.Name)
             end 
@@ -293,6 +293,24 @@ spawn(function()
                             until Plr.Character:FindFirstChild(v)
                         end
                         wait(.5)
+                    else 
+                        if  Plrgui.Main.BottomCenter.Boosts[v].Visible and Plrgui.Main.BottomCenter.Boosts[v].timer.TextColor3 ~= Color3.new(255, 255, 255) then 
+                            local backpackItem = Plr.Backpack:FindFirstChild(v)
+                            if not backpackItem then
+                                repeat wait()
+                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
+                                    wait(0.5)
+                                until Plr.Backpack:FindFirstChild(v)     
+                                repeat wait() 
+                                    Plr.Backpack[v].Parent = Plr.Character
+                                until Plr.Character:FindFirstChild(v)                       
+                            else 
+                                repeat wait() 
+                                    Plr.Backpack[v].Parent = Plr.Character 
+                                until Plr.Character:FindFirstChild(v)
+                            end
+                            wait(.5)
+                        end
                     end
                 end
             end
