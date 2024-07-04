@@ -100,7 +100,7 @@ end
 local function getItemShopUnlock()
     local itemlist = {}
     for i,v in pairs(Plrgui.Frames.GymStore.PowerUps.CanvasGroup.List:GetChildren()) do 
-        if v:IsA("Frame") and v.Name ~= "Milk" then 
+        if v:IsA("Frame") and v.Name ~= "Milk" and v.Name ~= "Death Potion" then 
             if not v.Main.Locked.Visible then 
                 table.insert(itemlist,v.Name)
             end 
