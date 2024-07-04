@@ -294,7 +294,7 @@ spawn(function()
                         end
                         wait(.5)
                     else 
-                        if  Plrgui.Main.BottomCenter.Boosts[v].timer.TextColor3 ~= Color3.new(255, 255, 255) then 
+                        if  Plrgui.Main.BottomCenter.Boosts[v].timer.TextColor3  ~= Color3.fromRGB(255, 255, 255) then 
                             local backpackItem = Plr.Backpack:FindFirstChild(v)
                             if not backpackItem then
                                 repeat wait()
