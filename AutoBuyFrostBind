@@ -54,6 +54,7 @@ spawn(function()
                 if tonumber(string.match(FrostBind.QuantityLeftLabel.Text,"stock (.*)x")) > 0 then 
                     if tonumber(PlayerGui.PAGES.RaidShop.PriceDisplay.TextLabel.Text) >= tonumber(FrostBind.BuyButton.AfterDiscountLabel.Text) then 
                         ClickButton(FrostBind.BuyButton)
+                        wait(.5)
                     end
                 end
             else 
