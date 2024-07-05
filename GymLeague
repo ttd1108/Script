@@ -7,6 +7,7 @@
     repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
     repeat wait() until Plr.Character:FindFirstChild("Humanoid")
     print('Humanoid')
+    wait(4)
     local TeleportService = game:GetService("TeleportService")
     local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
     print(1)
@@ -18,7 +19,7 @@
         ["The GYM"]=10000000,
         ["Golden GYM"]=500000000,
         ["Cyber GYM"]=25000000000,
-        ["Gravity GYM"]=5000000000000,
+        ["Gravity GYM"]=20000000000000,
     }
 
 
