@@ -1,0 +1,68 @@
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid")
+local TeleportService = game:GetService("TeleportService")
+local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
+if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
+    Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
+end
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+40,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+40,0,false,a,1)
+end
+local function ClickButton1(a)
+    game:GetService("GuiService").SelectedObject = a
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, 13, false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, 13, false, game) 
+end
+
+local function detectRaid1()
+    for i,v in pairs(Plrgui.PAGES.RaidShop.ShopScrollingFrame:GetChildren()) do 
+        if v.Name == "ShopPadding" then 
+            if v.ShopButton.TextLabel.Text == "Raid1" then 
+                return v 
+            end
+        end 
+    end 
+end 
+local function getFrostBind()
+    for i,v in pairs(Plrgui.PAGES.RaidShop.ScrollingFrame:GetChildren()) do 
+        if v.Name == "RaidItemFrame" then 
+            if v.ItemHolder.ItemNameLabel.Text == "Frost Bind" then 
+                return v 
+            end 
+        end 
+    end 
+end
+
+local function ConvertGradientToRGB(v, num)
+    local color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+spawn(function()
+    while wait() do 
+        if Plrgui.PAGES.RaidShop.Visible then 
+            local raid1 = detectRaid1()
+            if ConvertGradientToRGB(raid1.ShopButton.UIGradient, 2) == Color3.fromRGB(249,0,0) then 
+                local FrostBind = getFrostBind()
+                if tonumber(string.match(FrostBind.QuantityLeftLabel.Text,"stock (.*)x")) > 0 then 
+                    if tonumber(PlayerGui.PAGES.RaidShop.PriceDisplay.TextLabel.Text) >= tonumber(FrostBind.BuyButton.AfterDiscountLabel.Text) then 
+                        ClickButton(FrostBind.BuyButton)
+                    end
+                end
+            else 
+                ClickButton(raid1)
+            end 
+        else 
+            Plr.Character.HumanoidRootPart.CFrame = CFrame.new(220.804611, -0.271606743, -572.711304, 0.840126932, -2.58113708e-08, -0.54238981, 3.66683084e-09, 1, -4.19085424e-08, 0.54238981, 3.32196457e-08, 0.840126932)
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, "E", false, game) 
+        end 
+    end 
+end)
