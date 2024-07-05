@@ -6,6 +6,7 @@ repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid")
 local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
+print(1)
 
 getgenv().NextWorld = false 
 local staminaeachworld = {
@@ -14,7 +15,7 @@ local staminaeachworld = {
     ["The GYM"]=10000000,
     ["Golden GYM"]=500000000,
     ["Cyber GYM"]=25000000000,
-    ["Gravity GYM"]=2500000000000,
+    ["Gravity GYM"]=5000000000000,
 }
 
 
@@ -145,7 +146,7 @@ local function getNextbodyatler()
     end
 end
 
-
+print(2)
 spawn(function()
     while wait() do     
         pcall(function()
@@ -317,7 +318,7 @@ spawn(function()
         end)
     end
 end)
-
+print(3)
 
 spawn(function()
     while wait(1) do 
