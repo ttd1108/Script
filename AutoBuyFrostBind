@@ -13,11 +13,6 @@ function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+40,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+40,0,false,a,1)
 end
-local function ClickButton1(a)
-    game:GetService("GuiService").SelectedObject = a
-    game:GetService("VirtualInputManager"):SendKeyEvent(true, 13, false, game)
-    game:GetService("VirtualInputManager"):SendKeyEvent(false, 13, false, game) 
-end
 
 local function detectRaid1()
     for i,v in pairs(Plrgui.PAGES.RaidShop.ShopScrollingFrame:GetChildren()) do 
