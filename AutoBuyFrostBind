@@ -42,6 +42,7 @@ local function ConvertGradientToRGB(v, num)
 end
 spawn(function()
     while wait() do 
+if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID SHOP OPEN" then
         if Plrgui.PAGES.RaidShop.Visible then 
             local raid1 = detectRaid1()
             if ConvertGradientToRGB(raid1.ShopButton.UIGradient, 2) == Color3.fromRGB(249,0,0) then 
@@ -60,5 +61,6 @@ spawn(function()
             game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, "E", false, game) 
         end 
+end
     end 
 end)
