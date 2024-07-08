@@ -88,6 +88,7 @@ local function ClickButton(a)
     game:GetService("GuiService").SelectedObject = a
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
     game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
+    
 end
 
 
