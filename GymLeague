@@ -1,18 +1,19 @@
 repeat wait() until game:IsLoaded()
-print('loaded')
+
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
-print('Plr')
+
 repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid")
-print('Humanoid')
-wait(4)
+
+wait()
 local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
-print(1)
+
 getgenv().StaminaStopFarm = 30
 getgenv().NextWorld = false 
+
 local staminaeachworld = {
     ["Beach GYM"] = 1000,
     ["Underground GYM"]=100000,
@@ -34,6 +35,11 @@ local machinelist ={
     ["Shoulder"] = "pushpress",
     ["Chest"] ="benchpress",
     ["Back"] = "pulldown",
+}
+
+local stattrainlist = {
+    "Abs",
+    "Chest"
 }
 local gymworldid = {
     [17450551531] = "Beach GYM",
@@ -95,6 +101,19 @@ local function getStatProgress()
     return statprogress
 end 
 
+local function findLowestStat()
+    local statprogress = getStatProgress()
+    local Stat = "Biceps"
+    local LowestStat = tonumber(string.match(statprogress[Stat],"(.*)%%"))
+    
+    for i,v in pairs(statprogress) do
+        if tonumber(string.match(v,"(.*)%%")) < LowestStat then 
+            LowestStat = tonumber(string.match(v,"(.*)%%"))
+            Stat = i 
+        end 
+    end
+    return Stat 
+end
 
 local function ClickScreen()
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2, 0, true, game, 1)
@@ -220,7 +239,7 @@ local function getNextbodyatler()
     end
 end
 
-print(2)
+
 spawn(function()
     while wait() do     
         pcall(function()
@@ -237,17 +256,17 @@ spawn(function()
                     game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PodiumService"):WaitForChild("RE"):WaitForChild("Event"):FireServer()
                 end 
             else 
-                if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) < staminaeachworld[gymworldid[game.PlaceId]] then
+                if Plr:GetAttribute("maxStamina") < staminaeachworld[gymworldid[game.PlaceId]] then
                     repeat wait()
                         if Plrgui.Main.RightCenter.click.Visible then 
-                            if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
+                            if Plr:GetAttribute("stamina") < Plr:GetAttribute("maxStamina")*(getgenv().StaminaStopFarm/100) then
                                 game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                                 repeat wait()
-                                until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
-                            elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
+                                until Plr:GetAttribute("stamina") == Plr:GetAttribute("maxStamina")
+                            elseif Plr:GetAttribute("stamina") <= Plr:GetAttribute("maxStamina") then
                                 repeat task.wait()
                                     ClickScreen() 
-                                until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") or not Plrgui.Main.RightCenter.click.Visible or tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) 
+                                until Plr:GetAttribute("maxStamina") >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") or not Plrgui.Main.RightCenter.click.Visible or Plr:GetAttribute("stamina") < Plr:GetAttribute("maxStamina")*(getgenv().StaminaStopFarm/100) 
                                 game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                             end
                         else
@@ -261,42 +280,38 @@ spawn(function()
                                 HopServer()
                             end 
                         end 
-                    until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
+                    until Plr:GetAttribute("maxStamina") >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
                     game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                 else 
-                    local statprogress =getStatProgress()
-                    for i,v in pairs(statprogress) do 
-                        if v ~= "100%" then 
-                            repeat wait()       
-                                if Plrgui.Main.RightCenter.click.Visible then 
-                                    if tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) < tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))*(getgenv().StaminaStopFarm/100) then
-                                        repeat wait()
-                                        until tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) == tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)"))
-                                    elseif tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"(.*)/")) <= tonumber(string.match(Plrgui.Main.BottomCenter.Stamina.Title.Text,"/(.*)")) then
-                                            print('trainning')
-                                            ClickScreen() 
+                    
+                    local LowestStat = findLowestStat()
+                    if LowestStat then 
+                        repeat wait()       
+                            if Plrgui.Main.RightCenter.click.Visible then 
+                                if Plr:GetAttribute("stamina") < Plr:GetAttribute("maxStamina")*(getgenv().StaminaStopFarm/100) then
+                                    repeat wait()
+                                    until Plr:GetAttribute("stamina") == Plr:GetAttribute("maxStamina")
+                                elseif Plr:GetAttribute("stamina") <= Plr:GetAttribute("maxStamina") then
                                         
-                                    end
-                                    statprogress = getStatProgress()
-                                    if statprogress[i] == "100%" or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
-                                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-                                    end
-                                else
-                                    local machine = getEmptyMachine(i)
-                                    if machine then
-                                        repeat wait()
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
-                                            fireproximityprompt(machine.root.ProximityPrompt)
-                                        until Plrgui.Main.RightCenter.click.Visible
-                                    else 
-                                        HopServer()
-                                    end 
+                                        ClickScreen() 
+                                    
                                 end
-                            until statprogress[i] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
-                            game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-                            break
-                        end
+                                
+                            else
+                                local machine = getEmptyMachine(LowestStat)
+                                if machine then
+                                    repeat wait()
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
+                                        fireproximityprompt(machine.root.ProximityPrompt)
+                                    until Plrgui.Main.RightCenter.click.Visible
+                                else 
+                                    HopServer()
+                                end 
+                            end
+                        until getStatProgress()[LowestStat] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") or not Plrgui.Main.RightCenter.click.Visible
+                        game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
                     end
+                        
                 end
             end
         end)
@@ -396,7 +411,7 @@ spawn(function()
         end)
     end
 end)
-print(3)
+
 
 spawn(function()
     while wait(1) do 
