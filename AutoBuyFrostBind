@@ -40,9 +40,10 @@ local function ConvertGradientToRGB(v, num)
     local b = math.floor(color.B * 255)
     return Color3.fromRGB(r, g, b)
 end
+getgenv().stock = true 
 spawn(function()
     while wait() do 
-if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID SHOP OPEN" then
+if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID SHOP OPEN" and getgenv().stock then
         if Plrgui.PAGES.RaidShop.Visible then 
             local raid1 = detectRaid1()
             if ConvertGradientToRGB(raid1.ShopButton.UIGradient, 2) == Color3.fromRGB(249,0,0) then 
@@ -51,7 +52,13 @@ if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID 
                     if tonumber(PlayerGui.PAGES.RaidShop.PriceDisplay.TextLabel.Text) >= tonumber(FrostBind.BuyButton.AfterDiscountLabel.Text) then 
                         ClickButton(FrostBind.BuyButton)
                         wait(.5)
+                    else
+                        getgenv().stock = false 
+                    
                     end
+                else 
+                    getgenv().stock = false 
+                    
                 end
             else 
                 ClickButton(raid1)
