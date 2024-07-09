@@ -1,89 +1,62 @@
 repeat wait() until game:IsLoaded()
-
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
-
 repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid")
-
-wait()
 local TeleportService = game:GetService("TeleportService")
+unitname = getgenv().UnitName:gsub(" ","")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 
-getgenv().StaminaStopFarm = 30
-getgenv().NextWorld = false 
-
-local staminaeachworld = {
-    ["Beach GYM"] = 1000,
-    ["Underground GYM"]=100000,
-    ["The GYM"]=10000000,
-    ["Golden GYM"]=500000000,
-    ["Cyber GYM"]=25000000000,
-    ["Gravity GYM"]=25000000000000,
-}
-
-
-local machinelist ={
-    ["Stamina"] = "treadmill",
-    ["Abs"] ="crunch",
-    ["Biceps"] ="hammercurl",
-    ["Legs"] = "legpress",
-    ["Calves"] = "frontsquat",
-    ["Triceps"] = "tricepscurl",
-    ["Forearm"] = "wristcurl",
-    ["Shoulder"] = "pushpress",
-    ["Chest"] ="benchpress",
-    ["Back"] = "pulldown",
-}
-
-local stattrainlist = {
-    "Abs",
-    "Chest"
-}
-local gymworldid = {
-    [17450551531] = "Beach GYM",
-    [17593437943] = "Underground GYM",
-    [17593439780] = "The GYM",
-    [17593439630] = "Golden GYM",
-    [17593441072] = "Cyber GYM",
-    [17883015202] = "Gravity GYM",
-}
-
-local gymOrder = {
-    17450551531,
-    17593437943,
-    17593439780,
-    17593439630,
-    17593441072,
-    17883015202,
-}
-
-local function getNextWorld()
-    local currentPlaceId = game.PlaceId
-    local currentIndex = nil
-
-    for index, placeId in ipairs(gymOrder) do
-        if placeId == currentPlaceId then
-            currentIndex = index
-            break
-        end
-    end
-
-    if currentIndex then
-        local nextIndex = currentIndex + 1
-        if nextIndex <= #gymOrder then
-            local nextPlaceId = gymOrder[nextIndex]
-            return gymworldid[nextPlaceId]
-        end
-    end
-
-    return nil
+local function ConvertGradientToRGB(v, num)
+    local color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
 end
 
 
+local RarityColor = {}
+for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do
+    if v:IsA("Frame") then
+        RarityColor[v.Name] = {
+            ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
+            ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
+        }
+    end
+end
 
 
+local function GetRarity(color1, color2)
+    for rarity, colors in pairs(RarityColor) do
+        if (color1 == colors["1"] and color2 == colors["2"]) then
+            return rarity
+        end
+    end
+end
+
+local function GetRandomUnit()
+    for _, v in pairs(Plrgui.Lobby.PostOffice.Menus.SendPackages.PlayerUnits.PlayerUnits:GetChildren()) do
+        if v:IsA("Frame") then
+            local UnitRarity = GetRarity(ConvertGradientToRGB(v.TroopPicture.RarityGradient, 1), ConvertGradientToRGB(v.TroopPicture.RarityGradient, 2))
+            if not v.TroopPicture.CannotTrade.Visible and (UnitRarity == "Basic" or UnitRarity == "Uncommon" or UnitRarity == "Rare") then
+                return v
+            end
+        end
+    end
+end
+
+local function DetectUID(x)
+    for i,v in next,getupvalues(getsenv(Plrgui.Lobby.UnitFrame.UnitInvHandler).UpdateInventory)[1]._data.Inventory.Troops do 
+        if i == x  then 
+            for i1,v1 in next,v do 
+                return i1 
+            end
+        end
+    end
+end
+-- Function to click a GUI button
 local function ClickButton(a)
     game:GetService("GuiService").SelectedObject = a
     game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
@@ -92,337 +65,167 @@ local function ClickButton(a)
 end
 
 
-local function getStatProgress()
-    local statprogress = {}
-    for i,v in pairs(Plrgui.Frames.Stats.Main.MuscleList.Stats:GetChildren()) do 
-        if v:IsA("ImageButton") then 
-            statprogress[v.Name] = v.Frame.APercentage.Text 
-        end 
-    end 
-    return statprogress
-end 
+-- Function to detect invocation
+local function DetectInvoke()
+    local a = require(game:GetService("ReplicatedStorage").MultiboxFramework)
+    for i, v in next, getupvalues(getupvalues(a.Network.Invoke)[1])[5] do
+        if i == "PostOffice_SendGift" then
+            return v.SendBridge._identifier
+        end
+    end
+end
 
-local function findLowestStat()
-    local statprogress = getStatProgress()
-    local Stat = "Biceps"
-    local LowestStat = tonumber(string.match(statprogress[Stat],"(.*)%%"))
+local function InputTextBox(textbox, text)
+    textbox:CaptureFocus()
+    wait(0.1)
+    textbox.Text = text
     
-    for i,v in pairs(statprogress) do
-        if tonumber(string.match(v,"(.*)%%")) < LowestStat then 
-            LowestStat = tonumber(string.match(v,"(.*)%%"))
-            Stat = i 
-        end 
-    end
-    return Stat 
 end
 
-local function Train()
-    game:GetService("ReplicatedStorage").common.packages._Index["sleitnick_knit@1.5.1"].knit.Services.EquipmentService.RE.click:FireServer()
-end
-
-local function HopServer()
-    local PlaceID = game.PlaceId
-    local AllIDs = {}
-    local foundAnything = ""
-    local actualHour = os.date("!*t").hour
-    local Deleted = false
-    local File = pcall(function()
-        AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
-    end)
-    if not File then
-        table.insert(AllIDs, actualHour)
-        writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+-- Function to generate a random string
+local function Random(Length)
+    local alphabet = "0123456789"
+    local n = string.len(alphabet)
+    local pw = {}
+    for i = 1, Length do
+        pw[i] = string.byte(alphabet, math.random(n))
     end
-    function TPReturner()
-        local Site;
-        if foundAnything == "" then
-            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-        else
-            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-        end
-        local ID = ""
-        if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-            foundAnything = Site.nextPageCursor
-        end
-        local num = 0;
-        for i,v in pairs(Site.data) do
-            local Possible = true
-            ID = tostring(v.id)
-            if tonumber(v.maxPlayers) > tonumber(v.playing) then
-                for _,Existing in pairs(AllIDs) do
-                    if num ~= 0 then
-                        if ID == tostring(Existing) then
-                            Possible = false
+    return string.char(table.unpack(pw))
+end
+local function SendWebHook(PlayerName,Unit)
+    local msg = {
+        ['content'] = 'Send Unit Success',
+        ["embeds"] = {{
+            ["title"] = "Toilet Tower Defense",
+            ["description"] = getgenv().UnitName,
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "Player name",
+                    ["value"] = PlayerName,                                            
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Unit name",
+                    ["value"] =Unit,                                            
+                    ["inline"] = false
+                }
+            }
+        }}
+    }
+    request({
+        Url = getgenv().Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
+getgenv().SendGemToggle = true 
+-- Main loop
+spawn(function()
+    while  getgenv().SendGemToggle do
+        wait()
+        pcall(function()
+            if DetectInvoke() ~= nil then
+                wait(10)
+                
+                for i, v in pairs(getgenv().PlayerList) do
+                    local Unit = DetectUID(unitname)
+                    if Unit then 
+                        local Unit_only = {
+                            [1] = {
+                                [1] = {
+                                    [1] = Random(64),
+                                    [2] = v,
+                                    [3] = 'Troops',
+                                    [4] = Unit,
+                                    [5] = 0,
+                                    [6] = ""
+                                },
+                                [2] = DetectInvoke()
+                            }
+                        }
+
+                        game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(Unit_only))
+                        SendWebHook(game:GetService("Players"):GetNameFromUserIdAsync(v),getgenv().UnitName)
+                    else 
+                        local msg = {
+                            ['content'] = 'Send Unit Lỗi',
+                            ["embeds"] = {{
+                                ["title"] = "Toilet Tower Defense",
+                                ["description"] = getgenv().UnitName,
+                                ["type"] = "rich",
+                                ["color"] = tonumber(0xbdce44),
+                                ["fields"] = {
+                                    {
+                                        ["name"] = "Reason",
+                                        ["value"] = "Acc không còn tồn unit",                                            
+                                        ["inline"] = false
+                                    },
+                                    
+                                }
+                            }}
+                        }
+                        request({
+                            Url = getgenv().Webhook,
+                            Method = "POST",
+                            Headers = {["Content-Type"] = "application/json"},
+                            Body = game:GetService("HttpService"):JSONEncode(msg)
+                        }) 
+                    end
+                    wait(10)
+                end
+                getgenv().SendGemToggle = false 
+            else
+                print("Step 9: DetectInvoke is nil")
+                if not Plrgui.LoadingGui.LoadingFrame.Visible then
+                    if Plrgui.Lobby.PostOffice.Visible then
+                        if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then
+                            local Unit = GetRandomUnit()
+                            if Unit then
+                                if  Unit.TroopPicture.IsInTrade.Visible then
+                                    if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
+                                    else 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                                    end
+                                else 
+                                    ClickButton(Unit.TroopPicture.InteractiveButton)
+                                end
+                            else 
+                                local msg = {
+                                    ['content'] = 'Send Unit Lỗi',
+                                    ["embeds"] = {{
+                                        ["title"] = "Toilet Tower Defense",
+                                        ["description"] = "",
+                                        ["type"] = "rich",
+                                        ["color"] = tonumber(0xbdce44),
+                                        ["fields"] = {
+                                            {
+                                                ["name"] = "Reason",
+                                                ["value"] = "Acc khong co unit rac",                                            
+                                                ["inline"] = false
+                                            },
+                                            
+                                        }
+                                    }}
+                                }
+                                request({
+                                    Url = getgenv().Webhook,
+                                    Method = "POST",
+                                    Headers = {["Content-Type"] = "application/json"},
+                                    Body = game:GetService("HttpService"):JSONEncode(msg)
+                                }) 
+                                wait()
+                                TeleportService:Teleport(13775256536)
+                            end         
+                        else
+                            Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
                         end
                     else
-                        if tonumber(actualHour) ~= tonumber(Existing) then
-                            local delFile = pcall(function()
-                                delfile("NotSameServers.json")
-                                AllIDs = {}
-                                table.insert(AllIDs, actualHour)
-                            end)
-                        end
-                    end
-                    num = num + 1
-                end
-                if Possible == true then
-                    table.insert(AllIDs, ID)
-                    wait()
-                    pcall(function()
-                        writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                        wait()
-                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, Plr)
-                    end)
-                    wait(4)
-                end
-            end
-        end
-    end
-    
-    function Teleport()
-        while wait() do
-            pcall(function()
-                TPReturner()
-                if foundAnything ~= "" then
-                    TPReturner()
-                end
-            end)
-        end
-    end
-    Teleport()
-end
-local function getItemShopUnlock()
-    local itemlist = {}
-    for i,v in pairs(Plrgui.Frames.GymStore.PowerUps.CanvasGroup.List:GetChildren()) do 
-        if v:IsA("Frame") and v.Name ~= "Milk" and v.Name ~= "Death Potion" and v.Name ~= "Random Potion" then 
-            if not v.Main.Locked.Visible then 
-                table.insert(itemlist,v.Name)
-            end 
-        end 
-    end 
-    return itemlist
-end 
-local function AutoPodium()
-    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PodiumService"):WaitForChild("RE"):WaitForChild("Event"):FireServer()
-end 
-local function getEmptyMachine(stats)
-    for i,v in pairs(workspace.Equipments:GetChildren()) do
-        if v.Name == machinelist[stats] then 
-            if  v.root.ProximityPrompt.Enabled  then 
-                return v    
-            end 
-        end 
-    end
-    return 
-end 
-
-local function ChangeTreadMillspeed()
-    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("ChangeSpeed"):InvokeServer(true)
-end
-local function checkallstatdone()
-    local statprogress =getStatProgress()
-    for i,v in pairs(statprogress) do 
-        if v ~= "100%" then
-            return false 
-        end 
-    end 
-    return true 
-end
-local function UnlockNextWorld(worldname)
-    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("unlock"):InvokeServer()
-    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("WorldService"):WaitForChild("RF"):WaitForChild("teleport"):InvokeServer(worldname)
-end
-
-local function getNextbodyatler()
-    for i,v in pairs(Plrgui.Frames.GymStore.BodyAlters.CanvasGroup.List:GetChildren()) do 
-        if v:IsA("Frame") then
-            if v.Name ~= "0" and v.Name ~= "1" then 
-                if not v.Main.Locked.Visible and v.Main.altText.Owned.Text ~= "Owned" then 
-                    return tonumber(v.Name)
-                end
-            end 
-        end
-    end
-end
-local function AutoLoadWeight()
-    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("AutoLoad"):InvokeServer()
-end
-local function Leave()
-    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EquipmentService"):WaitForChild("RF"):WaitForChild("Leave"):InvokeServer()
-end
-local function UnlockNextBody(body)
-    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("CharacterService"):WaitForChild("RF"):WaitForChild("NextAlter"):InvokeServer(body)
-end
-spawn(function()
-    while wait() do     
-        pcall(function()
-            if string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") then 
-                if  workspace.Podium.entrance.BrickColor ~= BrickColor.new("Br. yellowish green") then 
-                    repeat wait()
-                        Leave()
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.Podium.entrance.CFrame.X,game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y,workspace.Podium.entrance.CFrame.Z )
-                        wait(.1)
-                    until workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green") or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"cooldown")
-                end
-            elseif (string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") and Plrgui.Podium.Enabled) or ((string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"is starting") and workspace.Podium.entrance.BrickColor == BrickColor.new("Br. yellowish green"))) then
-                if Plrgui.Podium.Enabled then 
-                    repeat task.wait()
-                        AutoPodium()
-                    until not Plrgui.Podium.Enabled or not string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
-                end 
-            else 
-                if Plr:GetAttribute("maxStamina") < staminaeachworld[gymworldid[game.PlaceId]] then
-                    repeat wait()
-                        if Plrgui.Main.RightCenter.click.Visible then 
-                            if Plr:GetAttribute("stamina") < Plr:GetAttribute("maxStamina")*(getgenv().StaminaStopFarm/100) then
-                                Leave()
-                                repeat wait()
-                                until Plr:GetAttribute("stamina") == Plr:GetAttribute("maxStamina")
-                            elseif Plr:GetAttribute("stamina") <= Plr:GetAttribute("maxStamina") then
-                                repeat task.wait()
-                                    Train() 
-                                until Plr:GetAttribute("maxStamina") >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") or not Plrgui.Main.RightCenter.click.Visible or Plr:GetAttribute("stamina") < Plr:GetAttribute("maxStamina")*(getgenv().StaminaStopFarm/100) 
-                                Leave()
-                            end
-                        else
-                            local machine = getEmptyMachine("Stamina")
-                            if machine then
-                                repeat wait()
-                                    Plr.Character.HumanoidRootPart.CFrame = machine.root.CFrame
-                                    fireproximityprompt(machine.root.ProximityPrompt)
-                                until Plrgui.Main.RightCenter.click.Visible
-                            else 
-                                queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/GymLeague"))()')
-                                HopServer()
-                            end 
-                        end 
-                    until Plr:GetAttribute("maxStamina") >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
-                    Leave()
-                else 
-                    
-                    local LowestStat = findLowestStat()
-                    if LowestStat then 
-                        repeat task.wait()       
-                            if Plrgui.Main.RightCenter.click.Visible then 
-                                if Plr:GetAttribute("stamina") < Plr:GetAttribute("maxStamina")*(getgenv().StaminaStopFarm/100) then
-                                    repeat wait()
-                                    until Plr:GetAttribute("stamina") == Plr:GetAttribute("maxStamina")
-                                elseif Plr:GetAttribute("stamina") <= Plr:GetAttribute("maxStamina") then
-                                    repeat task.wait()   
-                                        Train() 
-                                    until getStatProgress()[LowestStat] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts") or not Plrgui.Main.RightCenter.click.Visible    
-                                    
-                                end
-                                
-                            else
-                                local machine = getEmptyMachine(LowestStat)
-                                if machine then
-                                    repeat wait()
-                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
-                                        fireproximityprompt(machine.root.ProximityPrompt)
-                                    until Plrgui.Main.RightCenter.click.Visible
-                                else 
-                                    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/GymLeague"))()')
-                                    HopServer()
-                                end 
-                            end
-                        until getStatProgress()[LowestStat] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
-                        Leave()
-                    end
-                        
-                end
-            end
-        end)
-    end
-end)
-
-
-spawn(function()
-    while wait() do
-        pcall(function()
-            local itemlist = getItemShopUnlock()
-            if getgenv().NextWorld==true then 
-            
-                for i, v in pairs(itemlist) do
-                    if v == "Cheap Body Oil" or v == "Average Body Oil" or v == "Premium Body Oil" or v == "Small Money Potion"  then 
-                        if not Plrgui.Main.BottomCenter.Boosts[v].Visible then
-                            local backpackItem = Plr.Backpack:FindFirstChild(v)
-                            if not backpackItem then
-                                repeat wait()
-                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
-                                    wait(0.5)
-                                until Plr.Backpack:FindFirstChild(v)     
-                                repeat wait() 
-                                    Plr.Backpack[v].Parent = Plr.Character
-                                until Plr.Character:FindFirstChild(v)                       
-                            else 
-                                repeat wait() 
-                                    Plr.Backpack[v].Parent = Plr.Character 
-                                until Plr.Character:FindFirstChild(v)
-                            end
-                            wait(.5)
-                        end
-                    end
-                end
-            elseif (checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%")  then 
-        
-                for i, v in pairs(itemlist) do
-                    if v == "Cheap Body Oil" or v == "Average Body Oil" or v == "Premium Body Oil" or v == "Small Money Potion" then 
-                        if not Plrgui.Main.BottomCenter.Boosts[v].Visible  then
-                            local backpackItem = Plr.Backpack:FindFirstChild(v)
-                            if not backpackItem then
-                                repeat wait()
-                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
-                                    wait(0.5)
-                                until Plr.Backpack:FindFirstChild(v)     
-                                repeat wait() 
-                                    Plr.Backpack[v].Parent = Plr.Character
-                                until Plr.Character:FindFirstChild(v)                       
-                            else 
-                                repeat wait() 
-                                    Plr.Backpack[v].Parent = Plr.Character 
-                                until Plr.Character:FindFirstChild(v)
-                            end
-                            wait(.5)
-                        end
-                    end
-                end
-            else 
-                for i, v in pairs(itemlist) do
-                    if not Plrgui.Main.BottomCenter.Boosts[v].Visible  then -- ( Plrgui.Main.BottomCenter.Boosts[v].Visible and Plrgui.Main.BottomCenter.Boosts[v].Timer.TextColor3 ~= Color3.fromRGB(255, 255, 255))
-                        local backpackItem = Plr.Backpack:FindFirstChild(v)
-                        if not backpackItem then
-                            repeat wait()
-                                game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
-                                wait(0.5)
-                            until Plr.Backpack:FindFirstChild(v)     
-                            repeat wait() 
-                                Plr.Backpack[v].Parent = Plr.Character
-                            until Plr.Character:FindFirstChild(v)                       
-                        else 
-                            repeat wait() 
-                                Plr.Backpack[v].Parent = Plr.Character 
-                            until Plr.Character:FindFirstChild(v)
-                        end
-                        wait(.5)
-                    else 
-                        if  Plrgui.Main.BottomCenter.Boosts[v].timer.TextColor3  ~= Color3.fromRGB(255, 255, 255) then 
-                            local backpackItem = Plr.Backpack:FindFirstChild(v)
-                            if not backpackItem then
-                                repeat wait()
-                                    game:GetService("ReplicatedStorage"):WaitForChild("common"):WaitForChild("packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.5.1"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PowerUpsService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(v)
-                                    wait(0.5)
-                                until Plr.Backpack:FindFirstChild(v)     
-                                repeat wait() 
-                                    Plr.Backpack[v].Parent = Plr.Character
-                                until Plr.Character:FindFirstChild(v)                       
-                            else 
-                                repeat wait() 
-                                    Plr.Backpack[v].Parent = Plr.Character 
-                                until Plr.Character:FindFirstChild(v)
-                            end
-                            wait(.5)
-                        end
+                        local PostOfficeHandler = getsenv(Plrgui.Lobby.PostOffice.PostOfficeHandler)
+                        PostOfficeHandler:OpenFrame()
                     end
                 end
             end
@@ -430,79 +233,3 @@ spawn(function()
     end
 end)
 
-
-spawn(function()
-    while wait(1) do 
-        pcall(function()
-            if Plrgui.Main.RightCenter.weight.Visible then 
-            elseif  Plrgui.Main.RightCenter.treadmill.Visible then 
-                ChangeTreadMillspeed()
-            end
-        end)
-    end 
-end)
-
-
-spawn(function()
-    while wait() do 
-        pcall(function()
-            if Plrgui.Podium.RewardsFrame.Visible then 
-                ClickButton(Plrgui.Podium.RewardsFrame.CanvasGroup.Continue)
-            end 
-            if Plrgui.Podium.winners.Visible then 
-                ClickButton(Plrgui.Podium.winners.ok)
-            end 
-        end)
-    end
-end)
-
-
-spawn(function()
-    while wait() do 
-        pcall(function()
-            while wait() do 
-                for i,v in pairs(Plr.Character:GetChildren()) do 
-                    if v:IsA("Tool") then 
-                        v:Activate()
-                    end 
-                end 
-            end 
-        end)
-    end
-end)
-
-
-spawn(function()
-    while wait() do 
-        pcall(function()
-            while wait() do 
-                if checkallstatdone() and Plrgui.Frames.Stats.Main.MuscleList.Stamina.Frame.APercentage.Text == "100%" then 
-                    UnlockNextBody(getNextbodyatler())
-                end
-            end 
-        end)
-    end
-end)
-
-
-spawn(function()
-    Plrgui.Notifications.Frame.ChildAdded:Connect(function(nofi)
-        pcall(function()
-            if string.find(nofi.text,"tutorial") then 
-                game.Players.LocalPlayer:Kick("Done tutorial pls")
-            elseif string.find(nofi.text,"next world") then 
-                getgenv().NextWorld = true 
-                if getNextWorld() ~= nil then 
-                    UnlockNextWorld(getNextWorld())
-                end
-            elseif string.find(nofi.text,"(5)") then
-                for i ,v in pairs(Plr.Backpack:GetChildren()) do 
-                    if v.Name ~= "Milk" and v.Name ~= "Death Potion"  then 
-                        v.Parent= Plr.Character
-                        wait()
-                    end 
-                end 
-            end
-        end)
-    end)
-end)
