@@ -49,7 +49,7 @@ if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID 
             if ConvertGradientToRGB(raid1.ShopButton.UIGradient, 2) == Color3.fromRGB(249,0,0) then 
                 local FrostBind = getFrostBind()
                 if tonumber(string.match(FrostBind.QuantityLeftLabel.Text,"stock (.*)x")) > 0 then 
-                    if tonumber(PlayerGui.PAGES.RaidShop.PriceDisplay.TextLabel.Text) >= tonumber(FrostBind.BuyButton.AfterDiscountLabel.Text) then 
+                    if tonumber(Plrgui.PAGES.RaidShop.PriceDisplay.TextLabel.Text) >= tonumber(FrostBind.BuyButton.AfterDiscountLabel.Text) then 
                         ClickButton(FrostBind.BuyButton)
                         wait(.5)
                     else
