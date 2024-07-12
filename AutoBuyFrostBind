@@ -1,3 +1,4 @@
+
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -49,19 +50,21 @@ if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID 
             local raid1 = detectRaid1()
             if ConvertGradientToRGB(raid1.ShopButton.UIGradient, 2) == Color3.fromRGB(249,0,0) then 
                 local FrostBind = getFrostBind()
-                if tonumber(string.match(FrostBind.QuantityLeftLabel.Text,"stock (.*)x")) > 0 then 
-repeat wait() until  Plrgui.PAGES.RaidShop.PriceDisplay.TextLabel.Text ~= "??"
-local money = Plrgui.PAGES.RaidShop.PriceDisplay.TextLabel.Text:gsub(",","")
-                    if tonumber(money) >= tonumber(FrostBind.BuyButton.AfterDiscountLabel.Text) then 
-                        ClickButton(FrostBind.BuyButton)
-                        wait(.5)
-                    else
-                        getgenv().stock = false 
-                    
-                    end
-                else 
-                    getgenv().stock = false 
-                    
+                if FrostBind then 
+                  repeat wait() until string.find(FrostBind.QuantityLeftLabel.Text,"x")
+                  if tonumber(string.match(FrostBind.QuantityLeftLabel.Text,"stock (.*)x")) > 0 then 
+                  repeat wait() until  Plrgui.PAGES.RaidShop.PriceDisplay.TextLabel.Text ~= "??"
+                  local money = Plrgui.PAGES.RaidShop.PriceDisplay.TextLabel.Text:gsub(",","")
+                      if tonumber(money) >= tonumber(FrostBind.BuyButton.AfterDiscountLabel.Text) then 
+                          ClickButton(FrostBind.BuyButton)
+                          wait(.5)
+                      else
+                          getgenv().stock = false 
+                      
+                      end
+                  else 
+                      getgenv().stock = false 
+                  end
                 end
             else 
                 ClickButton(raid1)
@@ -74,5 +77,10 @@ local money = Plrgui.PAGES.RaidShop.PriceDisplay.TextLabel.Text:gsub(",","")
 end end)
     end 
 end)
-spawn(function() while not  getgenv().stock do wait()  Plrgui.PAGES.RaidShop.Visible = false
-Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-68.5077744, 10.7806377, -373.844635, 0.164980143, -1.00113404e-07, 0.986296892, -4.6370598e-08, 1, 1.09260846e-07, -0.986296892, -6.37610427e-08, 0.164980143) end end)
+spawn(function() 
+  while getgenv().stock==false do 
+    wait()  
+    Plrgui.PAGES.RaidShop.Visible = false
+    Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-68.5077744, 10.7806377, -373.844635, 0.164980143, -1.00113404e-07, 0.986296892, -4.6370598e-08, 1, 1.09260846e-07, -0.986296892, -6.37610427e-08, 0.164980143) 
+  end 
+end)
