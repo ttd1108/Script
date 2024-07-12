@@ -41,11 +41,11 @@ local function ConvertGradientToRGB(v, num)
     local b = math.floor(color.B * 255)
     return Color3.fromRGB(r, g, b)
 end
-getgenv().stock = true 
+getgenv().stock = false 
 spawn(function()
     while wait() do 
 pcall(function()
-if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID SHOP OPEN" and getgenv().stock then
+if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID SHOP OPEN" then
         if Plrgui.PAGES.RaidShop.Visible then 
             local raid1 = detectRaid1()
             if ConvertGradientToRGB(raid1.ShopButton.UIGradient, 2) == Color3.fromRGB(249,0,0) then 
@@ -59,11 +59,13 @@ if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID 
                           ClickButton(FrostBind.BuyButton)
                           wait(.5)
                       else
-                          getgenv().stock = false 
+                          getgenv().stock = true 
+break
                       
                       end
                   else 
-                      getgenv().stock = false 
+                      getgenv().stock = true 
+break
                   end
                 end
             else 
@@ -78,7 +80,7 @@ end end)
     end 
 end)
 spawn(function() 
-  while getgenv().stock==false do 
+  while getgenv().stock  do 
     wait()  
     Plrgui.PAGES.RaidShop.Visible = false
     Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-68.5077744, 10.7806377, -373.844635, 0.164980143, -1.00113404e-07, 0.986296892, -4.6370598e-08, 1, 1.09260846e-07, -0.986296892, -6.37610427e-08, 0.164980143) 
