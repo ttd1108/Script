@@ -43,6 +43,7 @@ end
 getgenv().stock = true 
 spawn(function()
     while wait() do 
+pcall(function()
 if workspace.Lobby.POpenUI.RaidShop1.RaidBillboardGui.TitleLabel.Text  == "RAID SHOP OPEN" and getgenv().stock then
         if Plrgui.PAGES.RaidShop.Visible then 
             local raid1 = detectRaid1()
@@ -70,7 +71,7 @@ local money = Plrgui.PAGES.RaidShop.PriceDisplay.TextLabel.Text:gsub(",","")
             game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, "E", false, game) 
         end 
-end
+end end)
     end 
 end)
 spawn(function() while not  getgenv().stock do wait()  Plrgui.PAGES.RaidShop.Visible = false
