@@ -82,5 +82,6 @@ spawn(function()
     wait()  
     Plrgui.PAGES.RaidShop.Visible = false
     Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-68.5077744, 10.7806377, -373.844635, 0.164980143, -1.00113404e-07, 0.986296892, -4.6370598e-08, 1, 1.09260846e-07, -0.986296892, -6.37610427e-08, 0.164980143) 
-  end 
+    break  
+end 
 end)
