@@ -14,7 +14,10 @@ StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
     Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
 end
+spawn(function() 
+while wait(10) do 
 setfpscap(5)
+end end)
 function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
