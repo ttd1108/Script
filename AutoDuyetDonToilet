@@ -253,10 +253,21 @@ spawn(function()
                                 else 
                                     ClickButton(Unit.TroopPicture.InteractiveButton)
                                 end
-                            else 
-                                if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.PlaceholderText =="100" then 
+                                wait()
+                            elseif Plr.leaderstats.Gems.Value >= 100 then 
+                                if Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.PlaceholderText =="100" then 
+                                    if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
+                                    else 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                                        wait(10)
+                                    end
                                 else 
+                                    writeGui(Plrgui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount,"100")
                                 end 
+                                
+                                wait()
+                            else 
                                 local msg = {
                                     ['content'] = 'Send Gem Lỗi',
                                     ["embeds"] = {{
@@ -267,7 +278,7 @@ spawn(function()
                                         ["fields"] = {
                                             {
                                                 ["name"] = "Reason",
-                                                ["value"] = "Acc khong co unit rac",                                            
+                                                ["value"] = "Acc khong co unit rac va gem",                                            
                                                 ["inline"] = false
                                             },
                                             
