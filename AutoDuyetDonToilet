@@ -1,0 +1,298 @@
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid")
+local TeleportService = game:GetService("TeleportService")
+
+local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
+local function ConvertGradientToRGB(v, num)
+    local color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+
+
+local RarityColor = {}
+for _, v in pairs(Plrgui.Lobby.MarketplaceFrame.MarketplaceMain.MainFrame.BuyMenu.FilterBar.Rarities:GetChildren()) do
+    if v:IsA("Frame") then
+        RarityColor[v.Name] = {
+            ["1"] = ConvertGradientToRGB(v.FilterButton[v.Name], 1),
+            ["2"] = ConvertGradientToRGB(v.FilterButton[v.Name], 2)
+        }
+    end
+end
+
+
+local function GetRarity(color1, color2)
+    for rarity, colors in pairs(RarityColor) do
+        if (color1 == colors["1"] and color2 == colors["2"]) then
+            return rarity
+        end
+    end
+end
+
+local function GetRandomUnit()
+    for _, v in pairs(Plrgui.Lobby.PostOffice.Menus.SendPackages.PlayerUnits.PlayerUnits:GetChildren()) do
+        if v:IsA("Frame") then
+            local UnitRarity = GetRarity(ConvertGradientToRGB(v.TroopPicture.RarityGradient, 1), ConvertGradientToRGB(v.TroopPicture.RarityGradient, 2))
+            if not v.TroopPicture.CannotTrade.Visible and (UnitRarity == "Basic" or UnitRarity == "Uncommon" or UnitRarity == "Rare") then
+                return v
+            end
+        end
+    end
+end
+
+local function GetJob()
+    local Job = {}
+    local CountJob = 1
+    local JobText = ""
+    if game:HttpGet("https://plazaroblox.vn/donhang/donhang?action=check&ten=D%E1%BB%8ACH%20V%E1%BB%A4%20B%C3%81N%20GEMS%20TOILET%20TOWER%20DEFENSE%20DUY%E1%BB%86T%205-15P") ~= "" then 
+        JobText = game:HttpGet("https://plazaroblox.vn/donhang/donhang?action=check&ten=D%E1%BB%8ACH%20V%E1%BB%A4%20B%C3%81N%20GEMS%20TOILET%20TOWER%20DEFENSE%20DUY%E1%BB%86T%205-15P") 
+    end
+
+    if JobText ~= "" then 
+        for split in string.gmatch(JobText, "([^|]+)") do
+            Job[CountJob] = split 
+            CountJob = CountJob + 1  
+        end 
+        return Job
+    end 
+    return 
+end
+
+local function ClickButton(a)
+    game:GetService("GuiService").SelectedObject = a
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
+end
+
+
+-- Function to detect invocation
+local function DetectInvoke()
+    local a = require(game:GetService("ReplicatedStorage").MultiboxFramework)
+    for i, v in next, getupvalues(getupvalues(a.Network.Invoke)[1])[5] do
+        if i == "PostOffice_SendGift" then
+            return v.SendBridge._identifier
+        end
+    end
+end
+
+local function InputTextBox(textbox, text)
+    textbox:CaptureFocus()
+    wait(0.1)
+    textbox.Text = text
+    
+end
+local function writeGui(path, text)
+   
+    game:GetService("GuiService").SelectedObject = path
+    wait(.2)
+    path.Text = text
+    wait(.2)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, 13, false, game)
+    wait(.1)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, 13, false, game)
+    wait(.2)
+    game:GetService("GuiService").SelectedObject = nil
+    wait(.2)
+    path.Text = text
+    wait(.2)
+end
+local function Random(Length)
+    local alphabet = "0123456789"
+    local n = string.len(alphabet)
+    local pw = {}
+    for i = 1, Length do
+        pw[i] = string.byte(alphabet, math.random(n))
+    end
+    return string.char(table.unpack(pw))
+end
+local function SendWebHook(Id,PlayerName,JobName)
+    local msg = {
+        ['content'] = 'Hoàn Thành Đơn',
+        ["embeds"] = {{
+            ["title"] = "Toilet Tower Defense",
+            ["description"] = getgenv().UnitName,
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "Id đơn",
+                    ["value"] = Id,                                            
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Player name",
+                    ["value"] = PlayerName,                                            
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Đơn",
+                    ["value"] =JobName,                                            
+                    ["inline"] = false
+                }
+            }
+        }}
+    }
+    request({
+        Url = getgenv().Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
+getgenv().SendGemToggle = true 
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+-- Main loop
+spawn(function()
+    while  getgenv().SendGemToggle do
+        wait()
+        pcall(function()
+            if DetectInvoke() ~= nil then
+                wait(10)
+                local Job = GetJob()
+                if Job  then                
+                    repeat wait()
+                        if Plr.leaderstats.Gems.Value >= tonumber(string.match(Job[3], "(.*) GEMS %(")) then
+                            if  Plr.leaderstats.Coins.Value >= 100 then 
+                                local for_gem = string.char(math.random(97, 122))
+                                local gem_only = {
+                                    [1] = {
+                                        [1] = {
+                                            [1] = Random(64),
+                                            [2] = game:GetService("Players"):GetUserIdFromNameAsync(Job[2]),
+                                            [3] = for_gem,
+                                            [4] = for_gem,
+                                            [5] = tonumber(string.match(Job[3], "(.*) GEMS %(")),
+                                            [6] = ""
+                                        },
+                                        [2] = DetectInvoke()
+                                    }
+                                }
+                                game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(gem_only))
+                                local success = "https://plazaroblox.vn/donhang/donhang?action=success&id="..tostring(Job[1])
+                                game:HttpGet(success)
+                                SendWebHook(Job[1],Job[2],Job[3]) 
+                            else 
+                                local msg = {
+                                    ['content'] = 'Send Gem Lỗi',
+                                    ["embeds"] = {{
+                                        ["title"] = "Toilet Tower Defense",
+                                        ["description"] = getgenv().UnitName,
+                                        ["type"] = "rich",
+                                        ["color"] = tonumber(0xbdce44),
+                                        ["fields"] = {
+                                            {
+                                                ["name"] = "Reason",
+                                                ["value"] = "Không đủ coin",                                            
+                                                ["inline"] = false
+                                            },
+                                            
+                                        }
+                                    }}
+                                }
+                                request({
+                                    Url = getgenv().Webhook,
+                                    Method = "POST",
+                                    Headers = {["Content-Type"] = "application/json"},
+                                    Body = game:GetService("HttpService"):JSONEncode(msg)
+                                }) 
+                                wait()
+                            end 
+                        else 
+                            local msg = {
+                                ['content'] = 'Send Gem Lỗi',
+                                ["embeds"] = {{
+                                    ["title"] = "Toilet Tower Defense",
+                                    ["description"] = getgenv().UnitName,
+                                    ["type"] = "rich",
+                                    ["color"] = tonumber(0xbdce44),
+                                    ["fields"] = {
+                                        {
+                                            ["name"] = "Reason",
+                                            ["value"] = "Không đủ gem",                                            
+                                            ["inline"] = false
+                                        },
+                                        
+                                    }
+                                }}
+                            }
+                            request({
+                                Url = getgenv().Webhook,
+                                Method = "POST",
+                                Headers = {["Content-Type"] = "application/json"},
+                                Body = game:GetService("HttpService"):JSONEncode(msg)
+                            }) 
+                            wait()
+                        end
+                    until Job[1] ~= GetJob()[1]
+                end 
+            else
+                print("Step 9: DetectInvoke is nil")
+                if not Plrgui.LoadingGui.LoadingFrame.Visible then
+                    if Plrgui.Lobby.PostOffice.Visible then
+                        if Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text == "ttd0968" then
+                            local Unit = GetRandomUnit()
+                            if Unit then
+                                if  Unit.TroopPicture.IsInTrade.Visible then
+                                    if Plrgui.Lobby.PostOffice.Menus.Alerts.Visible then 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.Alerts.ConfirmSend.Options.Confirm)
+                                    else 
+                                        ClickButton(Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Send.SendButton)
+                                        wait(10)
+                                    end
+                                else 
+                                    ClickButton(Unit.TroopPicture.InteractiveButton)
+                                end
+                            else 
+                                if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.PostOffice.Menus.SendPackages.YourGems.GemAmount.GemAmount.PlaceholderText =="100" then 
+                                else 
+                                end 
+                                local msg = {
+                                    ['content'] = 'Send Gem Lỗi',
+                                    ["embeds"] = {{
+                                        ["title"] = "Toilet Tower Defense",
+                                        ["description"] = getgenv().UnitName,
+                                        ["type"] = "rich",
+                                        ["color"] = tonumber(0xbdce44),
+                                        ["fields"] = {
+                                            {
+                                                ["name"] = "Reason",
+                                                ["value"] = "Acc khong co unit rac",                                            
+                                                ["inline"] = false
+                                            },
+                                            
+                                        }
+                                    }}
+                                }
+                                request({
+                                    Url = getgenv().Webhook,
+                                    Method = "POST",
+                                    Headers = {["Content-Type"] = "application/json"},
+                                    Body = game:GetService("HttpService"):JSONEncode(msg)
+                                }) 
+                                wait()
+                                
+                            end         
+                        else
+                            Plrgui.Lobby.PostOffice.Menus.SendPackages.SendingFrame.Username.Text = "ttd0968"
+                        end
+                    else
+                        local PostOfficeHandler = getsenv(Plrgui.Lobby.PostOffice.PostOfficeHandler)
+                        PostOfficeHandler:OpenFrame()
+                    end
+                end
+            end
+        end)
+    end
+end)
+
