@@ -21,6 +21,8 @@ local staminaeachworld = {
     ["Golden GYM"]=500000000,
     ["Cyber GYM"]=25000000000,
     ["Gravity GYM"]=25000000000000,
+    ["Pirate GYM"]=25000000000000,
+    ["Hidden GYM"]=25000000000000,
 }
 
 
@@ -37,10 +39,7 @@ local machinelist ={
     ["Back"] = "pulldown",
 }
 
-local stattrainlist = {
-    "Abs",
-    "Chest"
-}
+
 local gymworldid = {
     [17450551531] = "Beach GYM",
     [17593437943] = "Underground GYM",
@@ -48,6 +47,8 @@ local gymworldid = {
     [17593439630] = "Golden GYM",
     [17593441072] = "Cyber GYM",
     [17883015202] = "Gravity GYM",
+    [18471848155]="Pirate GYM",
+    [18524420267]= "Hidden GYM"
 }
 
 local gymOrder = {
@@ -57,6 +58,8 @@ local gymOrder = {
     17593439630,
     17593441072,
     17883015202,
+    18471848155,
+    18524420267,
 }
 
 local function getNextWorld()
@@ -291,9 +294,7 @@ spawn(function()
                                     Plr.Character.HumanoidRootPart.CFrame = machine.root.CFrame
                                     fireproximityprompt(machine.root.ProximityPrompt)
                                 until Plrgui.Main.RightCenter.click.Visible
-                            else 
-                                queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/GymLeague"))()')
-                                HopServer()
+                            
                             end 
                         end 
                     until Plr:GetAttribute("maxStamina") >=  staminaeachworld[gymworldid[game.PlaceId]] or string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
@@ -321,9 +322,7 @@ spawn(function()
                                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = machine.root.CFrame
                                         fireproximityprompt(machine.root.ProximityPrompt)
                                     until Plrgui.Main.RightCenter.click.Visible
-                                else 
-                                    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/GymLeague"))()')
-                                    HopServer()
+                                
                                 end 
                             end
                         until getStatProgress()[LowestStat] == "100%" or  string.find(workspace.Podium.entrance.billboard.billboard.labelTimer.Text,"Starts")
