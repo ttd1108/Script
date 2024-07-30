@@ -12,7 +12,7 @@ StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
     Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
 end
-
+getgenv().farm = true 
 local function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)        
@@ -26,8 +26,8 @@ local function findMiniLuck()
     return 
 end 
 spawn(function()
-    while wait() do
-        pcall(function() 
+    while getgenv().farm  do wait()
+        
             if not Plrgui.HUD.HolderLeftBottom.HUDPotions:FindFirstChild("PotionViewportFrame") then 
                 if Plrgui.PAGES.ItemPage.Visible then 
                     if not Plrgui.PAGES.ItemPage.FocusDisplayItem.EmptyTextLabel.Visible then 
@@ -37,6 +37,9 @@ spawn(function()
                         local MiniLuck = findMiniLuck()
                         if MiniLuck then 
                             ClickButton(MiniLuck)
+                        else 
+                            getgenv().farm = false 
+                            ClickButton(Plrgui.PAGES.ItemPage.CloseButton)
                         end
                     end
                 else 
@@ -49,9 +52,9 @@ spawn(function()
             else 
                 if Plrgui.PAGES.ItemPage.Visible then 
 
-                    Plrgui.PAGES.ItemPage.Visible = false 
+                    ClickButton(Plrgui.PAGES.ItemPage.CloseButton)
                 end
             end 
-        end)
+       
     end 
 end)
