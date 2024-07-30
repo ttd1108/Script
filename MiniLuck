@@ -14,8 +14,12 @@ if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
     Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
 end
 repeat wait(1)
-until game:GetService("CoreGui"):FindFirstChild("FluxusAndroidUI")
-game.CoreGui.FluxusAndroidUI.Enabled = false
+until game:IsLoaded()
+for i, v in pairs(game.CoreGui:GetChildren()) do
+    if v:IsA("ScreenGui") and v.DisplayOrder == 1999999999 then
+        v.Enabled = false
+    end
+end
 local function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)        
@@ -48,7 +52,12 @@ spawn(function()
                     else 
                         game:Shutdown()
                     end
-                end 
+                end
+            else 
+                if Plrgui.PAGES.ItemPage.Visible then 
+
+                    Plrgui.PAGES.ItemPage.Visible = false 
+                end
             end 
         end)
     end 
