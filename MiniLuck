@@ -7,11 +7,11 @@ repeat wait() until Plr.Character:FindFirstChild("Humanoid")
 local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 local StarterGui = game:GetService("StarterGui")
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+--StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 --StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
-    Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
-end
+    if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
+        Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
+    end
 getgenv().farm = true 
 local function ClickButton(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
