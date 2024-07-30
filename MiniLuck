@@ -28,7 +28,7 @@ local function findMiniLuck()
 end 
 spawn(function()
     while wait() do
-        pcall(function() 
+       
             if not Plrgui.HUD.HolderLeftBottom.HUDPotions:FindFirstChild("PotionViewportFrame") then 
                 if Plrgui.PAGES.ItemPage.Visible then 
                     if not Plrgui.PAGES.ItemPage.FocusDisplayItem.EmptyTextLabel.Visible then 
@@ -53,6 +53,6 @@ spawn(function()
                     Plrgui.PAGES.ItemPage.Visible = false 
                 end
             end 
-        end)
+       
     end 
 end)
