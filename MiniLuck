@@ -1,0 +1,55 @@
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid")
+local TeleportService = game:GetService("TeleportService")
+local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+--StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
+    Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
+end
+repeat wait(1)
+until game:GetService("CoreGui"):FindFirstChild("FluxusAndroidUI")
+game.CoreGui.FluxusAndroidUI.Enabled = false
+local function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)        
+end
+local function findMiniLuck()
+    for i,v in pairs(Plrgui.PAGES.ItemPage.ScrollingFrame:GetChildren()) do
+        if v.Name == "Mini Luck Potion" then 
+            return v 
+        end 
+    end 
+    return 
+end 
+spawn(function()
+    while wait() do
+        pcall(function() 
+            if not Plrgui.HUD.HolderLeftBottom.HUDPotions:FindFirstChild("PotionViewportFrame") then 
+                if Plrgui.PAGES.ItemPage.Visible then 
+                    if not Plrgui.PAGES.ItemPage.FocusDisplayItem.EmptyTextLabel.Visible then 
+                        ClickButton(Plrgui.PAGES.ItemPage.HolderItemButtons.Use)
+                        wait(.5)
+                    else 
+                        local MiniLuck = findMiniLuck()
+                        if MiniLuck then 
+                            ClickButton(MiniLuck)
+                        end
+                    end
+                else 
+                    if Plrgui.HUD.HolderLeft:FindFirstChild("ItemsButtonHolder") then 
+                        ClickButton(Plrgui.HUD.HolderLeft.ItemsButtonHolder)
+                    else 
+                        game:Shutdown()
+                    end
+                end 
+            end 
+        end)
+    end 
+end)
