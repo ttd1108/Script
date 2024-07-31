@@ -1,10 +1,9 @@
-repeat wait() until game:IsLoaded()
+repeat wait(10) until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
 repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid")
-local TeleportService = game:GetService("TeleportService")
 local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
 local StarterGui = game:GetService("StarterGui")
 --StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
