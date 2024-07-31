@@ -1,4 +1,4 @@
-repeat wait(10) until game:IsLoaded()
+repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
 repeat wait() until Plr.Character
