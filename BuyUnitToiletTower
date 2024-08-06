@@ -123,18 +123,18 @@ local function WebhookFindUnit(Unit,Cost)
             ["type"] = "rich",
             ["color"] = tonumber(0xbdce44),
             ["fields"] = {
-  {
-                    ["name"] = "Unit Name:",
-                    ["value"] = Unit,                                            
-                    ["inline"] = false
-                },
+
                 {
                     ["name"] = "Cost:",
                     ["value"] = Cost,                                            
                     ["inline"] = false
                 },
                 
-                
+                 {
+                    ["name"] = "Server:",
+                    ["value"] = game.JobId,                                            
+                    ["inline"] = false
+                },
                 
             }
         }}
