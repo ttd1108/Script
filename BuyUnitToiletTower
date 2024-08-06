@@ -132,7 +132,7 @@ local function WebhookFindUnit(Unit,Cost)
                 
                  {
                     ["name"] = "Server:",
-                    ["value"] = game.JobId,                                            
+                    ["value"] = 'game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..',"'..game.JobId..'",game.Players.LocalPlayer)',                                            
                     ["inline"] = false
                 },
                 
