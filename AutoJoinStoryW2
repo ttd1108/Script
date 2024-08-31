@@ -7,7 +7,9 @@ repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
 local vim = game:GetService("VirtualInputManager")
-
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 
 --List World
 local ListWorld = {
