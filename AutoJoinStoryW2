@@ -1,0 +1,149 @@
+
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+local vim = game:GetService("VirtualInputManager")
+
+
+--List World
+local ListWorld = {
+    "Ruined City",
+    "Aether Gateway",
+    "Pantheon Passage",
+    "Abyssal Gate",
+    "Soulweaver Gate",
+    "Cyber Gate",
+    
+}
+
+
+--ClickButton 
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
+end 
+
+
+--get world
+local function GetWorld(NameWorld)
+    for i,v in pairs(Plrgui.PAGES.MatchPage.WorldSelectFrame.ScrollingFrame:GetChildren()) do 
+        if v.Name == "_WorldHolder" then
+            if v.ImageButton.WorldNameLabel.Text == NameWorld then 
+                return v
+            end 
+        end 
+    end 
+end
+
+
+--get Highest world
+local function GetHighestWorld()
+    local HighestWorld = ""   
+    for i,v in pairs(ListWorld) do 
+        local World = GetWorld(v)
+        if not World.ImageButton.LockedFrame.Visible then 
+             HighestWorld = World
+        end 
+    end
+    return HighestWorld
+end          
+
+
+--get Highest chapter
+local function GetHighestChapter()
+    local HighestChapter = ""
+    for i,v in pairs(Plrgui.PAGES.MatchPage.Frame.Main.LeftSide.ScrollingFrame:GetChildren()) do
+        if v.Name == "_ChapterTemplate" then 
+            if v:FindFirstChild("ChapterButton") then 
+                if v.ChapterButton.TextLabel.Text ~= "Infinite Mode" then 
+                    if not v.ChapterButton.LockedFrame.Visible then 
+                        HighestChapter = v 
+                    end 
+                end 
+            end 
+        end 
+    end
+    return HighestChapter 
+end
+
+
+--Convert Gradient to RGB
+function ConvertGradientToRGB(v, num)
+    color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+
+
+--get Confirm button
+local function GetConfirmButton()
+    for i,v in pairs(Plrgui.PAGES.MatchPage.Frame.OptionsHolder:GetChildren()) do
+        if v.Name == "_ButtonHolder" then 
+            if v:FindFirstChild("ConfirmButton") then 
+                return v 
+            end 
+        end
+    end
+end
+
+
+--Main 
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if game.PlaceId == 17017769292 then 
+                if (Plr.Character.HumanoidRootPart.Position - CFrame.new(44.03368, 11.219141, -431.113129, -0.935099721, 2.95253226e-08, -0.35438475, 3.43023693e-10, 1, 8.24091941e-08, 0.35438475, 7.69392514e-08, -0.935099721).Position).magnitude <= 10 then 
+                    if Plrgui.PAGES.RealmTeleportPage.Visible then 
+                        if Plrgui.PromptGui:FindFirstChild("PromptDefault") then 
+                            ClickButton(Plrgui.PromptGui.PromptDefault.Holder.Options.Teleport)
+                        else
+                            ClickButton(Plrgui.PAGES.RealmTeleportPage.TeleportButton)
+                        end
+                    else
+                        vim:SendKeyEvent(true, "E", false, game)
+                            task.wait()
+                        vim:SendKeyEvent(false, "E", false, game)
+                    end
+                else
+                    Plr.Character.HumanoidRootPart.CFrame =  CFrame.new(44.03368, 11.219141, -431.113129, -0.935099721, 2.95253226e-08, -0.35438475, 3.43023693e-10, 1, 8.24091941e-08, 0.35438475, 7.69392514e-08, -0.935099721)
+                end
+            else 
+                if Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.MatchDetailsFrame.Visible then
+                    ClickButton(Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.OptionsHolder.StartButtonHolder.ConfirmButton)
+                else 
+                    if Plrgui.PAGES.MatchPage.Visible then 
+                        if Plrgui.PAGES.MatchPage.Frame.Main.LeftSide.Visible then
+                            local HighestChapter = GetHighestChapter()
+                            if ConvertGradientToRGB(HighestChapter.ChapterButton.UIGradient,1) == Color3.fromRGB(29, 187, 255) then 
+                                ClickButton(GetConfirmButton())
+                            else 
+                                ClickButton(HighestChapter)
+                            end
+                        else 
+                            local HighestWorld =GetHighestWorld()
+                            print(HighestWorld)
+                            for i,v in pairs(Plrgui.PAGES.MatchPage.WorldSelectFrame.ScrollingFrame:GetChildren()) do 
+                                if v.Name == "_WorldHolder" then
+                                    if v ~= HighestWorld then 
+                                        v.Visible= false 
+                                    end
+                                end
+                            end
+                            ClickButton(HighestWorld)
+                        end
+                    else 
+                        repeat wait()
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SubStuff_DONT_DELETE.StoryPods:GetChildren()[math.random(1,6)].MatchDisplayPart.CFrame
+                        until Plrgui.PAGES.MatchPage.Visible
+                    end
+                end
+            end
+        end)
+    end
+end)
