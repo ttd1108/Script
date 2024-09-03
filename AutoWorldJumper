@@ -24,8 +24,13 @@ local function getWaveJumperItem(waveJumperGui)
     for i,v in pairs(waveJumperGui.ScrollingFrame:GetChildren()) do 
         if v.Name == "Wave Jumper (Tier 2)" then 
             return v 
-        elseif v.Name == "Wave Jumper (Tier 1)" then 
+        
+        end 
+    end 
+    for i,v in pairs(waveJumperGui.ScrollingFrame:GetChildren()) do 
+        if v.Name == "Wave Jumper (Tier 1)" then 
             return v 
+        
         end 
     end 
     return  
@@ -46,11 +51,15 @@ spawn(function()
                                 UseWaveJumpToggle = false 
                                 wait()
                             else 
-                                ClickButton(waveJumperItem)
+                                repeat wait()
+                                    ClickButton(waveJumperItem)
+                                until WaveJumperGui.FocusDisplayItem.EmptyTextLabel.Visible or not UseWaveJumpToggle
                             end
                         end 
                     else 
-                        ClickButton(Plrgui.HUD.Toolbar.CurrencyList.WaveJumperButton)
+                        repeat wait()
+                            ClickButton(Plrgui.HUD.Toolbar.CurrencyList.WaveJumperButton)
+                        until GetWaveJumperGui() ~= nil or not UseWaveJumpToggle
                     end 
                 end 
             end
