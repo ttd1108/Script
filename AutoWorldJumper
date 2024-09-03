@@ -1,0 +1,59 @@
+
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game.Players.LocalPlayer.PlayerGui
+local vim = game:GetService("VirtualInputManager")
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
+end 
+local function GetWaveJumperGui()
+    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+        if v.Name == "GridPrompt" then 
+            if v.TitleLabel.Text == "Select Wave Jumper" and v.Visible then 
+                return v 
+            end 
+        end 
+    end 
+end 
+local function getWaveJumperItem(waveJumperGui)
+    for i,v in pairs(waveJumperGui.ScrollingFrame:GetChildren()) do 
+        if v.Name == "Wave Jumper (Tier 2)" then 
+            return v 
+        elseif v.Name == "Wave Jumper (Tier 1)" then 
+            return v 
+        end 
+    end 
+    return  
+end
+getgenv().UseWaveJumpToggle = true 
+spawn(function()
+    while UseWaveJumpToggle do 
+        wait()
+        pcall(function()
+            if workspace:FindFirstChild("PhysicalMap") then 
+                if Plrgui.HUD.Toolbar.CurrencyList.WaveJumperButton.Visible then 
+                    local WaveJumperGui = GetWaveJumperGui()
+                    if WaveJumperGui then 
+                        local waveJumperItem = getWaveJumperItem(WaveJumperGui)
+                        if waveJumperItem then 
+                            if not WaveJumperGui.FocusDisplayItem.EmptyTextLabel.Visible then 
+                                ClickButton(WaveJumperGui.HolderButtons.ConfirmButton)
+                                UseWaveJumpToggle = false 
+                                wait()
+                            else 
+                                ClickButton(waveJumperItem)
+                            end
+                        end 
+                    else 
+                        ClickButton(Plrgui.HUD.Toolbar.CurrencyList.WaveJumperButton)
+                    end 
+                end 
+            end
+        end)
+    end
+end)
