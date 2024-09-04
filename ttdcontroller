@@ -1,0 +1,118 @@
+if game:GetService("CoreGui"):FindFirstChild("ttdmove") then 
+	game:GetService("CoreGui"):FindFirstChild("ttdmove"):Destroy()
+end
+
+local Converted = {
+	["_ScreenGui"] = Instance.new("ScreenGui");
+	["_Frame"] = Instance.new("Frame");
+	["_Up"] = Instance.new("ImageButton");
+	["_Left"] = Instance.new("ImageButton");
+	["_Right"] = Instance.new("ImageButton");
+	["_Down"] = Instance.new("ImageButton");
+}
+
+-- Properties:
+
+Converted["_ScreenGui"].Parent = game:GetService("CoreGui")
+Converted["_ScreenGui"].Name = "ttdmove"
+Converted["_Frame"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Converted["_Frame"].BackgroundTransparency = 1
+Converted["_Frame"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+Converted["_Frame"].BorderSizePixel = 0
+Converted["_Frame"].Position = UDim2.new(0.0629923716, 0, 0.699680507, 0)
+Converted["_Frame"].Size = UDim2.new(0, 206, 0, 172)
+Converted["_Frame"].Parent = Converted["_ScreenGui"]
+
+Converted["_Up"].Image = "rbxassetid://18968310209"
+Converted["_Up"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Converted["_Up"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+Converted["_Up"].BorderSizePixel = 0
+Converted["_Up"].Position = UDim2.new(0.339805812, 0, 0, 0)
+Converted["_Up"].Size = UDim2.new(0, 66, 0, 54)
+Converted["_Up"].Name = "Up"
+Converted["_Up"].Parent = Converted["_Frame"]
+
+Converted["_Left"].Image = "rbxassetid://18968317337"
+Converted["_Left"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Converted["_Left"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+Converted["_Left"].BorderSizePixel = 0
+Converted["_Left"].Position = UDim2.new(0, 0, 0.313953489, 0)
+Converted["_Left"].Size = UDim2.new(0, 70, 0, 64)
+Converted["_Left"].Name = "Left"
+Converted["_Left"].Parent = Converted["_Frame"]
+
+Converted["_Right"].Image = "rbxassetid://18968319290"
+Converted["_Right"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Converted["_Right"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+Converted["_Right"].BorderSizePixel = 0
+Converted["_Right"].Position = UDim2.new(0.660194159, 0, 0.313953489, 0)
+Converted["_Right"].Size = UDim2.new(0, 70, 0, 64)
+Converted["_Right"].Name = "Right"
+Converted["_Right"].Parent = Converted["_Frame"]
+
+Converted["_Down"].Image = "rbxassetid://18968320377"
+Converted["_Down"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Converted["_Down"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+Converted["_Down"].BorderSizePixel = 0
+Converted["_Down"].Position = UDim2.new(0.339805812, 0, 0.686046541, 0)
+Converted["_Down"].Size = UDim2.new(0, 66, 0, 54)
+Converted["_Down"].Name = "Down"
+Converted["_Down"].Parent = Converted["_Frame"]
+local vim = game:GetService("VirtualInputManager")
+
+local keycode = {
+	["Up"] = "W",
+	["Right"] = "D",
+	["Down"] = "S",
+	["Left"] = "A",
+}
+local function onHold(direction)
+	vim:SendKeyEvent(true, keycode[direction], false, game)
+	for i,v in pairs(keycode) do 
+		if i ~= direction then 
+			vim:SendKeyEvent(false, v, false, game)
+		end
+	end
+end
+local function onRelease(direction)
+	for i,v in pairs(keycode) do 
+
+		vim:SendKeyEvent(false, v, false, game)
+	end
+end
+
+-- Connect the functions to the Up button
+Converted["_Up"].MouseButton1Down:Connect(function()
+	onHold("Up")
+end)
+
+Converted["_Up"].MouseButton1Up:Connect(function()
+	onRelease("Up")
+end)
+
+-- Connect the functions to the Down button
+Converted["_Down"].MouseButton1Down:Connect(function()
+	onHold("Down")
+end)
+
+Converted["_Down"].MouseButton1Up:Connect(function()
+	onRelease("Down")
+end)
+
+-- Connect the functions to the Left button
+Converted["_Left"].MouseButton1Down:Connect(function()
+	onHold("Left")
+end)
+
+Converted["_Left"].MouseButton1Up:Connect(function()
+	onRelease("Left")
+end)
+
+-- Connect the functions to the Right button
+Converted["_Right"].MouseButton1Down:Connect(function()
+	onHold("Right")
+end)
+
+Converted["_Right"].MouseButton1Up:Connect(function()
+	onRelease("Right")
+end)
