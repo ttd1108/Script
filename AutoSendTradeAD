@@ -132,7 +132,7 @@ _G.farm = true
 spawn(function()
     while _G.farm  do wait()
         pcall(function()
-            if game.PlaceId == 17764698696 then 
+            if game.PlaceId == 17764698696 or game.PlaceId == 17017769292 then 
                 
                 local TradeHubGui = GetTradeHubGui()
                 if TradeHubGui then 
