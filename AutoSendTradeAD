@@ -53,6 +53,16 @@ local function GetTradeHubGui()
     end
     return
 end
+local function GetWaitingTrade()
+    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+        if v.Name == "PromptDefault" then 
+            if v.Visible and string.find(v.Holder.MessageLabel.Text,"before trading") then 
+                return v
+            end 
+        end 
+    end
+    return
+end
 function writeGui(path, text)
    
         guiservice.SelectedObject = path
@@ -139,9 +149,12 @@ spawn(function()
                     if TradeHubGui.Holder.Options:FindFirstChild("Join Friend") then 
                         ClickButton(TradeHubGui.Holder.Options["Join Friend"])
                     elseif TradeHubGui.Holder.Options:FindFirstChild("Teleport") then 
-                        writeGui(TradeHubGui.Holder.Friend.TextBoxHolder.TextBox,getgenv().AccHold)
-                        wait()
-                        ClickButton(TradeHubGui.Holder.Options["Teleport"])
+                        if TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ~=getgenv().AccHold then
+                            writeGui(TradeHubGui.Holder.Friend.TextBoxHolder.TextBox,getgenv().AccHold)
+                            wait()
+                        else 
+                            ClickButton(TradeHubGui.Holder.Options["Teleport"])
+                        end
                     end 
                 else 
                     Plr.Character.HumanoidRootPart.CFrame = CFrame.new(93.8999634, 10.9806194, -325.375671)
@@ -152,12 +165,9 @@ spawn(function()
                 end 
             elseif game.PlaceId == 17490500437 then 
                 if game.Players:FindFirstChild(getgenv().AccHold) then 
-                    if not Loaded then 
-                        wait(60)
-                        Loaded = true 
-                    end 
+                   
                     if CheckTradeFinish() then 
-                        game:Shutdown()
+                        _G.farm = false 
                     
                     else    
                         if Plrgui.UI.TradeTransactionUI.Visible then
@@ -211,19 +221,27 @@ spawn(function()
                             end
                         else 
                             if Plrgui.UI.TradeMenuUI.Visible then 
-                                local TradeUser = FindUserTrade()
-                                if TradeUser then   
-                                    for i,v in pairs(Plrgui.UI.TradeMenuUI.RequestFrame:GetChildren()) do 
-                                        if v.Name == "Player" then 
-                                            if v~= TradeUser then 
-                                                v.Visible = false 
-                                            end
-                                        end 
+                                local WaitingTrade = GetWaitingTrade()
+                                if WaitingTrade then 
+                                    print('waiting')
+                                    ClickButton(WaitingTrade.Holder.Options.Back)
+                                else
+                                    print('not waiting')
+                                    local TradeUser = FindUserTrade()
+                                    if TradeUser then   
+                                        for i,v in pairs(Plrgui.UI.TradeMenuUI.RequestFrame:GetChildren()) do 
+                                            if v.Name == "Player" then 
+                                                if v~= TradeUser then 
+                                                    v.Visible = false 
+                                                end
+                                            end 
+                                        end
+                                        ClickButton(TradeUser.Frame.RequestButton)                         
                                     end
-                                    ClickButton(TradeUser.Frame.RequestButton)                         
-                                end
+                                end 
                             else 
-                                ClickButton(Plrgui.HUD.MobileHolderRight.TradeButtonHolder.OpenTrade)
+                                local TradeButton = Plrgui.HUD.HolderLeft.TradeButtonHolder.OpenTrade or Plrgui.HUD.MobileHolderRight.TradeButtonHolder.OpenTrade
+                                ClickButton(TradeButton)
                             end 
                         end
                     end
