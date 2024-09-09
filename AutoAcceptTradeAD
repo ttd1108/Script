@@ -1,0 +1,80 @@
+
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game.Players.LocalPlayer.PlayerGui
+local vim = game:GetService("VirtualInputManager")
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
+end 
+
+local listacc = game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/master/listaccgom")
+local function CheckTradeFinish()
+    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+        if v.Name == "PromptDefault" then 
+            if v.Visible and v.Holder.MessageLabel.Text == "Trade has been completed!" then 
+                return v
+            end 
+        end 
+    end
+    return
+end 
+local function getTradeRequest()
+    for i,v in pairs(Plrgui.UI.NotificationsHolder:GetChildren()) do 
+        if v.Name == "Notification" then 
+            local match = string.match(v.PromptWindow.PromptMessage.Text, "%s*(.*)%s*wants%s*")
+            if string.find(listacc, match) then
+               
+                return v 
+            end 
+        end 
+    end 
+end 
+_G.farm = true 
+spawn(function()
+    while _G.farm do wait()
+            local PlayerControl =  require(game:GetService("ReplicatedFirst").Classes.PlayerControl)
+            local Data = PlayerControl.AllPlayerControls[Plr].Inventory
+            if tonumber(Data.Items["Trait Crystal"]) < 19000 then 
+                print('thieu rr')
+
+                local tradefinishgui = CheckTradeFinish()
+                if tradefinishgui  then 
+                    print('trade done')
+                    ClickButton(tradefinishgui.Holder.Options.Back)
+                else 
+                    if Plrgui.UI.TradeTransactionUI.Visible then 
+                        print('Ui trade dang bat')
+                        if  Plrgui.UI.TradeTransactionUI.ReceiveContents.Locked.Enabled then
+                            if Plrgui.UI.TradeTransactionUI.Lock.TextLabel.Text == "Trade" or Plrgui.UI.TradeTransactionUI.Lock.TextLabel.Text == "Ready" then
+                                ClickButton(Plrgui.UI.TradeTransactionUI.Lock)
+                                wait()
+                            end
+                        end
+                    else 
+                        print('ui trade tat')
+                        local traderequest = getTradeRequest() 
+                        if traderequest then 
+                            print('da tim duoc trade requestr')
+                            ClickButton(traderequest.PromptWindow.Responses.ResponseYes)
+                        end 
+                    end
+                end
+            else 
+                request(
+                    {
+                    Url = "https://discord.com/api/webhooks/1224690904799907962/UDhPgFvhTwu8FJJ1vWc0fl-p4vDZxlhxsoCPe4Zagw2hjusJ-1vOclcUN6tw-ShxsbHB",
+                    Method = "POST",
+                    Headers = {["Content-Type"] = "application/json"},
+                Body = game:GetService("HttpService"):JSONEncode({["content"] = "acc "..Plr.Name.." full reroll"})
+                    }
+                )
+                wait(5)
+            end
+        
+    end
+end)
