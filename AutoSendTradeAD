@@ -243,7 +243,13 @@ spawn(function()
                                     end
                                 end 
                             else 
-                                local TradeButton = Plrgui.HUD.HolderLeft.TradeButtonHolder.OpenTrade or Plrgui.HUD.MobileHolderRight.TradeButtonHolder.OpenTrade
+
+                                local TradeButton
+                                if Plrgui.HUD.HolderLeft:FindFirstChild("TradeButtonHolder") then 
+                                    TradeButton =Plrgui.HUD.HolderLeft:FindFirstChild("TradeButtonHolder").OpenTrade
+                                elseif Plrgui.HUD.MobileHolderRight:FindFirstChild("TradeButtonHolder") then
+                                    TradeButton =Plrgui.HUD.MobileHolderRight:FindFirstChild("TradeButtonHolder").OpenTrade
+                                end
                                 ClickButton(TradeButton)
                             end 
                         end
