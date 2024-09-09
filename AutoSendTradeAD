@@ -9,6 +9,9 @@ local Plrgui =game.Players.LocalPlayer.PlayerGui
 local guiservice = game:GetService("GuiService")
 local vim = game:GetService("VirtualInputManager")
 local ListItemTrade = {"Trait Crystal","Frost Bind","Risky Dice"}
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 function SlideButton(a, targetX)
     local currentX = a.AbsolutePosition.X + a.AbsoluteSize.X / 2
     local moveStep = 5  -- Default step size
