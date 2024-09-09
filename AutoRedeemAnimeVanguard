@@ -59,7 +59,7 @@ spawn(function()
         end 
     end 
 end)
-local ListRarity = {"Mythic","Legendary"}
+local ListRarity = {"Mythic","Legendary","Secret"}
 Plrgui.ViewFrames.ChildAdded:Connect(function(Unit)
 	if table.find(ListRarity,Unit.Holder.Main.UnitName.UnitRarity.Text) then 
         SendWebHook(Unit.Holder.Main.UnitName.UnitName.Text,Unit.Holder.Main.UnitName.UnitRarity.Text) 
