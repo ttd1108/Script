@@ -6,10 +6,17 @@ repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game.Players.LocalPlayer.PlayerGui
 local vim = game:GetService("VirtualInputManager")
-local ListCode = {"DELAY","RELEASE"}
+local ListCode = {"DELAY","RELEASE","10KLIKES","100KLIKES","200KLIKES","300KLIKES","10MVISITS","25MVISITS","400KLIKES"}
 for i,v in pairs(ListCode) do 
     game:GetService("ReplicatedStorage"):WaitForChild("Networking"):WaitForChild("CodesEvent"):FireServer(v)
 end
+local args = {
+    [1] = "Toggle",
+    [2] = "Rare"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Networking"):WaitForChild("Settings"):WaitForChild("SettingsEvent"):FireServer(unpack(args))
+
 function SendWebHook(UnitName,UnitRarity)
     local msg = {
         ['content'] = '@everyone',
