@@ -39,7 +39,7 @@ spawn(function()
     while _G.farm do wait()
             local PlayerControl =  require(game:GetService("ReplicatedFirst").Classes.PlayerControl)
             local Data = PlayerControl.AllPlayerControls[Plr].Inventory
-            if tonumber(Data.Items["Trait Crystal"]) < 19000 then 
+            if tonumber(Data.Items["Trait Crystal"]) < 20000 then 
                 print('thieu rr')
 
                 local tradefinishgui = CheckTradeFinish()
