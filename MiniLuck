@@ -1,57 +1,81 @@
-repeat wait() until game:IsLoaded()
-repeat wait() until game.Players.LocalPlayer
-local Plr = game.Players.LocalPlayer
-repeat wait() until Plr.Character
-repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
-repeat wait() until Plr.Character:FindFirstChild("Humanoid")
-local Plrgui = game:GetService("Players").LocalPlayer.PlayerGui
-local StarterGui = game:GetService("StarterGui")
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-if  Plrgui.PromptGui:FindFirstChild("GridPrompt") then
-    Plrgui.PromptGui:FindFirstChild("GridPrompt"):Destroy()
+repeat
+    wait()
+until game:IsLoaded()
+repeat
+    wait()
+until game.Players.LocalPlayer
+local a = game.Players.LocalPlayer
+repeat
+    wait()
+until a.Character
+repeat
+    wait()
+until a.Character:FindFirstChild("HumanoidRootPart")
+repeat
+    wait()
+until a.Character:FindFirstChild("Humanoid")
+local b = game.Players.LocalPlayer.PlayerGui
+local c = game:GetService("StarterGui")
+c:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+c:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+function ClickButton(d)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        d.AbsolutePosition.X + d.AbsoluteSize.X / 2,
+        d.AbsolutePosition.Y + 65,
+        0,
+        true,
+        d,
+        1
+    )
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        d.AbsolutePosition.X + d.AbsoluteSize.X / 2,
+        d.AbsolutePosition.Y + 65,
+        0,
+        false,
+        d,
+        1
+    )
 end
-local ItemButton = Plrgui.HUD.MobileHolderRight.ItemsButtonHolder or Plrgui.HUD.HolderLeft.ItemsButtonHolder
-getgenv().farm = true 
+local function e()
+    for f, g in pairs(game:GetService("Players").LocalPlayer.PlayerGui.PromptGui:GetChildren()) do
+        if g.Name == "PromptDefault" then
+            if g.Holder.TitleLabel.Text == "Leave The Game?" then
+                return g
+            end
+        end
+    end
+    return
+end
 
-local function ClickButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)        
-end
-local function findMiniLuck()
-    for i,v in pairs(Plrgui.PAGES.ItemPage.ScrollingFrame:GetChildren()) do
-        if v.Name == "Mini Luck Potion" then 
-            return v 
-        end 
-    end 
-    return 
-end 
+_G.farm = true 
 spawn(function()
-    while getgenv().farm  do wait()
-        
-            if not Plrgui.HUD.HolderLeftBottom.HUDPotions:FindFirstChild("PotionViewportFrame") then 
-                if Plrgui.PAGES.ItemPage.Visible then 
-                    if not Plrgui.PAGES.ItemPage.FocusDisplayItem.EmptyTextLabel.Visible then 
-                        ClickButton(Plrgui.PAGES.ItemPage.HolderItemButtons.Use)
-                        wait(.5)
-                    else 
-                        local MiniLuck = findMiniLuck()
-                        if MiniLuck then 
-                            ClickButton(MiniLuck)
-                        else 
-                            getgenv().farm = false 
-                            ClickButton(Plrgui.PAGES.ItemPage.CloseButton)
+    while _G.farm    do
+        wait()
+        pcall(function()
+            if game.PlaceId ~= 17764698696 and game.PlaceId ~= 17017769292 then
+                if b.PAGES.MatchResultPage.Banner.TextLabel.Text == "Defeat!" then 
+                    if  b.PAGES.MatchResultPage.Visible then 
+                        b.PAGES.MatchResultPage.Visible = false 
+                    end 
+                    
+                    
+                    if b.TopBar.Enabled then
+                        local h = e()
+                        if h then
+                            ClickButton(h.Holder.Options.Leave)
+                        else
+                            if b.TopBar.HolderFrame.Left.dropDown.DropdownFrame.Visible then
+                                ClickButton(b.TopBar.HolderFrame.Left.dropDown.DropdownFrame["Leave Game"])
+                            else
+                                b.TopBar.HolderFrame.Left.dropDown.DropdownFrame.Visible = true
+                            end
                         end
-                    end
-                else 
-                    ClickButton(ItemButton)
-                end
-            else 
-                if Plrgui.PAGES.ItemPage.Visible then 
+                    else 
+                        b.TopBar.Enabled = true 
 
-                    ClickButton(Plrgui.PAGES.ItemPage.CloseButton)
+                    end 
                 end
-            end 
-       
-    end 
+            end
+        end)
+    end
 end)
