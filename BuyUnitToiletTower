@@ -170,7 +170,7 @@ spawn(function()
         if game.GameId == 4778845442 then
             if game.PlaceId == 13775256536 then
                 if not game:GetService("Players").LocalPlayer.PlayerGui.Teleports["Lobby -> TradingPlaza"].Visible then 
-                    game:GetService("Players").LocalPlayer.PlayerGui.Teleports["Lobby -> TradingPlaza"].Visible =true
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =CFrame.new(-497.519958, 246.002686, 52.4452629, -0.859242439, 7.52596776e-08, -0.511568606, 4.83728471e-08, 1, 6.58673684e-08, 0.511568606, 3.18500071e-08, -0.859242439)
                 else 
                     ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Teleports["Lobby -> TradingPlaza"].Teleport.Button)
                 end 
