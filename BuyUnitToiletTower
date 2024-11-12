@@ -169,10 +169,10 @@ spawn(function()
     while wait() do 
         if game.GameId == 4778845442 then
             if game.PlaceId == 13775256536 then
-                if not Plrgui.Lobby.TradingPlazaFrame.Visible then 
-                    Plrgui.Lobby.TradingPlazaFrame.Visible =true
+                if not game:GetService("Players").LocalPlayer.PlayerGui.Teleports["Lobby -> TradingPlaza"].Visible then 
+                    game:GetService("Players").LocalPlayer.PlayerGui.Teleports["Lobby -> TradingPlaza"].Visible =true
                 else 
-                    ClickButton(Plrgui.Lobby.TradingPlazaFrame.Start)
+                    ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Teleports["Lobby -> TradingPlaza"].Teleport.Button)
                 end 
             else 
                 if not game:GetService("Players").LocalPlayer.PlayerGui.LoadingGui.LoadingFrame.Visible then
