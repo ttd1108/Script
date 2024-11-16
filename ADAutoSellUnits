@@ -1,0 +1,202 @@
+getgenv().UnitName = "Spectral Warden"
+getgenv().Price = 15000000
+repeat
+    wait()
+until game:IsLoaded()
+repeat
+    wait()
+until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat
+    wait()
+until Plr.Character
+repeat
+    wait()
+until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat
+    wait()
+until Plr.Character:FindFirstChild("Humanoid")
+local Plrgui = game.Players.LocalPlayer.PlayerGui
+local vim = game:GetService("VirtualInputManager")
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+local vim = game:GetService("VirtualInputManager")
+
+local function writeGui(path, text)
+   
+    game:GetService("GuiService").SelectedObject = path
+    wait(.1)
+
+    path.Text = text
+    wait(.1)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, 13, false, game)
+    wait(.1)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, 13, false, game)
+    wait(.1)
+
+    game:GetService("GuiService").SelectedObject = nil
+    wait(.1)
+
+    path.Text = text
+    wait(.1)
+end
+local function GetTradeHubGui()
+    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+        if v.Name == "PromptDefault" then 
+            if v.Visible and v.Holder.TitleLabel.Text == "Trade Hub"  then 
+                return v
+            end 
+        end 
+    end
+    return
+end
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 65,
+        0,
+        true,
+        a,
+        1
+    )
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+        a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 65,
+        0,
+        false,
+        a,
+        1
+    )
+end
+local function ClickButton1(a)
+    game:GetService("GuiService").SelectedObject = a
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
+end
+function checkownbooth()
+    for i, v in pairs(workspace.Folder:GetChildren()) do
+        if v.Root.SurfaceGui.PlayerName.Text == "Your Booth" then
+            return v
+        end
+    end
+   
+end
+
+function getBooth()
+    for i, v in pairs(workspace.BoothLocations:GetChildren()) do
+        if v.BoothClaimPrompt.Enabled then 
+
+            return v
+        end
+    end
+end
+local function getPromptSellUnit()
+    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+        if v.Name == "GridPrompt" then 
+            if v.Visible and v.TitleLabel.Text=="Select A Unit To Sell" then 
+                return v 
+            end 
+        end 
+    end 
+end
+local function getUnit(path,unitName)
+    for i,v in pairs(path:GetChildren()) do 
+        if v.Name == "UnitGridPrefab" and v.Visible then 
+            if (v.Button.UnitNameLabel.Text == unitName or string.find(v.Button.UnitNameLabel.Text,unitName)) and not v.Button.SelectedFrame.Visible then 
+                return v 
+            end 
+        end
+    end 
+    return 
+end
+local function getPromptInputValueUnit()
+    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+        if v.Name == "PromptDefault" and v.Holder.Options:FindFirstChild("Sell") then 
+            return v 
+        end 
+    end 
+end
+_G.sell = true
+spawn(function()
+while _G.sell do
+    wait()
+    if game.PlaceId == 17764698696 or game.PlaceId == 17017769292 then 
+                
+        local TradeHubGui = GetTradeHubGui()
+        if TradeHubGui then 
+           
+                
+            ClickButton(TradeHubGui.Holder.Options.Teleport)
+            
+        else 
+            Plr.Character.HumanoidRootPart.CFrame = CFrame.new(93.8999634, 10.9806194, -325.375671)
+            
+            vim:SendKeyEvent(true, "E", false, game)
+            wait(.1)
+            vim:SendKeyEvent(false, "E", false, game)
+        end 
+    else
+        local OwnBooth = checkownbooth()
+
+        if OwnBooth then
+            local PromptInputValueUnit = getPromptInputValueUnit()
+            if PromptInputValueUnit then 
+                if PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox.Text ~= tostring(getgenv().Price) then
+                    repeat wait()
+                        writeGui(PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox,tostring(getgenv().Price))
+                    until PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox.Text == tostring(getgenv().Price)
+                else 
+                    ClickButton(PromptInputValueUnit.Holder.Options.Sell)
+                    wait(5)
+                end 
+            else 
+                if Plrgui.PAGES.PlayerBoothUI.Visible then 
+                    if tonumber(string.match(Plrgui.PAGES.PlayerBoothUI.StorageFrame.BoothStorageLabel.Text,"Items: (.*) /"))  < tonumber(string.match(Plrgui.PAGES.PlayerBoothUI.StorageFrame.BoothStorageLabel.Text,"/ (.*)")) then 
+                        local PromptSellUnit = getPromptSellUnit()
+                        if PromptSellUnit then 
+                            if PromptSellUnit.FocusDisplayUnit.ViewportFrame:FindFirstChild("Camera") then 
+                                ClickButton(PromptSellUnit.HolderButtons.ConfirmButton)
+                            else 
+                                local Unit = getUnit(PromptSellUnit.ScrollingFrame,getgenv().UnitName)
+                                if Unit then 
+                                    print(2)
+
+                                    ClickButton1(Unit)
+                                    wait()
+                                    ClickButton(Unit)
+                                end 
+                            end 
+                        else 
+                            ClickButton(Plrgui.PAGES.PlayerBoothUI.AddButtons.AddUnitsButton)
+                        end 
+                    end 
+                else
+                    if Plr:DistanceFromCharacter(OwnBooth.Root.Position) < 22  then
+                        fireproximityprompt(OwnBooth.PromptHolderPart.BoothInteractPrompt)
+                    else 
+                        Plr.Character.HumanoidRootPart.CFrame = OwnBooth.Root.CFrame
+                    end 
+                end 
+            end 
+        else
+            local booth = getBooth()
+            if booth then
+                if Plr:DistanceFromCharacter(booth.Position) < 15 then
+                    fireproximityprompt(booth.BoothClaimPrompt)
+                else
+                    Plr.Character.HumanoidRootPart.CFrame = booth.CFrame
+                end
+            end
+        end
+    end
+end end)
+
+
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
