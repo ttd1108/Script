@@ -1,5 +1,5 @@
-getgenv().UnitName = "Spectral Warden"
-getgenv().Price = 15000000
+getgenv().UnitName = "Divine Tyrant"
+getgenv().Price = 25000000
 repeat
     wait()
 until game:IsLoaded()
