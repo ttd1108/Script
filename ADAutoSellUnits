@@ -1,4 +1,8 @@
-
+getgenv().UnitName = "Divine Tyrant"
+getgenv().Price = 20000000
+getgenv().RandomPice = true
+getgenv().PriceRandom = { ["Max"] = 20000000, ["Min"] = 19000000
+}
 repeat
     wait()
 until game:IsLoaded()
