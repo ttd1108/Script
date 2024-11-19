@@ -1,5 +1,4 @@
-getgenv().UnitName = "Divine Tyrant"
-getgenv().Price = 25000000
+
 repeat
     wait()
 until game:IsLoaded()
@@ -142,17 +141,24 @@ while _G.sell do
         if OwnBooth then
             local PromptInputValueUnit = getPromptInputValueUnit()
             if PromptInputValueUnit then 
-                if PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox.Text ~= tostring(getgenv().Price) then
+            local PriceUnit 
+            if getgenv().RandomPice then 
+                PriceUnit = math.random(getgenv().PriceRandom["Min"],getgenv().PriceRandom["Max"])
+            else 
+                PriceUnit = getgenv().Price
+            end
+                if PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox.Text ~= tostring(PriceUnit) then
+                    
                     repeat wait()
-                        writeGui(PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox,tostring(getgenv().Price))
-                    until PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox.Text == tostring(getgenv().Price)
+                        writeGui(PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox,tostring(PriceUnit))
+                    until PromptInputValueUnit.Holder.SellTextBox.TextBoxHolder.TextBox.Text == tostring(PriceUnit)
                 else 
                     ClickButton(PromptInputValueUnit.Holder.Options.Sell)
                     wait(5)
                 end 
             else 
                 if Plrgui.PAGES.PlayerBoothUI.Visible then 
-                    if tonumber(string.match(Plrgui.PAGES.PlayerBoothUI.StorageFrame.BoothStorageLabel.Text,"Items: (.*) /"))  < tonumber(string.match(Plrgui.PAGES.PlayerBoothUI.StorageFrame.BoothStorageLabel.Text,"/ (.*)")) then 
+                    if tonumber(string.match(Plrgui.PAGES.PlayerBoothUI.StorageFrame.BoothStorageLabel.Text,"Items: (.*) /"))  < 1 then 
                         local PromptSellUnit = getPromptSellUnit()
                         if PromptSellUnit then 
                             if PromptSellUnit.FocusDisplayUnit.ViewportFrame:FindFirstChild("Camera") then 
