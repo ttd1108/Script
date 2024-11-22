@@ -1,0 +1,104 @@
+
+repeat wait(3) until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+local vim = game:GetService("VirtualInputManager")
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, true)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+
+local ListDifficult = {
+   "Easy",
+   "Normal",
+   "Hard",
+   "Nightmare"
+    
+}
+
+
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,false,a,1)
+end 
+
+
+local function GetDifficulity(Difficult)
+    for i,v in pairs(Plrgui.PAGES.HallOfMirrorsPage.Main.DifficultyHolder:GetChildren()) do
+        if v:IsA("Frame") then 
+            if v:FindFirstChildOfClass("ImageButton").Name == Difficult then 
+                return v 
+            end 
+        end 
+    end 
+end 
+
+local function GetHighestDifficult()
+    local HighestDifficult = ""   
+    for i,v in pairs(ListDifficult) do 
+        local Difficult = GetDifficulity(v)
+        if not Difficult.LockedFrame.Visible then 
+            HighestDifficult = Difficult
+        end 
+    end
+    return HighestDifficult
+end          
+
+
+--get Highest chapter
+
+
+
+--Convert Gradient to RGB
+function ConvertGradientToRGB(v, num)
+    color = v.Color.Keypoints[num].Value
+    local r = math.floor(color.R * 255)
+    local g = math.floor(color.G * 255)
+    local b = math.floor(color.B * 255)
+    return Color3.fromRGB(r, g, b)
+end
+
+
+local function GetConfirmButton()
+    for i,v in pairs(Plrgui.PAGES.HallOfMirrorsPage.OptionsHolder:GetChildren()) do
+        if v.Name == "_ButtonHolder" then 
+            if v:FindFirstChild("ConfirmButton") then 
+                return v 
+            end 
+        end
+    end
+end
+
+
+_G.farm = true 
+spawn(function()
+    while _G.farm  do wait() 
+        pcall(function()
+            if game.PlaceId == 17017769292 then 
+                
+            
+                if Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.MatchDetailsFrame.Visible then
+                    ClickButton(Plrgui.HUD.MatchDisplayHolder.MatchDisplayFrame.OptionsHolder.StartButtonHolder.ConfirmButton)
+                else 
+                    if Plrgui.PAGES.HallOfMirrorsPage.Visible    then 
+                        local HighestDifficult =GetHighestDifficult() 
+                        if HighestDifficult then 
+                            if string.match(Plrgui.PAGES.HallOfMirrorsPage.Main.MatchDetailsFrame.StatsFrame.TitleLabel.Text,"Stats %((.-)%)") ~= HighestDifficult:FindFirstChildOfClass("ImageButton").Name then 
+                                ClickButton(HighestDifficult)
+                            else 
+                                ClickButton(GetConfirmButton())
+                            end 
+                        end 
+                    else 
+                        repeat wait()
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SubStuff_DONT_DELETE.HoMPods:GetChildren()[math.random(1,6)].MatchDisplayPart.CFrame
+                        until Plrgui.PAGES.HallOfMirrorsPage.Visible
+                    end
+                end
+            end
+        end)
+    end
+end)
