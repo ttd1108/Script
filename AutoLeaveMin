@@ -1,0 +1,45 @@
+local min = 180
+repeat wait((min+1)*60) until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game.Players.LocalPlayer.PlayerGui
+local guiservice = game:GetService("GuiService")
+
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false )
+
+function ClickButton(a)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
+    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,false,a,1)
+end 
+
+local function getLeavePrompt()
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.PromptGui:GetChildren()) do 
+        if v.Name == "PromptDefault" then
+            if v.Holder.TitleLabel.Text == "Leave The Game?" then 
+                return v
+            end 
+        end 
+    end 
+    return 
+end
+while wait() do 
+    pcall(function()
+        if game.PlaceId ~= 17764698696 and game.PlaceId ~= 17017769292 then 
+            local leavePrompt =  getLeavePrompt()
+            if leavePrompt then 
+                ClickButton(leavePrompt.Holder.Options.Leave)
+            else 
+                if  Plrgui.TopBar.HolderFrame.Left.dropDown.DropdownFrame.Visible  then 
+                    ClickButton(Plrgui.TopBar.HolderFrame.Left.dropDown.DropdownFrame["Leave Game"])
+                else 
+                    Plrgui.TopBar.HolderFrame.Left.dropDown.DropdownFrame.Visible = true 
+                end 
+            end 
+        end 
+    end)
+end 
