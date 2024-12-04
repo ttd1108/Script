@@ -2,8 +2,8 @@ getgenv().UnitName = "Divine Tyrant"
 getgenv().Price = 7600000
 getgenv().RandomPice = true
 getgenv().PriceRandom = {
-    ["Max"] = 7600000,
-    ["Min"] = 7500000
+    ["Max"] = 7050000,
+    ["Min"] = 7000000
 }
 repeat
     wait(3)
