@@ -1,3 +1,6 @@
+getgenv().Crate = "Golden Gladiator"
+getgenv().Webhook = "https://discord.com/api/webhooks/1224690904799907962/UDhPgFvhTwu8FJJ1vWc0fl-p4vDZxlhxsoCPe4Zagw2hjusJ-1vOclcUN6tw-ShxsbHB"
+
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -149,7 +152,7 @@ spawn(function()
                local OkButton = getOkButton(NotEnoughSpaceGui.Buttons)
                if OkButton then 
                   ClickButton(OkButton)
-                  wait(.5)
+                  wait(1)
                end 
             else 
                local OpenGui= getOpenGui()
@@ -157,12 +160,12 @@ spawn(function()
                   OpenButton = getOpenButton(OpenGui.Buttons)
                   if OpenButton then 
                      ClickButton(OpenButton)
-                     wait(.5)
+                     wait(1)
                   end
                else 
                   if Plrgui.Lobby.UnitFrame.Visible then 
                      Plrgui.Lobby.UnitFrame.UnitHolder.UnitList.UIGridLayout.SortOrder = "Name"
-                     wait(.5)
+                     wait(1)
                      for i, v in pairs(unitlist) do 
                         if isCrate(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v]) then 
                            
@@ -175,7 +178,7 @@ spawn(function()
                      end 
                   else 
                      ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
-                     wait(.5)
+                     wait(1)
                   end
                end
             end 
