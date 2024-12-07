@@ -1,12 +1,6 @@
-getgenv().UnitName = "Divine Tyrant"
-getgenv().Price = 7600000
-getgenv().RandomPice = true
-getgenv().PriceRandom = {
-    ["Max"] = 7050000,
-    ["Min"] = 7000000
-}
+
 repeat
-    wait(3)
+    wait()
 until game:IsLoaded()
 repeat
     wait()
@@ -114,6 +108,38 @@ local function getUnit(path, unitName)
     end
     return
 end
+local function SendWebHook(Unit,Gem)
+    local msg = {
+        ['content'] = 'Sell',
+        ["embeds"] = {{
+            ["title"] = "Anime Defender",
+            ["description"] = Unit,
+            ["type"] = "rich",
+            ["color"] = tonumber(0xbdce44),
+            ["fields"] = {
+                {
+                    ["name"] = "Price:",
+                    ["value"] = Gem,                                            
+                    ["inline"] = false
+                },
+               
+                
+                {
+                    ["name"] = "User:",
+                    ["value"] = game.Players.LocalPlayer.Name,                                            
+                    ["inline"] = false
+                }
+                
+            }
+        }}
+    }
+    request({
+        Url = getgenv().Webhook,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"},
+        Body = game:GetService("HttpService"):JSONEncode(msg)
+    }) 
+end
 local function getPromptInputValueUnit()
     for i, v in pairs(Plrgui.PromptGui:GetChildren()) do
         if v.Name == "PromptDefault" and v.Holder.Options:FindFirstChild("Sell") then
@@ -164,6 +190,7 @@ spawn(
                             wait(1.5)
                             ClickButton(PromptInputValueUnit.Holder.Options.Sell)
                             wait(5)
+                             
                         end
                     else
                         if Plrgui.PAGES.PlayerBoothUI.Visible then
@@ -191,6 +218,8 @@ spawn(
                                 else
                                     ClickButton(Plrgui.PAGES.PlayerBoothUI.AddButtons.AddUnitsButton)
                                 end
+                            else 
+                                
                             end
                         else
                             if Plr:DistanceFromCharacter(OwnBooth.Root.Position) < 22 then
@@ -215,7 +244,9 @@ end
         end
     end
 )
-
+Plrgui.PAGES.PlayerBoothUI.ScrollingFrame.ChildRemoved:Connect(function(SoldUnit)
+    SendWebHook(SoldUnit.Button.UnitNameLabel.Text,SoldUnit.OnSaleFrame.TextLabel.Text)
+end)
 local vu = game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:connect(
     function()
