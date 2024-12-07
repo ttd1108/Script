@@ -1,4 +1,4 @@
-local min = 480
+local min = 360
 repeat wait((min+1)*60) until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
