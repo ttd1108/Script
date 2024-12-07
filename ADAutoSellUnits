@@ -1,5 +1,5 @@
 getgenv().UnitName = "Divine Tyrant"
-getgenv().Price = 7000000
+getgenv().Price = 7600000
 getgenv().RandomPice = true
 getgenv().PriceRandom = {
     ["Max"] = 7050000,
@@ -137,7 +137,10 @@ spawn(
                     wait(.1)
                     vim:SendKeyEvent(false, "E", false, game)
                 end
-            else
+            else   
+            if #game.Players:GetChildren() < 10 then 
+                game:Shutdown()
+            else 
                 local OwnBooth = checkownbooth()
 
                 if OwnBooth then
@@ -179,7 +182,6 @@ spawn(
                                     else
                                         local Unit = getUnit(PromptSellUnit.ScrollingFrame, getgenv().UnitName)
                                         if Unit then
-                                            print(2)
 
                                             ClickButton1(Unit)
                                             wait()
@@ -208,6 +210,7 @@ spawn(
                         end
                     end
                 end
+end
             end
         end
     end
