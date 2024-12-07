@@ -16,7 +16,11 @@ function ClickButton(a)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,false,a,1)
 end
-
+local function ClickButton1(a)
+   game:GetService("GuiService").SelectedObject = a
+   game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+   game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
+end
 local listCrate = {
    ["Golden Gladiator"] = "rbxassetid://129368477907107",
 }
@@ -145,34 +149,35 @@ spawn(function()
                local OkButton = getOkButton(NotEnoughSpaceGui.Buttons)
                if OkButton then 
                   ClickButton(OkButton)
-                  wait(.25)
+                  wait(.5)
                end 
             else 
-               if Plrgui.Lobby.UnitFrame.Visible then 
-                  Plrgui.Lobby.UnitFrame.UnitHolder.UnitList.UIGridLayout.SortOrder = "Name"
-                  wait(.25)
-                  for i, v in pairs(unitlist) do 
-                     if isCrate(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v]) then 
-                        local OpenGui= getOpenGui()
-                        if OpenGui then 
-                           OpenButton = getOpenButton(OpenGui.Buttons)
-                           if OpenButton then 
-                              ClickButton(OpenButton)
-                              wait(.25)
-                           end
-                        else 
-                           ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v])
-                           wait(.25)
-                        end
-                     else 
-                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v] = false 
-                        wait(.25)
-                     end
-                  end 
+               local OpenGui= getOpenGui()
+               if OpenGui then 
+                  OpenButton = getOpenButton(OpenGui.Buttons)
+                  if OpenButton then 
+                     ClickButton(OpenButton)
+                     wait(.5)
+                  end
                else 
-                  ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
-                  wait(.25)
-               end 
+                  if Plrgui.Lobby.UnitFrame.Visible then 
+                     Plrgui.Lobby.UnitFrame.UnitHolder.UnitList.UIGridLayout.SortOrder = "Name"
+                     wait(.5)
+                     for i, v in pairs(unitlist) do 
+                        if isCrate(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v]) then 
+                           
+                           ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v])
+                           wait()
+                        else 
+                           game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v] = false 
+                           wait()
+                        end
+                     end 
+                  else 
+                     ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
+                     wait(.5)
+                  end
+               end
             end 
          end
       end)
