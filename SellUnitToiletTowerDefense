@@ -16,11 +16,13 @@ repeat
     wait()
 until plr.Character:FindFirstChild("Humanoid")
 local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-wait(1)
-vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
+game:GetService("Players").LocalPlayer.Idled:connect(
+    function()
+        vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        wait(1)
+        vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end
+)
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 function ClickButton(x, y)
@@ -95,42 +97,31 @@ wait(3)
 GetUnitList()
 function GetSellRandom()
     local a = require(game:GetService("ReplicatedStorage").MultiboxFramework)
-    for i,v in next,getupvalues(getupvalues(a.Network.Fire)[1])[4] do 
-        if i == 'SellTroops' then
+    for i, v in next, getupvalues(getupvalues(a.Network.Fire)[1])[4] do
+        if i == "SellTroops" then
             return v._identifier
         end
     end
-end 
+end
 while wait() do
- 
     if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Visible then
         game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList.UIGridLayout.SortOrder = "Name"
         wait(.5)
 
         for i, v in pairs(unitlist) do
-            if GetSellRandom() == nil then 
-                if
-                    game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text ==
-                        "Sell Units"
-                then
+            if GetSellRandom() == nil then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text =="Sell Units" then
                     print("bật chế độ bán")
                     repeat
                         wait()
                         ClickButton(616, 420)
                         wait(.1)
-                    until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text ==
-                        "Cancel"
+                    until game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.Buttons.SellUnits.Button.Text =="Cancel"
                 end
-                if
-                    CheckRarity(
-                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient
-                    )
-                then
+                if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)then
                     print("chọn unit để bán")
 
-                    if
-                        not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible
-                    then
+                    if not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.BulkSellIcon.Visible then
                         repeat
                             wait()
                             ClickButton(290, 190)
@@ -152,22 +143,23 @@ while wait() do
                     game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false
                     wait(.3)
                 end
-            else 
+            else
                 game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].Visible = false
-                local args = {
-                    [1] = {
+                if CheckRarity(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitList[v].TroopsFrame.Background.RarityGradient)
+                    local args = {
                         [1] = {
                             [1] = {
-                                [1] = v
-                            }
-                        },
-                        [2] = GetSellRandom()
+                                [1] = {
+                                    [1] = v
+                                }
+                            },
+                            [2] = GetSellRandom()
+                        }
                     }
-                }
-                
-                game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
-                
-            end 
+
+                    game:GetService("ReplicatedStorage"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
+                end
+            end
         end
     else
         print("mở gui unit")
