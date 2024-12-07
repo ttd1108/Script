@@ -1,0 +1,194 @@
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
+local vim = game:GetService("VirtualInputManager")
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+unitlist = {}
+
+
+function ClickButton(a)
+   game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
+   game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,false,a,1)
+end
+
+local listCrate = {
+   ["Golden Gladiator"] = "rbxassetid://129368477907107",
+}
+function GetUnitList()
+   
+   if #Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren() <= 1 then
+       repeat
+          ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
+       until #Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren() > 1
+   end
+   unitlist = {}
+   for i, v in pairs(Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren()) do
+       if v:IsA("Frame") then
+           if v.TroopsFrame.TroopIcon.Image == "rbxassetid://15798757056" then
+               v:Destroy()
+           else
+               table.insert(unitlist, v.Name)
+           end
+       end
+   end
+   Plrgui.Lobby.UnitFrame.Visible  = false
+   table.sort(unitlist)
+end
+GetUnitList()
+local function isCrate(crate)
+   
+   if crate.TroopsFrame.TroopIcon.Image == listCrate[getgenv().Crate] then 
+      return crate
+   end 
+     
+   return 
+end
+local function getNotEnoughSpaceGui()
+   for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:GetChildren()) do 
+      if v.Name == "BigNotification" and v.Parent.Visible then 
+         if string.find(v.NotificationMessage.Text,"enough space") then 
+            return v 
+         end 
+      end 
+   end 
+   return 
+    
+end
+local function getOpenGui()
+   for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:GetChildren()) do 
+      if v.Name == "BigNotification" and v.Parent.Visible then 
+         if v.NotificationMessage.Text == "Are you sure you want to open this crate?" then 
+            return v 
+         end 
+      end 
+   end 
+   return 
+end 
+function CheckRarity(rarity)
+   if rarity =="Ultimate" or rarity=="Godly" then 
+         return true 
+   end
+   return false 
+end
+function SendWebHook(v)
+   local msg = {
+       ['content'] = '@everyone',
+       ["embeds"] = {{
+           ["title"] = "Toilet Tower Defense",
+           ["description"] = "Crate Opened",
+           ["type"] = "rich",
+           ["color"] = tonumber(0xbdce44),
+           ["fields"] = {
+               {
+                   ["name"] = "User",
+                   ["value"] = game.Players.LocalPlayer.Name,                                            
+                   ["inline"] = false
+               },
+               {
+                   ["name"] = "Name",
+                   ["value"] = v.Holder.UnitName.Text,                                            
+                   ["inline"] = true
+               },
+               {
+                   ["name"] = "Rarity",
+                   ["value"] = v.Holder.RarityFrame.Rarity.Text,                                            
+                   ["inline"] = true
+               },
+             
+           }
+       }}
+   }
+   request({
+       Url = getgenv().Webhook,
+       Method = "POST",
+       Headers = {["Content-Type"] = "application/json"},
+       Body = game:GetService("HttpService"):JSONEncode(msg)
+   }) 
+end
+local function getOkButton(frame)
+   if frame:FindFirstChild("OkButton") and frame.OkButton.Visible then
+      return frame.OkButton
+   end
+   return  
+end
+local function getOpenButton(frame)
+   if frame:FindFirstChild("Button3") and frame.Button3.Visible and    frame.Button3.Btn.Text == "Open 8" then 
+      return frame.Button3 
+   else 
+      return frame.Button1 
+   end 
+end 
+local movementRadius = 10 
+local speed = 16 
+
+local origin = Plr.Character.HumanoidRootPart.Position
+local function moveRandomly()
+   local randomX = math.random(-movementRadius, movementRadius)
+   local randomZ = math.random(-movementRadius, movementRadius)
+   local targetPosition = Vector3.new(origin.X + randomX, origin.Y, origin.Z + randomZ)
+
+   Plr.Character.Humanoid:MoveTo(targetPosition)
+   Plr.Character.Humanoid.MoveToFinished:Wait() 
+end
+spawn(function()
+   while wait() do 
+      pcall(function()
+         if game.PlaceId == 13775256536 then 
+            local NotEnoughSpaceGui = getNotEnoughSpaceGui()
+            if NotEnoughSpaceGui then 
+               local OkButton = getOkButton(NotEnoughSpaceGui.Buttons)
+               if OkButton then 
+                  ClickButton(OkButton)
+                  wait(.25)
+               end 
+            else 
+               if Plrgui.Lobby.UnitFrame.Visible then 
+                  Plrgui.Lobby.UnitFrame.UnitHolder.UnitList.UIGridLayout.SortOrder = "Name"
+                  wait(.25)
+                  for i, v in pairs(unitlist) do 
+                     if isCrate(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v]) then 
+                        local OpenGui= getOpenGui()
+                        if OpenGui then 
+                           OpenButton = getOpenButton(OpenGui.Buttons)
+                           if OpenButton then 
+                              ClickButton(OpenButton)
+                              wait(.25)
+                           end
+                        else 
+                           ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v])
+                           wait(.25)
+                        end
+                     else 
+                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v] = false 
+                        wait(.25)
+                     end
+                  end 
+               else 
+                  ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
+                  wait(.25)
+               end 
+            end 
+         end
+      end)
+   end 
+end)
+spawn(function()
+   while wait() do
+      moveRandomly()
+      wait(.5)
+  end
+end)
+Plrgui.ResultsGui.TroopResultsFrame.SummonResults.ChildAdded:connect(function(Unit)
+      if Unit:IsA("Frame") then 
+         if CheckRarity(Unit.Holder.RarityFrame.Rarity.Text) then 
+               SendWebHook(Unit)
+         end 
+      end 
+   
+end)
