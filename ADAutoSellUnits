@@ -164,7 +164,7 @@ spawn(
                     vim:SendKeyEvent(false, "E", false, game)
                 end
             else   
-            if #game.Players:GetChildren() < 5 then 
+            if #game.Players:GetChildren() < 10 then 
                 game:Shutdown()
             else 
                 local OwnBooth = checkownbooth()
