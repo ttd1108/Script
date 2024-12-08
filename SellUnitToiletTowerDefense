@@ -8,7 +8,7 @@ local Plrgui =game:GetService("Players").LocalPlayer.PlayerGui
 local vim = game:GetService("VirtualInputManager")
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 
 function ClickButton(a)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
