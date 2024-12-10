@@ -94,7 +94,7 @@ end
 _G.farm = true 
 _G.rankedshop =true
 while _G.farm do wait()
-pcall(function()
+
    if game.PlaceId ==13775256536 then 
       if _G.rankedshop then 
          if Plrgui.Lobby.RankedShop.Visible then 
@@ -180,5 +180,5 @@ end)
       until _G.farm == false 
 
    end
-end)
+
 end
