@@ -9,7 +9,8 @@ repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game.Players.LocalPlayer.PlayerGui
-
+if getgenv().WhiteScreen then 
+game:GetService("RunService"):Set3dRenderingEnabled(false) end
 local vim = game:GetService("VirtualInputManager") 
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
