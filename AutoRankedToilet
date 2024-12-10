@@ -176,7 +176,7 @@ while _G.farm do wait()
       Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
       SendWebHook(Result)
       repeat wait()
-         ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
+         ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
       until _G.farm == false 
    end
 end
