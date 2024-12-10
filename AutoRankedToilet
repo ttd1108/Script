@@ -1,4 +1,3 @@
-
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -6,10 +5,12 @@ repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game.Players.LocalPlayer.PlayerGui
+
+game:GetService("RunService"):Set3dRenderingEnabled(false)
 local vim = game:GetService("VirtualInputManager")
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 
 function ClickButton(a)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
@@ -21,7 +22,7 @@ local function ClickButton1(a)
    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
 end
 local function writeGui(path, text)
-   game:GetService("GuiService").SelectedObject = path
+   game:GetService("GuiService").SelectedObject = path 
    wait(.1)
 
    path.Text = text
@@ -145,7 +146,11 @@ while _G.farm do wait()
             end
          end 
       end
-   else  spawn(function()
+   else  
+      spawn(function()
+         _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=true,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=true},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=false,NoMesh=false,Destroy=true},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
+      end)
+      spawn(function()
       repeat
           wait()
       until game:IsLoaded()
