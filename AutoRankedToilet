@@ -1,3 +1,7 @@
+getgenv().UserSend = "kunlove1999"
+getgenv().Webhook = "https://discord.com/api/webhooks/1224690904799907962/UDhPgFvhTwu8FJJ1vWc0fl-p4vDZxlhxsoCPe4Zagw2hjusJ-1vOclcUN6tw-ShxsbHB"
+
+getgenv().WhiteScreen = true --true/false
 
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
@@ -11,7 +15,7 @@ game:GetService("RunService"):Set3dRenderingEnabled(false) end
 local vim = game:GetService("VirtualInputManager") 
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
 
 function ClickButton(a)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
@@ -115,7 +119,7 @@ while _G.farm do wait()
                               writeGui(Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername,getgenv().UserSend)
                               print('viet ten')
                               wait()
-                           until  Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text == getgenv().UserSend or _G.farm == false
+                           until  Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text == getgenv().UserSend or not _G.farm or not _G.rankedshop or not Plrgui.Lobby.GiftItemFrame.Visible
                            wait()
                            local gift1btn = getGift1Btn()
                            if gift1btn then 
@@ -136,12 +140,15 @@ while _G.farm do wait()
             end
          else 
             Plr.Character.HumanoidRootPart.CFrame =CFrame.new( -707.611511, 243.921158, -539.093689)
+            wait()
+            Plr.Character.HumanoidRootPart.CFrame=CFrame.new(-691.7052, 244.360031, -528.573059)
          end
       else 
          if Plrgui.Matchmaking.Ranked.TopQueueingBar.Visible then 
          else 
             if Plrgui.Matchmaking.Ranked.RankedQueue.Visible then 
-               ClickButton1(Plrgui.Matchmaking.Ranked.RankedQueue.QueueButton)
+               print('click find match')
+               ClickButton(Plrgui.Matchmaking.Ranked.RankedQueue.QueueButton)
             else 
                Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-663.385681, 247.624741, -572.973511)
             end
@@ -160,11 +167,15 @@ _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destro
 end)
          repeat wait()
             ClickButton1(Plrgui.Match.MatchInfo.AutoSkip.OnAndOff)
+            print('auto skip')
             wait(.4)
       until Plrgui.Match.MatchInfo.AutoSkip.OnAndOff.BackgroundColor3 ==Color3.fromRGB(0, 255, 0)
       repeat
             wait()
+            print('playing')
       until Plrgui.FinishUI.MatchFinish.Visible
+      print('finish')
+      print('webhook')
       local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","")..
       " ("..
       Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..
@@ -176,6 +187,7 @@ end)
       Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
       SendWebHook(Result)
       repeat wait()
+         print('lobby')
          ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
       until _G.farm == false 
 
