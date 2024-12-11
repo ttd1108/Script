@@ -164,7 +164,9 @@ _G.rankedshop =true
          game:Shutdown()
       end) 
       spawn(function()
-         _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=false,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=false},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=true,NoMesh=true,Destroy=false},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
+         if getgenv().FpsBooster then 
+            _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=false,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=false},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=true,NoMesh=true,Destroy=false},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
+         end
       end)
       repeat wait()
          ClickButton(Plrgui.Match.MatchInfo.AutoSkip.OnAndOff)
