@@ -1,5 +1,3 @@
-
-
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -99,6 +97,7 @@ while _G.farm do wait()
    if game.PlaceId ==13775256536 then 
       if _G.rankedshop then 
          if Plrgui.Lobby.RankedShop.Visible then 
+            print('ranked shop opened')
             local rankedcoin = Plrgui.Lobby.RankedShop.EventPassHolder.RankedCoins.CurrencyLayout.AmountLabel.Text:gsub(",","")
             if tonumber(rankedcoin) >= 100 then 
                repeat wait()
@@ -135,10 +134,16 @@ while _G.farm do wait()
             else 
                _G.rankedshop = false
             end
-         else 
-            Plr.Character.HumanoidRootPart.CFrame =CFrame.new( -707.611511, 243.921158, -539.093689)
-            wait()
-            Plr.Character.HumanoidRootPart.CFrame=CFrame.new(-691.7052, 244.360031, -528.573059)
+         else
+            repeat wait() 
+               print('tp to rankedshop')
+               wait()
+               Plr.Character.HumanoidRootPart.CFrame=CFrame.new(-691.7052, 244.360031, -528.573059)
+               wait()
+               Plr.Character.HumanoidRootPart.CFrame =CFrame.new( -707.611511, 243.921158, -539.093689)
+            
+               print(Plrgui.Lobby.RankedShop.Visible)
+            until Plrgui.Lobby.RankedShop.Visible or not _G.farm or not _G.rankedshop
          end
       else 
          if Plrgui.Matchmaking.Ranked.TopQueueingBar.Visible then 
