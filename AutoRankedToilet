@@ -1,4 +1,3 @@
-
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -6,15 +5,16 @@ repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game.Players.LocalPlayer.PlayerGui
-if game:GetService("Players").LocalPlayer.PlayerGui.Lobby:FindFirstChild("UpdateLog") then 
-   game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog:Destroy()
-end
+
 if getgenv().WhiteScreen then 
 game:GetService("RunService"):Set3dRenderingEnabled(false) end
 local vim = game:GetService("VirtualInputManager") 
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+if game:GetService("Players").LocalPlayer.PlayerGui.Lobby:FindFirstChild("UpdateLog") then 
+   game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog:Destroy()
+end
 
 function ClickButton(a)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
@@ -93,6 +93,26 @@ local function getGift1Btn()
       end
    end
    return
+end
+_G.TradeOff = true 
+while _G.TradeOff do wait()
+   if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible then 
+      if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Frame.SettingsList.Trading.On.Visible then 
+         repeat wait()
+            ClickButton1( game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Frame.SettingsList.Trading.On)
+            wait(.5)
+         until not  game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Frame.SettingsList.Trading.On.Visible or not _G.TradeOff
+         _G.TradeOff = false 
+         wait()
+         game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = false
+      else
+         _G.TradeOff = false 
+         wait()
+         game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = false
+      end
+   else 
+      game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = true 
+   end
 end
 _G.farm = true 
 _G.rankedshop =true
