@@ -12,9 +12,7 @@ local vim = game:GetService("VirtualInputManager")
 local StarterGui = game:GetService("StarterGui")
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
-if game:GetService("Players").LocalPlayer.PlayerGui.Lobby:FindFirstChild("UpdateLog") then 
-   game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog:Destroy()
-end
+
 
 function ClickButton(a)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
@@ -99,8 +97,12 @@ _G.farm = true
 _G.rankedshop =true
 
 if game.PlaceId ==13775256536 then 
+   if game:GetService("Players").LocalPlayer.PlayerGui.Lobby:FindFirstChild("UpdateLog") then 
+      game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog:Destroy()
+   end
 _G.TradeOff = true 
 while _G.TradeOff do wait()
+   
    if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible then 
       if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Frame.SettingsList.Trading.On.Visible then 
          repeat wait()
