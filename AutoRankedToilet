@@ -180,7 +180,9 @@ _G.rankedshop =true
                print('finish')
                print('webhook')
                local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
-               SendWebHook(Result)
+               pcall(function()
+                  SendWebHook(Result)
+               end)
                while _G.farm  do wait()
                   print('lobby')
                   ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
