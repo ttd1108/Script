@@ -1,3 +1,4 @@
+
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -5,6 +6,9 @@ repeat wait() until Plr.Character
 repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game.Players.LocalPlayer.PlayerGui
+if game:GetService("Players").LocalPlayer.PlayerGui.Lobby:FindFirstChild("UpdateLog") then 
+   game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog:Destroy()
+end
 if getgenv().WhiteScreen then 
 game:GetService("RunService"):Set3dRenderingEnabled(false) end
 local vim = game:GetService("VirtualInputManager") 
@@ -149,6 +153,7 @@ if game.PlaceId ==13775256536 then
          if Plrgui.Matchmaking.Ranked.TopQueueingBar.Visible then 
          else 
             if Plrgui.Matchmaking.Ranked.RankedQueue.Visible then 
+               wait()
                print('click find match')
                ClickButton1(Plrgui.Matchmaking.Ranked.RankedQueue.QueueButton)
             else 
