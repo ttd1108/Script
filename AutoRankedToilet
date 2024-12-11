@@ -1,4 +1,3 @@
-
    repeat wait() until game:IsLoaded()
    repeat wait() until game.Players.LocalPlayer
    local Plr = game.Players.LocalPlayer
@@ -149,7 +148,7 @@
                         repeat wait()
                            ClickButton1(gift1btn)
                            print('gift1')
-                        until not _G.rankedshop or not _G.farm or getConfirmGift()
+                        until not _G.rankedshop or not _G.farm or getConfirmGift() or not Plrgui.Lobby.GiftItemFrame.Visible
                      end
                   end
                else 
