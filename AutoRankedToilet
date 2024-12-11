@@ -1,4 +1,3 @@
-
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -94,101 +93,102 @@ end
 _G.farm = true 
 _G.rankedshop =true
 
-   if game.PlaceId ==13775256536 then 
-      while _G.farm do wait()
-         if _G.rankedshop then 
-            if Plrgui.Lobby.RankedShop.Visible then 
-               print('ranked shop opened')
-               local rankedcoin = Plrgui.Lobby.RankedShop.EventPassHolder.RankedCoins.CurrencyLayout.AmountLabel.Text:gsub(",","")
-               if tonumber(rankedcoin) >= 100 then 
+if game.PlaceId ==13775256536 then 
+   while _G.farm do wait()
+      if _G.rankedshop then 
+         local ConfirmGift = getConfirmGift()
+         if ConfirmGift then 
+            repeat wait()
+               print('yes buttom')
+               ClickButton1(ConfirmGift.Buttons.YesButton.Btn)
+               wait()
+            until not getConfirmGift() or not _G.farm or not _G.rankedshop
+            print('give finish')
+            _G.rankedshop = false
+         else
+            if Plrgui.Lobby.GiftItemFrame.Visible then 
+               if Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text ~= getgenv().UserSend then 
                   repeat wait()
-                     local ConfirmGift = getConfirmGift()
-                     if ConfirmGift then 
-                        ClickButton(ConfirmGift.Buttons.YesButton)
-                        wait(1)
-                        _G.rankedshop = false
-                     else
-                        if Plrgui.Lobby.GiftItemFrame.Visible then 
-                           
-                           
-                           if Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text ~= getgenv().UserSend then 
-                              repeat wait()
-                                 writeGui(Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername,getgenv().UserSend)
-                                 print('viet ten')
-                                 wait()
-                              until  Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text == getgenv().UserSend or not _G.farm or not _G.rankedshop or not Plrgui.Lobby.GiftItemFrame.Visible
-                              wait()
-                              local gift1btn = getGift1Btn()
-                              if gift1btn then 
-                              
-                                 ClickButton(gift1btn)
-                                 print('gift1')
-                              end
-                           end
-                           
-                        else 
-                           ClickButton1(Plrgui.Lobby.RankedShop.EventPassHolder.ShopFrame.ShopList.GoldenGladiatorCrate.CrateHolder.CrateInfo.BuyCrates.Gift.GiftHolder.Gift)
-                           print('gift')
-                        end
-                     end
-                  until _G.farm == false or _G.rankedshop == false 
-               else 
-                  _G.rankedshop = false
-               end
-            else
-               repeat wait() 
-                  print('tp to rankedshop')
-                  Plr.Character.HumanoidRootPart.CFrame=CFrame.new(-691.7052, 244.360031, -528.573059)
+                     writeGui(Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername,getgenv().UserSend)
+                     print('viet ten')
+                     wait()
+                  until  Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text == getgenv().UserSend or not _G.farm or not _G.rankedshop or not Plrgui.Lobby.GiftItemFrame.Visible
                   wait()
-                  Plr.Character.HumanoidRootPart.CFrame =CFrame.new( -707.611511, 243.921158, -539.093689)
-                  wait(.5)
-                  print(Plrgui.Lobby.RankedShop.Visible)
-               until Plrgui.Lobby.RankedShop.Visible or not _G.farm or not _G.rankedshop
-            end
-         else 
-            if Plrgui.Matchmaking.Ranked.TopQueueingBar.Visible then 
+                  local gift1btn = getGift1Btn()
+                  if gift1btn then 
+                     repeat wait()
+                        ClickButton1(gift1btn)
+                        print('gift1')
+                     until not _G.rankedshop or not _G.farm or getConfirmGift()
+                  end
+               end
             else 
-               if Plrgui.Matchmaking.Ranked.RankedQueue.Visible then 
-                  print('click find match')
-                  ClickButton(Plrgui.Matchmaking.Ranked.RankedQueue.QueueButton)
+               if Plrgui.Lobby.RankedShop.Visible then 
+                     local rankedcoin = Plrgui.Lobby.RankedShop.EventPassHolder.RankedCoins.CurrencyLayout.AmountLabel.Text:gsub(",","")
+                     if tonumber(rankedcoin) >= 100 then 
+                        ClickButton1(Plrgui.Lobby.RankedShop.EventPassHolder.ShopFrame.ShopList.GoldenGladiatorCrate.CrateHolder.CrateInfo.BuyCrates.Gift.GiftHolder.Gift)
+                        print('gift')
+                     else
+                        print('not enough coin')
+                        _G.rankedshop = false
+                        wait()
+                     end
                else 
-                  Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-663.385681, 247.624741, -572.973511)
+                  repeat wait() 
+                     print('tp to rankedshop')
+                     Plr.Character.HumanoidRootPart.CFrame=CFrame.new(-691.7052, 244.360031, -528.573059)
+                     wait()
+                     Plr.Character.HumanoidRootPart.CFrame =CFrame.new( -707.611511, 243.921158, -539.093689)
+                     wait(.5)
+                     print(Plrgui.Lobby.RankedShop.Visible)
+                  until Plrgui.Lobby.RankedShop.Visible or not _G.farm or not _G.rankedshop
                end
-            end 
+            end
          end
+      else 
+         if Plrgui.Matchmaking.Ranked.TopQueueingBar.Visible then 
+         else 
+            if Plrgui.Matchmaking.Ranked.RankedQueue.Visible then 
+               print('click find match')
+               ClickButton1(Plrgui.Matchmaking.Ranked.RankedQueue.QueueButton)
+            else 
+               Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-663.385681, 247.624741, -572.973511)
+            end
+         end 
       end
-   else  
-      spawn(function()
-         repeat wait() until game:IsLoaded()
-         wait(360)
-         game:Shutdown()
-      end) 
-      spawn(function()
-         if getgenv().FpsBooster then 
-            _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=false,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=false},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=true,NoMesh=true,Destroy=false},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
-         end
-      end)
-      repeat wait()
-         ClickButton(Plrgui.Match.MatchInfo.AutoSkip.OnAndOff)
-         print('auto skip')
-         wait(.5)
-      until Plrgui.Match.MatchInfo.AutoSkip.OnAndOff.BackgroundColor3 ==Color3.fromRGB(0, 255, 0) 
-      spawn(function()
-         Plrgui.FinishUI.MatchFinish:GetPropertyChangedSignal("Visible"):Connect(function()
-           
-            spawn(function()
-               print('finish')
-               print('webhook')
-               local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
-               pcall(function()
-                  SendWebHook(Result)
-               end)
-               while _G.farm  do wait()
-                  print('lobby')
-                  ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
-               end
-            end)
-
-         end)
-      end)      
    end
+else  
+   spawn(function()
+      repeat wait() until game:IsLoaded()
+      wait(360)
+      game:Shutdown()
+   end) 
+   spawn(function()
+      if getgenv().FpsBooster then 
+         _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=false,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=false},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=true,NoMesh=true,Destroy=false},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
+      end
+   end)
+   repeat wait()
+      ClickButton1(Plrgui.Match.MatchInfo.AutoSkip.OnAndOff)
+      print('auto skip')
+      wait(.5)
+   until Plrgui.Match.MatchInfo.AutoSkip.OnAndOff.BackgroundColor3 ==Color3.fromRGB(0, 255, 0) 
+   spawn(function()
+      Plrgui.FinishUI.MatchFinish:GetPropertyChangedSignal("Visible"):Connect(function()
+         
+         spawn(function()
+            print('finish')
+            print('webhook')
+            local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
+            pcall(function()
+               SendWebHook(Result)
+            end)
+            while _G.farm  do wait()
+               print('lobby')
+               ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
+            end
+         end)
+
+      end)
+   end)      
+end
