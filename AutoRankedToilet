@@ -203,8 +203,6 @@ else
          
          spawn(function()
             print('finish')
-            print('webhook')
-            local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
            
             while _G.farm  do wait()
                print('lobby')
