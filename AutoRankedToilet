@@ -94,6 +94,11 @@ local function getGift1Btn()
    end
    return
 end
+
+_G.farm = true 
+_G.rankedshop =true
+
+if game.PlaceId ==13775256536 then 
 _G.TradeOff = true 
 while _G.TradeOff do wait()
    if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible then 
@@ -114,10 +119,6 @@ while _G.TradeOff do wait()
       game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = true 
    end
 end
-_G.farm = true 
-_G.rankedshop =true
-
-if game.PlaceId ==13775256536 then 
    while _G.farm do wait()
       if _G.rankedshop then 
          local ConfirmGift = getConfirmGift()
