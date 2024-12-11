@@ -1,3 +1,5 @@
+
+
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -104,7 +106,7 @@ while _G.farm do wait()
                   local ConfirmGift = getConfirmGift()
                   if ConfirmGift then 
                      ClickButton(ConfirmGift.Buttons.YesButton)
-                     wait(.5)
+                     wait(1)
                      _G.rankedshop = false
                   else
                      if Plrgui.Lobby.GiftItemFrame.Visible then 
