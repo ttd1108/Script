@@ -137,11 +137,10 @@ while _G.farm do wait()
          else
             repeat wait() 
                print('tp to rankedshop')
-               wait()
                Plr.Character.HumanoidRootPart.CFrame=CFrame.new(-691.7052, 244.360031, -528.573059)
                wait()
                Plr.Character.HumanoidRootPart.CFrame =CFrame.new( -707.611511, 243.921158, -539.093689)
-            
+               wait(.5)
                print(Plrgui.Lobby.RankedShop.Visible)
             until Plrgui.Lobby.RankedShop.Visible or not _G.farm or not _G.rankedshop
          end
