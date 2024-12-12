@@ -1,3 +1,8 @@
+getgenv().UserSend = "kunlove1999"
+getgenv().Webhook = "https://discord.com/api/webhooks/1224690904799907962/UDhPgFvhTwu8FJJ1vWc0fl-p4vDZxlhxsoCPe4Zagw2hjusJ-1vOclcUN6tw-ShxsbHB"
+getgenv().FpsBooster = false
+getgenv().WhiteScreen = false --true/false
+
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -228,19 +233,12 @@ else
       wait(.5)
    until Plrgui.Match.MatchInfo.AutoSkip.OnAndOff.BackgroundColor3 ==Color3.fromRGB(0, 255, 0) 
    print('wait finish')
-   module.Network.Fired("ShowMatchFinishStat"):Connect(function(arg1, arg2, arg3, arg4, arg5, arg6)
-      _G.finish = true 
-   end)
-   repeat wait()
-   until _G.finish
-   pcall(function()
-      local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
-      SendWebHook(Result) 
-   end)
+   --module.Network.Fired("ShowMatchFinishStat"):Connect(function(arg1, arg2, arg3, arg4, arg5, arg6) _G.finish = true end)
+   --repeat wait() until _G.finish pcall(function() local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text SendWebHook(Result) end)
    while _G.farm  do wait()
       pcall(function()
          print('lobby')
-         ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
+         ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
    
       end)
    end
