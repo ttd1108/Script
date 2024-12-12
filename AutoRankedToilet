@@ -212,7 +212,7 @@ else
    end) 
    spawn(function()
       repeat wait() until game:IsLoaded()
-      wait(60)
+      wait(120)
       if #game.Players:GetChildren() <= 1 then 
         game:Shutdown()
       end
