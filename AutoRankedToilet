@@ -1,7 +1,3 @@
-getgenv().UserSend = "kunlove1999"
-getgenv().Webhook = "https://discord.com/api/webhooks/1224690904799907962/UDhPgFvhTwu8FJJ1vWc0fl-p4vDZxlhxsoCPe4Zagw2hjusJ-1vOclcUN6tw-ShxsbHB"
-getgenv().FpsBooster = false
-getgenv().WhiteScreen = false --true/false
 
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
