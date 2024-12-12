@@ -114,11 +114,7 @@ if game.PlaceId ==13775256536 then
       any_WaitForManager_result1_upvr:CloseFrame(v)
    end
    
-   spawn(function()
-      repeat wait() until game:IsLoaded()
-      wait(600)
-      game:Shutdown()
-   end) 
+   --spawn(function() repeat wait() until game:IsLoaded() wait(600) game:Shutdown() end) 
    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible then 
       repeat wait()
          ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.LogHolder.Frame.CloseButton)
@@ -210,18 +206,9 @@ if game.PlaceId ==13775256536 then
 else  
    _G.finish = false 
 
-   spawn(function()
-      repeat wait() until game:IsLoaded()
-      wait(900)
-     game:Shutdown()
-   end) 
-   spawn(function()
-      repeat wait() until game:IsLoaded()
-      wait(120)
-      if #game.Players:GetChildren() <= 1 then 
-        game:Shutdown()
-      end
-   end) 
+      --spawn(function() repeat wait() until game:IsLoaded() wait(900) game:Shutdown() end) 
+
+   --spawn(function() repeat wait() until game:IsLoaded() wait(120) if #game.Players:GetChildren() <= 1 then game:Shutdown() end end) 
    spawn(function()
       if getgenv().FpsBooster then 
          _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=false,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=false},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=true,NoMesh=true,Destroy=false},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
