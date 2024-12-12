@@ -1,107 +1,126 @@
-   repeat wait() until game:IsLoaded()
-   repeat wait() until game.Players.LocalPlayer
-   local Plr = game.Players.LocalPlayer
-   repeat wait() until Plr.Character
-   repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
-   repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
-   local Plrgui =game.Players.LocalPlayer.PlayerGui
-
-   if getgenv().WhiteScreen then 
-   game:GetService("RunService"):Set3dRenderingEnabled(false) end
-   local vim = game:GetService("VirtualInputManager") 
-   local StarterGui = game:GetService("StarterGui")
-   StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-   StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
 
 
-   function ClickButton(a)
-      game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
-      game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,false,a,1)
-   end
-   local function ClickButton1(a)
-      game:GetService("GuiService").SelectedObject = a
-      game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
-      game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
-   end
-   local function writeGui(path, text)
-      game:GetService("GuiService").SelectedObject = path 
-      wait(.1)
+repeat wait() until game:IsLoaded()
+repeat wait() until game.Players.LocalPlayer
+local Plr = game.Players.LocalPlayer
+repeat wait() until Plr.Character
+repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+local Plrgui =game.Players.LocalPlayer.PlayerGui
 
-      path.Text = text
-      wait(.1)
-      game:GetService("VirtualInputManager"):SendKeyEvent(true, 13, false, game)
-      wait(.1)
-      game:GetService("VirtualInputManager"):SendKeyEvent(false, 13, false, game)
-      wait(.1)
+local module = require(game:GetService("ReplicatedStorage"):WaitForChild("MultiboxFramework"))
 
-      game:GetService("GuiService").SelectedObject = nil
-      wait(.1)
 
-      path.Text = text
-      wait(.1)
-   end
-   local function getConfirmGift()
-      for i,v in pairs(Plrgui.MainFrames.NotificationFrame:GetChildren()) do 
-         if v.Name == "BigNotification" and v.Parent.Visible then 
-            if string.find(v.NotificationMessage.Text,"gift") then 
-               return v 
-            end 
+if getgenv().WhiteScreen then 
+game:GetService("RunService"):Set3dRenderingEnabled(false) end
+local vim = game:GetService("VirtualInputManager") 
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+
+local TweenService = game:GetService("TweenService")
+
+function ClickButton(a)
+   game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
+   game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,false,a,1)
+end
+local function ClickButton1(a)
+   game:GetService("GuiService").SelectedObject = a
+   game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+   game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
+end
+local function writeGui(path, text)
+   game:GetService("GuiService").SelectedObject = path 
+   wait(.1)
+
+   path.Text = text
+   wait(.1)
+   game:GetService("VirtualInputManager"):SendKeyEvent(true, 13, false, game)
+   wait(.1)
+   game:GetService("VirtualInputManager"):SendKeyEvent(false, 13, false, game)
+   wait(.1)
+
+   game:GetService("GuiService").SelectedObject = nil
+   wait(.1)
+
+   path.Text = text
+   wait(.1)
+end
+local function getConfirmGift()
+   for i,v in pairs(Plrgui.MainFrames.NotificationFrame:GetChildren()) do 
+      if v.Name == "BigNotification" and v.Parent.Visible then 
+         if string.find(v.NotificationMessage.Text,"gift") then 
+            return v 
          end 
       end 
-      return 
-      
-   end
-   function SendWebHook(Result)
-      local msg = {
-         ['content'] = '',
-         ["embeds"] = {{
-            ["title"] = "Toilet Tower Defense",
-            ["description"] = "Match Finished",
-            ["type"] = "rich",
-            ["color"] = tonumber(0xbdce44),
-            ["fields"] = {
-                  {
-                     ["name"] = "Name:",
-                     ["value"] = "||"..game.Players.LocalPlayer.Name.."||",                                            
-                     ["inline"] = false
-                  },
+   end 
+   return 
+   
+end
+function SendWebHook(Result)
+   local msg = {
+      ['content'] = '',
+      ["embeds"] = {{
+         ["title"] = "Toilet Tower Defense",
+         ["description"] = "Match Finished",
+         ["type"] = "rich",
+         ["color"] = tonumber(0xbdce44),
+         ["fields"] = {
+               {
+                  ["name"] = "Name:",
+                  ["value"] = "||"..game.Players.LocalPlayer.Name.."||",                                            
+                  ["inline"] = false
+               },
+         
+               {
+                  ["name"] = "Result:",
+                  ["value"] =Result,                                            
+                  ["inline"] = false
+               },
             
-                  {
-                     ["name"] = "Result:",
-                     ["value"] =Result,                                            
-                     ["inline"] = false
-                  },
-               
-            }
-         }}
-      }
-      request({
-         Url = getgenv().Webhook,
-         Method = "POST",
-         Headers = {["Content-Type"] = "application/json"},
-         Body = game:GetService("HttpService"):JSONEncode(msg)
-      }) 
-   end
-   local function getGift1Btn()
-      for i,v in pairs(Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.GiftOptions:GetChildren()) do 
-         if v.Name =="GiftButton" then 
-            if v.Text == "Gift 1" then 
-               return v 
-            end 
-         end
+         }
+      }}
+   }
+   request({
+      Url = getgenv().Webhook,
+      Method = "POST",
+      Headers = {["Content-Type"] = "application/json"},
+      Body = game:GetService("HttpService"):JSONEncode(msg)
+   }) 
+end
+local function getGift1Btn()
+   for i,v in pairs(Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.GiftOptions:GetChildren()) do 
+      if v.Name =="GiftButton" then 
+         if v.Text == "Gift 1" then 
+            return v 
+         end 
       end
-      return
    end
+   return
+end
 
-   _G.farm = true 
-   _G.rankedshop =true
+_G.farm = true 
+_G.rankedshop =true
 
-   if game.PlaceId ==13775256536 then 
-      if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible then 
-         repeat wait()
-            ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.LogHolder.Frame.CloseButton)
-         until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible
-      end
+if game.PlaceId ==13775256536 then 
+   local any_WaitForManager_result1_upvr = module.GuiFramesManager:WaitForManager("UIFramesManager")
+   local function OpenUi(v)
+      any_WaitForManager_result1_upvr:OpenFrame(v)
+   end
+   local function CloseUi(v)
+      any_WaitForManager_result1_upvr:CloseFrame(v)
+   end
+   
+   spawn(function()
+      repeat wait() until game:IsLoaded()
+      wait(90)
+      game:Shutdown()
+   end) 
+   if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible then 
+      repeat wait()
+         ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.LogHolder.Frame.CloseButton)
+      until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible
+   end
    _G.TradeOff = true 
    while _G.TradeOff do wait()
       
@@ -123,103 +142,109 @@
          game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = true 
       end
    end
-      while _G.farm do wait()
-         if _G.rankedshop then 
-            local ConfirmGift = getConfirmGift()
-            if ConfirmGift then 
-               repeat wait()
-                  print('yes buttom')
-                  ClickButton1(ConfirmGift.Buttons.YesButton.Btn)
-                  wait()
-               until not getConfirmGift() or not _G.farm or not _G.rankedshop
-               print('give finish')
-               _G.rankedshop = false
-            else
-               if Plrgui.Lobby.GiftItemFrame.Visible then 
-                  if Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text ~= getgenv().UserSend then 
-                     repeat wait()
-                        writeGui(Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername,getgenv().UserSend)
-                        print('viet ten')
-                        wait()
-                     until  Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text == getgenv().UserSend or not _G.farm or not _G.rankedshop or not Plrgui.Lobby.GiftItemFrame.Visible
+   while _G.farm do wait()
+      if _G.rankedshop then 
+         local ConfirmGift = getConfirmGift()
+         if ConfirmGift then 
+            repeat wait()
+               print('yes buttom')
+               ClickButton1(ConfirmGift.Buttons.YesButton.Btn)
+               wait()
+            until not getConfirmGift() or not _G.farm or not _G.rankedshop
+            print('give finish')
+            _G.rankedshop = false
+         else
+            if Plrgui.Lobby.GiftItemFrame.Visible then 
+               if Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text ~= getgenv().UserSend then 
+                  repeat wait()
+                     writeGui(Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername,getgenv().UserSend)
+                     print('viet ten')
                      wait()
-                     local gift1btn = getGift1Btn()
-                     if gift1btn then 
-                        repeat wait()
-                           ClickButton1(gift1btn)
-                           print('gift1')
-                        until not _G.rankedshop or not _G.farm or getConfirmGift() or not Plrgui.Lobby.GiftItemFrame.Visible
-                     end
+                  until  Plrgui.Lobby.GiftItemFrame.GiftMain.Frame.LogInfo.ReceipentUsername.Text == getgenv().UserSend or not _G.farm or not _G.rankedshop or not Plrgui.Lobby.GiftItemFrame.Visible
+                  wait()
+                  local gift1btn = getGift1Btn()
+                  if gift1btn then 
+                     repeat wait()
+                        ClickButton1(gift1btn)
+                        print('gift1')
+                     until not _G.rankedshop or not _G.farm or getConfirmGift() or not Plrgui.Lobby.GiftItemFrame.Visible
                   end
-               else 
-                  if Plrgui.Lobby.RankedShop.Visible then 
-                        local rankedcoin = Plrgui.Lobby.RankedShop.EventPassHolder.RankedCoins.CurrencyLayout.AmountLabel.Text:gsub(",","")
-                        if tonumber(rankedcoin) >= 100 then 
-                           ClickButton1(Plrgui.Lobby.RankedShop.EventPassHolder.ShopFrame.ShopList.GoldenGladiatorCrate.CrateHolder.CrateInfo.BuyCrates.Gift.GiftHolder.Gift)
-                           print('gift')
-                        else
-                           print('not enough coin')
-                           _G.rankedshop = false
-                           wait()
-                        end
-                  else 
-                     repeat wait() 
-                        print('tp to rankedshop')
-                        Plr.Character.HumanoidRootPart.CFrame=CFrame.new(-691.7052, 244.360031, -528.573059)
+               end
+            else 
+               if Plrgui.Lobby.RankedShop.Visible then 
+                     local rankedcoin = Plrgui.Lobby.RankedShop.EventPassHolder.RankedCoins.CurrencyLayout.AmountLabel.Text:gsub(",","")
+                     if tonumber(rankedcoin) >= 100 then 
+                        ClickButton1(Plrgui.Lobby.RankedShop.EventPassHolder.ShopFrame.ShopList.GoldenGladiatorCrate.CrateHolder.CrateInfo.BuyCrates.Gift.GiftHolder.Gift)
+                        print('gift')
+                     else
+                        print('not enough coin')
+                        _G.rankedshop = false
                         wait()
-                        Plr.Character.HumanoidRootPart.CFrame =CFrame.new( -707.611511, 243.921158, -539.093689)
-                        wait(.5)
-                        print(Plrgui.Lobby.RankedShop.Visible)
-                     until Plrgui.Lobby.RankedShop.Visible or not _G.farm or not _G.rankedshop
-                  end
+                     end
+               else 
+                  OpenUi('RankedShop')
                end
             end
+         end
+      else 
+         if Plrgui.Matchmaking.Ranked.TopQueueingBar.Visible then 
          else 
-            if Plrgui.Matchmaking.Ranked.TopQueueingBar.Visible then 
+            if Plrgui.Matchmaking.Ranked.RankedQueue.Visible then 
+               wait()
+               print('click find match')
+               ClickButton1(Plrgui.Matchmaking.Ranked.RankedQueue.QueueButton)
             else 
-               if Plrgui.Matchmaking.Ranked.RankedQueue.Visible then 
-                  wait()
-                  print('click find match')
-                  ClickButton1(Plrgui.Matchmaking.Ranked.RankedQueue.QueueButton)
-               else 
-                  Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-663.385681, 247.624741, -572.973511)
-               end
-            end 
-         end
+               CloseUi('RankedShop')
+               local any_Create_result1_upvr = TweenService:Create(game.Players.LocalPlayer.PlayerGui.Matchmaking.Ranked.RankedQueue,  TweenInfo.new(0.1), {
+                  Position = UDim2.fromScale(0.5, 0.6);
+               })
+               game.Players.LocalPlayer.PlayerGui.Matchmaking.Ranked.RankedQueue.Visible = true
+               any_Create_result1_upvr:Play()
+            end
+         end 
       end
-   else  
-      spawn(function()
-         repeat wait() until game:IsLoaded()
-         wait(360)
-         game:Shutdown()
-      end) 
-      spawn(function()
-         if getgenv().FpsBooster then 
-            _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=false,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=false},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=true,NoMesh=true,Destroy=false},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
-         end
-      end)
-      repeat wait()
-         ClickButton1(Plrgui.Match.MatchInfo.AutoSkip.OnAndOff)
-         print('auto skip')
-         wait(.5)
-      until Plrgui.Match.MatchInfo.AutoSkip.OnAndOff.BackgroundColor3 ==Color3.fromRGB(0, 255, 0) 
-      spawn(function()
-         Plrgui.FinishUI.MatchFinish:GetPropertyChangedSignal("Visible"):Connect(function()
-            
-            spawn(function()
-               print('finish')
-if getgenv().SendWebhook then
-               print('webhook')
-pcall(function()
-               local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
-               SendWebHook(Result) end)
-end
-               while _G.farm  do wait()
-                  print('lobby')
-                  ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
-               end
-            end)
-
-         end)
-      end)      
    end
+else  
+   _G.finish = false 
+
+   spawn(function()
+      repeat wait() until game:IsLoaded()
+      wait(900)
+     game:Shutdown()
+   end) 
+   spawn(function()
+      repeat wait() until game:IsLoaded()
+      wait(60)
+      if #game.Players:GetChildren() <= 1 then 
+        game:Shutdown()
+      end
+   end) 
+   spawn(function()
+      if getgenv().FpsBooster then 
+         _G.Settings={Players={["Ignore Me"]=true,["Ignore Others"]=false},Meshes={Destroy=false,LowDetail=true},Images={Invisible=true,LowDetail=false,Destroy=false},Explosions={Smaller=true,Invisible=false,Destroy=true},MeshParts={LowerQuality=true,Invisible=false,NoTexture=true,NoMesh=true,Destroy=false},["No Particles"]=true,["No Camera Effects"]=true,["No Explosions"]=true,["No Clothes"]=true,["Low Water Graphics"]=true,["No Shadows"]=true,["Low Rendering"]=true,["Low Quality Parts"]=true,["Reset Materials"]=true,["FPS Cap"]=5}loadstring(game:HttpGet("https://raw.githubusercontent.com/ttd1108/Script/refs/heads/master/FpsBooster"))()
+      end
+   end)
+   repeat wait()
+      ClickButton1(Plrgui.Match.MatchInfo.AutoSkip.OnAndOff)
+      print('auto skip')
+      wait(.5)
+   until Plrgui.Match.MatchInfo.AutoSkip.OnAndOff.BackgroundColor3 ==Color3.fromRGB(0, 255, 0) 
+   print('wait finish')
+   module.Network.Fired("ShowMatchFinishStat"):Connect(function(arg1, arg2, arg3, arg4, arg5, arg6)
+      _G.finish = true 
+   end)
+   repeat wait()
+   until _G.finish
+   pcall(function()
+      local Result = Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MapInfo.Text:gsub("Map: ","").." ("..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.ModeInfo.Text:gsub("Mode: ","")..")".."-"..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.MatchOutcome.Text:gsub("You ",""):gsub("!","").."\nTime: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.TimePassed.TimerFrame.Timer.Text.."\nReward: ".."\nRankedCoins: "..Plrgui.FinishUI.MatchFinish.MatchFinishFrame.CurrenciesAwarded.CurrenciesAwarded.RankedCoins.RewardFrame.TotalAwarded.AmountFrame.AmountText.Text
+      SendWebHook(Result) 
+   end)
+   while _G.farm  do wait()
+      pcall(function()
+         print('lobby')
+         ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.FinishUI.MatchFinish.MatchFinishFrame.EndOptions.ReturnToLobby.ButtonFrame.ReturnToLobbyButton)
+   
+      end)
+   end
+
+end
