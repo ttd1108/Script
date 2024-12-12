@@ -111,7 +111,7 @@ if game.PlaceId ==13775256536 then
    
    spawn(function()
       repeat wait() until game:IsLoaded()
-      wait(120)
+      wait(300)
       game:Shutdown()
    end) 
    if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible then 
