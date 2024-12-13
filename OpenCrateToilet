@@ -14,31 +14,41 @@ function ClickButton(a)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,true,a,1)
    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+65,0,false,a,1)
 end
+local function ClickButton1(a)
+   game:GetService("GuiService").SelectedObject = a
+   game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+   game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
+end
 local listCrate = {
    ["Golden Gladiator"] = "rbxassetid://129368477907107",
 }
 function GetUnitList()
    unitlist = {}
-   if #Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren() <= 1 then
-       repeat
-          ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
-       until #Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren() > 1
+   if Plrgui.Lobby.UnitFrame.Visible then 
+      if #Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren() <= 1 then
+         repeat
+               ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
+         until #Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren() > 1 or  Plrgui.Lobby.UnitFrame.Visible
+      end
+      unitlist = {}
+      for i, v in pairs(Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren()) do
+         if v:IsA("Frame") then
+               if v.TroopsFrame.TroopIcon.Image == "rbxassetid://15798757056" then
+                  v:Destroy()
+               else
+                  table.insert(unitlist, v.Name)
+               end
+         end
+      end
+
+      table.sort(unitlist)
+   else
+      ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
+      wait(1)
    end
-   unitlist = {}
-   for i, v in pairs(Plrgui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren()) do
-       if v:IsA("Frame") then
-           if v.TroopsFrame.TroopIcon.Image == "rbxassetid://15798757056" then
-               v:Destroy()
-           else
-               table.insert(unitlist, v.Name)
-           end
-       end
-   end
-   
-   table.sort(unitlist)
 return unitlist
 end
-
+GetUnitList()
 local function isCrate(crate)
    
    if crate.TroopsFrame.TroopIcon.Image == listCrate[getgenv().Crate] then 
@@ -47,18 +57,7 @@ local function isCrate(crate)
      
    return 
 end
-function UseBoost()
-   CloseAllUi()
-   local boost = FindBoost()
-   if tonumber(boost["2xLuckBoost"].BoostInfo.BoostOwnAmount.Text:match("%d+")) > 0 then
-       repeat wait()
-       game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = true
-        ClickButton(412, 225)
-       wait(.5)
-       until   game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.Boosts:FindFirstChild("2xLuckBoost")     
-game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = false 
-   end
-end
+
 local function getNotEnoughSpaceGui()
    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:GetChildren()) do 
       if v.Name == "BigNotification" and v.Parent.Visible then 
@@ -70,41 +69,9 @@ local function getNotEnoughSpaceGui()
    return 
     
 end
-function CloseAllUi()
-   game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = false
-   game.Players.LocalPlayer.PlayerGui.Lobby.SummonShopFrame.Visible = false
-end
-function FindBoost()
-   for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.ShopHolder.ShopList.ShopList:GetChildren()) do
-       if not string.find(v.Name, "UI") and v.Name ~= "Barrier" then
-           if v:FindFirstChild("2xLuckBoost") then
-               return v
-           end
-       end
-   end
-end
 
-function HideShopList()
-   CloseAllUi()
-   wait(.1)
-   game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = true
-   wait(.1)
-   local boost = FindBoost()
- 
-   for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.ShopHolder.ShopList.ShopList:GetChildren()) do
-       if not string.find(v.Name, "UI") and v.Name ~= "Barrier" then
-           if v ~= boost then
-              
-               v:Destroy()
-           end
-       end
-   end
-   wait(.1)
-   game:GetService("Players").LocalPlayer.PlayerGui.Lobby.ShopFrame.Visible = false
-end
-if game.PlaceId ~=13775256536 then 
-HideShopList()
-end
+
+
 local function getOpenGui()
    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.NotificationFrame:GetChildren()) do 
       if v.Name == "BigNotification" and v.Parent.Visible then 
@@ -179,62 +146,77 @@ local function moveRandomly()
    Plr.Character.Humanoid:MoveTo(targetPosition)
    Plr.Character.Humanoid.MoveToFinished:Wait() 
 end
+if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible then 
+   repeat wait()
+      ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.LogHolder.Frame.CloseButton)
+   until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible
+end
+_G.TradeOff = false 
+while _G.TradeOff do wait()
+   
+   if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible then 
+      if game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Frame.SettingsList.Trading.On.Visible then 
+         repeat wait()
+            ClickButton1( game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Frame.SettingsList.Trading.On)
+            wait(.5)
+         until not  game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Frame.SettingsList.Trading.On.Visible or not _G.TradeOff
+         _G.TradeOff = false 
+         wait()
+         game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = false
+      else
+         _G.TradeOff = false 
+         wait()
+         game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = false
+      end
+   else 
+      game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = true 
+   end
+end
+_G.farm = true
 spawn(function()
-   while wait() do 
+   while _G.farm do wait()
       pcall(function()
-         if game.PlaceId == 13775256536 then 
-            if Plrgui.Teleports["Lobby -> TradingPlaza"].Visible then 
-               ClickButton(Plrgui.Teleports["Lobby -> TradingPlaza"].Teleport)
-            else 
-               Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-489.68457, 246.229614, 51.8587036)
+        -- if game.PlaceId == 13775256536 then  if Plrgui.Teleports["Lobby -> TradingPlaza"].Visible then  ClickButton(Plrgui.Teleports["Lobby -> TradingPlaza"].Teleport) else Plr.Character.HumanoidRootPart.CFrame = CFrame.new(-489.68457, 246.229614, 51.8587036) end else
+            for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList:GetChildren()) do 
+               if not  Plrgui.Lobby.UnitFrame.Visible then 
+                  repeat wait()
+                     ClickButton1(Plrgui.Lobby.LeftSideFrame.Units.Button)
+                     wait(1)
+                  until  Plrgui.Lobby.UnitFrame.Visible 
+                  wait(1)
+               end
+               
+               if v:IsA("Frame") and isCrate(v) then 
+                  
+                  repeat wait()
+                     print('chon ruong de mo')
+                     ClickButton1(v.TroopsFrame.InteractiveButton)
+                     wait(1)
+                  until getOpenGui() or not _G.farm
+                  wait(1)
+                  repeat wait()
+                     print('bam nut mo ruong')
+                     ClickButton1(getOpenButton(getOpenGui().Buttons).Btn)
+                     wait(1)
+                  until not _G.farm or not getOpenGui() or getNotEnoughSpaceGui()
+                  wait(1)
+                  if getNotEnoughSpaceGui() then
+                     
+                     repeat wait()
+                        print('tat not enough')
+                        ClickButton1(getOkButton(getNotEnoughSpaceGui().Buttons).Btn)
+                        wait(1)
+                     until not getNotEnoughSpaceGui() or not _G.farm
+                     wait(18)
+                  end
+               end
             end
-         else
-            local NotEnoughSpaceGui = getNotEnoughSpaceGui()
-            if NotEnoughSpaceGui then 
-               local OkButton = getOkButton(NotEnoughSpaceGui.Buttons)
-               if OkButton then 
-                  ClickButton(OkButton)
-                  wait(1)
-               end 
-            else 
-               local OpenGui = getOpenGui()
-               if OpenGui and not Plrgui.Lobby.UnitFrame.Visible then
-                  ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
-                  wait(1)
-               end 
-
-               if Plrgui.Lobby.UnitFrame.Visible then 
-                  Plrgui.Lobby.UnitFrame.UnitHolder.UnitList.UIGridLayout.SortOrder = "Name"
-                    wait(1)
-                  for i, v in pairs(GetUnitList()) do 
-                     if isCrate(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v]) then 
-                        local OpenGui = getOpenGui()
-                        if OpenGui then 
-                           local OpenButton = getOpenButton(OpenGui.Buttons)
-                           if OpenButton then 
-                              ClickButton(OpenButton)
-                                wait(1)
-                           end 
-                        else 
-                           ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v])
-                           wait(.5)
-                        end
-                     else 
-                        game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UnitFrame.UnitHolder.UnitList[v] = false 
-                        wait(.5)
-                     end
-                  end 
-               else 
-                  ClickButton(Plrgui.Lobby.LeftSideFrame.Units.Button)
-                  wait(1)
-               end 
-            end 
-         end
+         --end
       end)
    end 
 end)
 spawn(function()
-   while wait() do
+   while _G.farm do wait()
       
       moveRandomly()
       wait(.5)
