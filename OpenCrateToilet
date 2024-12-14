@@ -1,3 +1,4 @@
+
 repeat wait() until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
@@ -198,7 +199,7 @@ spawn(function()
                      print('bam nut mo ruong')
                      ClickButton1(getOpenButton(getOpenGui().Buttons).Btn)
                      wait(1)
-                  until not _G.farm or not getOpenGui() or getNotEnoughSpaceGui()
+                  until not _G.farm or not getOpenGui() or getNotEnoughSpaceGui() or not  Plrgui.Lobby.UnitFrame.Visible
                   wait(1)
                   if getNotEnoughSpaceGui() then
                      
@@ -207,7 +208,7 @@ spawn(function()
                         ClickButton1(getOkButton(getNotEnoughSpaceGui().Buttons).Btn)
                         wait(1)
                      until not getNotEnoughSpaceGui() or not _G.farm
-                     wait(18)
+                     wait(2)
                   end
                end
             end
