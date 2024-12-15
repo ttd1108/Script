@@ -7,8 +7,7 @@ repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game.Players.LocalPlayer.PlayerGui
 
-spawn(function()
---while wait() do pcall(function() local Code = game:GetService'GuiService':GetErrorCode().Value if Code >= Enum.ConnectionError.DisconnectErrors.Value   then return game:Shutdown() end end) end end)
+--spawn(function() while wait() do pcall(function() local Code = game:GetService'GuiService':GetErrorCode().Value if Code >= Enum.ConnectionError.DisconnectErrors.Value   then return game:Shutdown() end end) end end)
 if getgenv().WhiteScreen then 
 game:GetService("RunService"):Set3dRenderingEnabled(false) end
 local vim = game:GetService("VirtualInputManager") 
