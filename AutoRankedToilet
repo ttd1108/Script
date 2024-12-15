@@ -7,8 +7,6 @@ repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
 repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
 local Plrgui =game.Players.LocalPlayer.PlayerGui
 
-local module = require(game:GetService("ReplicatedStorage"):WaitForChild("MultiboxFramework"))
-
 
 if getgenv().WhiteScreen then 
 game:GetService("RunService"):Set3dRenderingEnabled(false) end
@@ -102,6 +100,8 @@ _G.farm = true
 _G.rankedshop =true
 
 if game.PlaceId ==13775256536 then 
+   local module = require(game:GetService("ReplicatedStorage"):WaitForChild("MultiboxFramework"))
+
    local any_WaitForManager_result1_upvr = module.GuiFramesManager:WaitForManager("UIFramesManager")
    local function OpenUi(v)
       any_WaitForManager_result1_upvr:OpenFrame(v)
