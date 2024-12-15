@@ -1,5 +1,5 @@
 
-repeat wait() until game:IsLoaded()
+repeat wait(10) until game:IsLoaded()
 repeat wait() until game.Players.LocalPlayer
 local Plr = game.Players.LocalPlayer
 repeat wait() until Plr.Character
@@ -100,7 +100,7 @@ _G.farm = true
 _G.rankedshop =true
 
 if game.PlaceId ==13775256536 then 
-   local module = require(game:GetService("ReplicatedStorage"):WaitForChild("MultiboxFramework"))
+   module = require(game:GetService("ReplicatedStorage"):WaitForChild("MultiboxFramework"))
 
    local any_WaitForManager_result1_upvr = module.GuiFramesManager:WaitForManager("UIFramesManager")
    local function OpenUi(v)
