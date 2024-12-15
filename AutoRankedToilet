@@ -111,11 +111,7 @@ if game.PlaceId ==13775256536 then
    end
    
    --spawn(function() repeat wait() until game:IsLoaded() wait(600) game:Shutdown() end) 
-   if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible then 
-      repeat wait()
-         ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.LogHolder.Frame.CloseButton)
-      until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible
-   end
+
    _G.TradeOff = true 
    while _G.TradeOff do wait()
       
@@ -133,6 +129,11 @@ if game.PlaceId ==13775256536 then
             wait()
             game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = false
          end
+   if game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible then 
+      repeat wait()
+         ClickButton1(game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.LogHolder.Frame.CloseButton)
+      until not game:GetService("Players").LocalPlayer.PlayerGui.Lobby.UpdateLog.Visible
+   end
       else 
          game:GetService("Players").LocalPlayer.PlayerGui.MainFrames.SettingsFrame.Visible = true 
       end
