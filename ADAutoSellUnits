@@ -1,3 +1,4 @@
+
 repeat
     wait()
 until game:IsLoaded()
@@ -150,7 +151,7 @@ local function getPromptInputValueUnit()
         end
     end
 end
-_G.sell = false
+_G.sell = true
 spawn(
     function()
         while _G.sell do
