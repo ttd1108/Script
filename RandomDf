@@ -1,0 +1,185 @@
+getgenv().Sea = "2"--2,3
+
+repeat task.wait() until game:IsLoaded()
+
+local function ClickButton(a)
+    game:GetService("GuiService").SelectedObject = a
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "Return", false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "Return", false, game) 
+end
+repeat wait()
+    pcall(function()
+    ClickButton(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton)
+end)
+until game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") and   not  game:GetService("Players").LocalPlayer.PlayerGui.Main:WaitForChild("ChooseTeam").Visible or not game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam")
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+wait(1)
+vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+Pos = {
+    ['1'] =  {
+        ['Drop'] = CFrame.new(-1422.78662, 65.1952133, 12.9214306),
+        ['Spawn'] = CFrame.new(-1336.93494, 12.1960964, 495.882416)
+    },
+    ['2'] =  {
+        ['Drop'] = CFrame.new(-428.404663, 149.220291, 383.255859, -0.991344988, -4.2343121e-08, -0.131282479, -3.72102562e-08, 1, -4.15510151e-08, 0.131282479, -3.63063357e-08, -0.991344988),
+        ['Spawn'] = CFrame.new(-380.796204, 73.0601044, 248.089951)     
+    },
+    ['3'] =  {
+        ['Drop'] =  CFrame.new(-12485.5879, 378.457672, -7574.04932),
+        ['Spawn'] = CFrame.new(-12548.1387, 336.914337, -7408.68408) 
+    }
+}
+World =  {
+    [2753915549] = {
+        ['Place'] = "1",
+        ['Remote'] = 'TravelMain'
+    } ,
+    [4442272183] = {
+        ['Place'] = "2",
+        ['Remote'] = 'TravelDressrosa'
+    },
+    [7449423635] = {
+        ['Place'] = "3",
+        ['Remote'] = 'TravelZou'
+    },
+}
+
+if getgenv().Sea == "1" then 
+    PlcId = 2753915549
+elseif getgenv().Sea == "2" then 
+    PlcId = 4442272183
+else 
+    PlcId = 7449423635
+end 
+
+if getgenv().Sea ~= World[game.PlaceId]['Place'] then 
+    repeat wait()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(World[PlcId]['Remote'])
+    until getgenv().Sea == World[game.PlaceId]['Place']
+end 
+local plr = game.Players.LocalPlayer
+function toTarget(pos, targetPos, targetCFrame,TpInstant)
+    if plr.Character:FindFirstChild("HumanoidRootPart") then 
+        local aaa =  150
+        local tween_s = game:service"TweenService"
+        local info = TweenInfo.new((targetPos - pos).Magnitude/aaa, Enum.EasingStyle.Quad)
+        if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and plr.Character.Humanoid.Health > 0 then
+            local a = Vector3.new(0,plr.Character:FindFirstChild("HumanoidRootPart").Position.Y,0) 
+            local b = Vector3.new(0,game:GetService("Workspace").Map["WaterBase-Plane"].Position.Y,0)
+            if (a-b).Magnitude <= 60 then
+                plr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame*CFrame.new(0,20,0)
+            end
+            getgenv().Tween = tween_s:Create(game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart"), info, {CFrame = targetCFrame})
+            getgenv().Tween:Play()
+            getgenv().Tween.Completed:Wait()
+        end
+    end
+end
+plr = game.Players.LocalPlayer
+function DetectFruit()
+    for i,v in pairs(plr.Backpack:GetChildren()) do 
+        if v:IsA("Tool") and string.find(v.Name,"Fruit") then 
+            return v 
+        end
+    end
+    for i,v in pairs(plr.Character:GetChildren()) do 
+        if v:IsA("Tool") and string.find(v.Name,"Fruit") then 
+            return v 
+        end
+    end
+end
+print(DetectFruit()==nil)
+function CreateTweenFloat()
+    if not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+        local BV = Instance.new("BodyVelocity")
+        BV.Parent = plr.Character.HumanoidRootPart
+        BV.Name = "EffectsSY"
+        BV.MaxForce = Vector3.new(0, 100000, 0)
+        BV.Velocity = Vector3.new(0, 0, 0)
+    end
+end
+game:GetService('RunService').Stepped:connect(function()
+    pcall(function()
+        if plr.Character:FindFirstChild("Humanoid") and plr.Character.Humanoid.Health ~= 0 then
+            CreateTweenFloat()
+        end
+    end)
+end)
+function equiptool(tool)
+    
+        plr.Character.Humanoid:EquipTool(tool)
+    
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if plr.Character:FindFirstChild("HumanoidRootPart") and plr.Character:FindFirstChild("Humanoid") then
+        for i,v in next,plr.Character:GetDescendants() do 
+            if (v:IsA("Part") or v:IsA("MeshPart")) and  v.CanCollide then 
+                v.CanCollide = false 
+            end
+        end
+    end
+end)
+getgenv().drop = true
+spawn(function()
+    while getgenv().drop do 
+        wait()
+        
+        print("[DEBUG] Starting loop iteration...")
+        
+        local PositionCaFe = Pos[getgenv().Sea]['Spawn']
+        local PositionF = Pos[getgenv().Sea]['Drop']
+        
+        print("[DEBUG] Moving to PositionCaFe: ", PositionCaFe)
+        toTarget(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position, PositionCaFe.Position, PositionCaFe)
+        print("[DEBUG] Setting spawn point...")
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("SetSpawnPoint")
+        
+       
+        while wait() do
+            local FruitDrop = DetectFruit()
+            print("[DEBUG] Fruit detected: ", FruitDrop and FruitDrop.Name or "None")
+            if FruitDrop then
+                print("[DEBUG] Moving to PositionF: ", PositionF)
+                toTarget(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position, PositionF.Position, PositionF)
+                if game.Players.LocalPlayer.Character:FindFirstChild(FruitDrop.Name) then
+                    print("[DEBUG] Dropping fruit: ", FruitDrop.Name)
+                    repeat 
+                        wait()
+                        DetectFruit().Parent = game.Workspace
+                    until DetectFruit() == nil or not getgenv().drop
+                    print("[DEBUG] Fruit dropped successfully.")
+                    wait(2)
+                    game:Shutdown()
+                else
+                    print("[DEBUG] Equipping fruit tool...")
+                    repeat 
+                        wait()
+                        equiptool(FruitDrop)
+                    until game.Players.LocalPlayer.Character:FindFirstChild(FruitDrop.Name) or not getgenv().drop
+                end
+            else
+                print("[DEBUG] Buying a fruit...")
+                local buy = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin", "Buy")
+                print("[DEBUG] Buy result: ", buy)
+                if buy ~= 1 and DetectFruit() == nil then 
+                    print("[DEBUG] No fruit detected after buy. Shutting down...")
+                    wait(2)
+                    game:Shutdown()
+                end
+            end
+        end
+    end
+end)
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if plr.Humanoid.Sit then 
+                plr.Humanoid.Sit = false 
+            end 
+        end)
+    end 
+end)
