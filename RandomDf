@@ -1,4 +1,3 @@
-
 repeat task.wait() until game:IsLoaded()
 
 local function ClickButton(a)
@@ -44,31 +43,55 @@ StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 
 local vu = game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:connect(function()
-    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-    wait(1)
-    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+wait(1)
+vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
-
 Pos = {
-    ['1'] = {
+    ['1'] =  {
         ['Drop'] = CFrame.new(-1422.78662, 65.1952133, 12.9214306),
         ['Spawn'] = CFrame.new(-1336.93494, 12.1960964, 495.882416)
     },
-    ['2'] = {
-        ['Drop'] = CFrame.new(-428.404663, 149.220291, 383.255859, -0.991344988, -4.2343121e-08, -0.131282479, -3.72102562e-08, 1, -4.15510151e-08, 0.131282479, -3.63063357e-08, -0.991344988),
+    ['2'] =  {
+        ['Drop'] ={
+            [1] = CFrame.new(-476.471008, 149.560364, 382.771088),
+            [2] = CFrame.new(-454.21283, 149.560364, 382.538116),
+            [3] = CFrame.new(-431.387939, 149.560379, 383.232269),
+            [4] = CFrame.new(-415.836243, 149.560379, 382.923096),
+            [5] = CFrame.new(-401.033997, 149.560379, 382.806396),
+            [6] = CFrame.new(-380.24585, 149.560379, 383.532867),
+            [7] = CFrame.new(-359.484772, 149.560379, 382.508118),
+            [8] = CFrame.new(-338.162689, 149.560379, 383.279144),
+            [9] = CFrame.new(-309.221558, 149.560379, 383.558807),
+            [10] = CFrame.new(-288.695343, 149.560379, 383.495544),
+            [11] = CFrame.new(-534.999573, 122.492226, 303.945618),
+            [12] = CFrame.new(-550.047363, 122.492226, 319.174744),
+            [13] = CFrame.new(-574.127747, 122.492226, 344.219604),
+            [14] = CFrame.new(-595.700073, 122.492226, 366.079437),
+            [15] = CFrame.new(-606.584595, 122.492226, 377.012299),
+            [16] = CFrame.new(-617.42688, 122.492226, 387.902832),
+            [17] = CFrame.new(-628.752686, 122.492226, 392.766205),
+            [18] = CFrame.new(-639.335022, 122.492226, 382.96225),
+            [19] = CFrame.new(-650.642517, 122.492226, 371.504059),
+            [20] = CFrame.new(-557.559021, 122.492226, 280.264313),
+            [21] = CFrame.new(-190.863571, 149.287689, -88.2294998),
+            [22] = CFrame.new(-224.866501, 149.287689, -92.9123154),
+            [23] = CFrame.new(-162.380966, 149.287704, -82.1316528),
+            [24] = CFrame.new(-141.600739, 149.28862, -88.2388382),
+            [25] = CFrame.new(-310.451752, 149.286667, -145.043884),
+        },
         ['Spawn'] = CFrame.new(-380.796204, 73.0601044, 248.089951)     
     },
-    ['3'] = {
+    ['3'] =  {
         ['Drop'] =  CFrame.new(-12485.5879, 378.457672, -7574.04932),
         ['Spawn'] = CFrame.new(-12548.1387, 336.914337, -7408.68408) 
     }
 }
-
-World = {
+World =  {
     [2753915549] = {
         ['Place'] = "1",
         ['Remote'] = 'TravelMain'
-    },
+    } ,
     [4442272183] = {
         ['Place'] = "2",
         ['Remote'] = 'TravelDressrosa'
@@ -92,19 +115,17 @@ if getgenv().Sea ~= World[game.PlaceId]['Place'] then
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(World[PlcId]['Remote'])
     until getgenv().Sea == World[game.PlaceId]['Place']
 end 
-
 local plr = game.Players.LocalPlayer
-
-function toTarget(pos, targetPos, targetCFrame, TpInstant)
+function toTarget(pos, targetPos, targetCFrame,TpInstant)
     if plr.Character:FindFirstChild("HumanoidRootPart") then 
-        local aaa = 150
+        local aaa =  150
         local tween_s = game:service"TweenService"
-        local info = TweenInfo.new((targetPos - pos).Magnitude / aaa, Enum.EasingStyle.Quad)
+        local info = TweenInfo.new((targetPos - pos).Magnitude/aaa, Enum.EasingStyle.Quad)
         if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and plr.Character.Humanoid.Health > 0 then
-            local a = Vector3.new(0, plr.Character:FindFirstChild("HumanoidRootPart").Position.Y, 0) 
-            local b = Vector3.new(0, game:GetService("Workspace").Map["WaterBase-Plane"].Position.Y, 0)
-            if (a - b).Magnitude <= 60 then
-                plr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0)
+            local a = Vector3.new(0,plr.Character:FindFirstChild("HumanoidRootPart").Position.Y,0) 
+            local b = Vector3.new(0,game:GetService("Workspace").Map["WaterBase-Plane"].Position.Y,0)
+            if (a-b).Magnitude <= 60 then
+                plr.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame*CFrame.new(0,20,0)
             end
             getgenv().Tween = tween_s:Create(game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart"), info, {CFrame = targetCFrame})
             getgenv().Tween:Play()
@@ -112,29 +133,20 @@ function toTarget(pos, targetPos, targetCFrame, TpInstant)
         end
     end
 end
-
--- Kiểm tra xem Acc A có đang trang bị trái không
-function isEquipped()
-    return plr.Character:FindFirstChildWhichIsA("Tool")
-end
-
+plr = game.Players.LocalPlayer
 function DetectFruit()
-    -- Kiểm tra trái trong Balo
-    local fruits = {}
-    for i, v in pairs(plr.Backpack:GetChildren()) do 
-        if v:IsA("Tool") and string.find(v.Name, "Fruit") then 
-            table.insert(fruits, v)
+    for i,v in pairs(plr.Backpack:GetChildren()) do 
+        if v:IsA("Tool") and string.find(v.Name,"Fruit") then 
+            return v 
         end
     end
-    -- Kiểm tra trái trong người (nếu đã trang bị)
-    for i, v in pairs(plr.Character:GetChildren()) do 
-        if v:IsA("Tool") and string.find(v.Name, "Fruit") then 
-            table.insert(fruits, v)
+    for i,v in pairs(plr.Character:GetChildren()) do 
+        if v:IsA("Tool") and string.find(v.Name,"Fruit") then 
+            return v 
         end
     end
-    return fruits  -- Trả về tất cả các trái tìm được
 end
-
+print(DetectFruit()==nil)
 function CreateTweenFloat()
     if not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
         local BV = Instance.new("BodyVelocity")
@@ -144,7 +156,6 @@ function CreateTweenFloat()
         BV.Velocity = Vector3.new(0, 0, 0)
     end
 end
-
 game:GetService('RunService').Stepped:connect(function()
     pcall(function()
         if plr.Character:FindFirstChild("Humanoid") and plr.Character.Humanoid.Health ~= 0 then
@@ -152,73 +163,107 @@ game:GetService('RunService').Stepped:connect(function()
         end
     end)
 end)
-
 function equiptool(tool)
-    plr.Character.Humanoid:EquipTool(tool)
+    
+        plr.Character.Humanoid:EquipTool(tool)
+    
 end
 
 game:GetService("RunService").RenderStepped:Connect(function()
     if plr.Character:FindFirstChild("HumanoidRootPart") and plr.Character:FindFirstChild("Humanoid") then
-        for i, v in next, plr.Character:GetDescendants() do 
-            if (v:IsA("Part") or v:IsA("MeshPart")) and v.CanCollide then 
+        for i,v in next,plr.Character:GetDescendants() do 
+            if (v:IsA("Part") or v:IsA("MeshPart")) and  v.CanCollide then 
                 v.CanCollide = false 
             end
         end
     end
 end)
-
+local RareFruit = {
+    'Dragon (East)',
+    'Dragon (West)',
+    'Dragon (Western)',
+    'Kitsune',
+    'Dough',
+    'Leopard',
+    'Gas',
+    'Buddha',
+    'Quake',
+    'Love',
+    'Spider',
+    'Sound',
+    'Phoenix',
+    'Portal',
+    'Rumble',
+    'Pain',
+    'Blizzard',
+    'Gravity',
+    'Mammoth',
+    'T-Rex',
+    'Shadow',
+    'Venom',
+    'Control',
+    'Spirit',
+}
 getgenv().drop = true
-
 spawn(function()
-    while getgenv().drop do
+    while getgenv().drop do 
         wait()
-
-        print("[DEBUG] Bắt đầu vòng lặp...")
-
-        local PositionCaFe = Pos[getgenv().Sea]['Spawn']
-        local PositionF = Pos[getgenv().Sea]['Drop']
-
-        print("[DEBUG] Di chuyển đến PositionCaFe: ", PositionCaFe)
-        toTarget(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position, PositionCaFe.Position, PositionCaFe)
-        print("[DEBUG] Đặt điểm spawn...")
+        
+        --print("[DEBUG] Starting loop iteration...")
+        
+        local Cafe = Pos[getgenv().Sea]['Spawn']
+        local Drop
+        --print("[DEBUG] Moving to PositionCaFe: ", PositionCaFe)
+        toTarget(Plr.Character.HumanoidRootPart.Position, Cafe.Position, Cafe)
+        --print("[DEBUG] Setting spawn point...")
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("SetSpawnPoint")
-
-        -- Kiểm tra xem Acc A có đang trang bị trái không
-    
-        -- Chờ đến khi phát hiện trái
-        local fruits = DetectFruit()
-        print(#fruits)
-        if #fruits > 0 then
-            print("[DEBUG] Di chuyển đến PositionF: ", PositionF)
-            toTarget(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position, PositionF.Position, PositionF)
-
-            if not isEquipped() then
-                for _, fruit in pairs(fruits) do
-                    print("[DEBUG] Trang bị trái: ", fruit.Name)
-                    equiptool(fruit)  -- Trang bị trái
-                    -- Thả trái sau khi trang bị
-                    print("[DEBUG] Thả trái: ", fruit.Name)
-                    repeat
-                        wait()
-                        fruit.Parent = game.Workspace  -- Thả trái
-                        wait()
-                    until #DetectFruit() < #fruits or not getgenv().drop
-                    fruits  = DetectFruit()
-                    print("[DEBUG] Thả trái thành công.")
+        
+       
+        while wait() do
+            local FruitDrop = DetectFruit()
+            --print("[DEBUG] Fruit detected: ", FruitDrop and FruitDrop.Name or "None")
+            if FruitDrop then
+                if table.find(RareFruit,string.match(FruitDrop.Name,"(.*) Fruit")) then
+                    Drop = Pos[getgenv().Sea]['Drop'][math.random(21,25)]
+                else 
+                    Drop = Pos[getgenv().Sea]['Drop'][math.random(1,20)]
                 end
-                game:Shutdown()  -- Tắt game sau khi thả tất cả trái
+                toTarget(Plr.Character.HumanoidRootPart.Position, Drop.Position, Drop)
+                if game.Players.LocalPlayer.Character:FindFirstChild(FruitDrop.Name) then
+                    --print("[DEBUG] Dropping fruit: ", FruitDrop.Name)
+                    repeat 
+                        wait()
+                        DetectFruit().Parent = game.Workspace
+                    until DetectFruit() == nil or not getgenv().drop
+                    --print("[DEBUG] Fruit dropped successfully.")
+                    wait()
+                    game:Shutdown()
+                else
+                    --print("[DEBUG] Equipping fruit tool...")
+                    repeat 
+                        wait()
+                        equiptool(FruitDrop)
+                    until game.Players.LocalPlayer.Character:FindFirstChild(FruitDrop.Name) or not getgenv().drop
+                end
+            else
+                --print("[DEBUG] Buying a fruit...")
+                local buy = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin", "Buy")
+                --print("[DEBUG] Buy result: ", buy)
+                if buy ~= 1 and DetectFruit() == nil then 
+                    --rint("[DEBUG] No fruit detected after buy. Shutting down...")
+                    wait()
+                    game:Shutdown()
+                end
             end
-        else 
-		    print("[DEBUG] Buying a fruit...")
-            local buy = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin", "Buy")
-            print("[DEBUG] Buy result: ", buy)
-            
-            if buy ~= 1 and #DetectFruit() ==0     then 
-                print("[DEBUG] No fruit detected after buy. Shutting down...")
-                wait()
-                game:Shutdown()
-            end
-                
         end
     end
+end)
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if plr.Humanoid.Sit then 
+                plr.Humanoid.Sit = false 
+            end 
+        end)
+    end 
 end)
