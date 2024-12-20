@@ -11,7 +11,7 @@
         local ListItemTrade = {"Trait Crystal","Frost Bind","Risky Dice"}
         local StarterGui = game:GetService("StarterGui")
         StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-        StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+        StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
         
         function ClickButton(d)
             game:GetService("VirtualInputManager"):SendMouseButtonEvent(
