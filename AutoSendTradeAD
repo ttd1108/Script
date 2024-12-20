@@ -253,6 +253,7 @@
                                                 repeat wait()
                                                     print('bấm lock trade')
                                                     ClickButton(Plrgui.UI.TradeTransactionUI.Lock)
+wait(.5)
                                                 until Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
                                                 print('xong')
                                             
