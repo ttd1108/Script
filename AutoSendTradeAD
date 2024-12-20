@@ -220,6 +220,7 @@
                                                                     print('đã tìm được item')
                                                                     repeat wait()
                                                                         ClickButton(Item)
+                                                                        wait(.5)
                                                                     until not AddItemUi.HolderButtons.ConfirmButton.TextLabel.Text == "Confirm" or not _G.farm 
                                                                     wait(.5)
                                                                 else 
