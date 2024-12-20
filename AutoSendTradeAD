@@ -11,31 +11,8 @@
         local ListItemTrade = {"Trait Crystal","Frost Bind","Risky Dice"}
         local StarterGui = game:GetService("StarterGui")
         StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-        StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-       local function disableCodex()
-    local Codex = game:GetService("CoreGui"):FindFirstChild("Codex")
-    if Codex then
-        for _, v in ipairs(Codex:GetChildren()) do
-            v.Enabled = false
-        end
-        return true
-    end
-    return false
-end
-
-
-local function checkAndDisable()
-    if disableCodex() then return end
-    
-end
-
-while true do
-    wait(1)
-    if game:IsLoaded() then
-        checkAndDisable()
-        break
-    end
-end
+        StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+        
         function ClickButton(d)
             game:GetService("VirtualInputManager"):SendMouseButtonEvent(
                 d.AbsolutePosition.X + d.AbsoluteSize.X / 2,
@@ -208,7 +185,7 @@ end
                                                     if Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) then 
                                                         local amountItem =string.match(Plrgui.UI.TradeTransactionUI.SendItems[v].Button.CountLabel.Text,"(.*)x"):gsub(",","")
                                                         if tonumber(amountItem) >= tonumber(Data.Items[v]) then 
-                                                            print('item',v,'dã d? s? lu?ng')
+                                                            print('item',v,'đã đủ số lượng')
                                                             CheckPutItemFinish[v] = true 
                                                             wait(.5)
                                                         else
@@ -216,7 +193,7 @@ end
                                                             if InputValueUi then 
 
                                                                 if tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) ~= tonumber(Data.Items[v]) then 
-                                                                    print('item chua d? s? lu?ng dang s?a l?i')
+                                                                    print('item chưa đủ số lượng đang sửa lại')
                                                                     repeat wait()
                                                                         ClickButton(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox)
                                                                         writeGui(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox,Data.Items[v])
@@ -224,12 +201,12 @@ end
                                                                         print(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text ,Data.Items[v], tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) ==tonumber(Data.Items[v]))
                                                                     until tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) == tonumber(Data.Items[v]) or not _G.farm
                                                                     ClickButton(InputValueUi.Holder.Options.Change)
-                                                                    print("dã s?a xong b?m change")
+                                                                    print("đã sửa xong bấm change")
                                                                     CheckPutItemFinish[v] = true 
                                                                     wait(.5)
                                                                 end
                                                             else
-                                                                print('b?m vào item d? s?a giá')
+                                                                print('bấm vào item để sửa giá')
                                                                 ClickButton(Plrgui.UI.TradeTransactionUI.SendItems[v])
                                                                 wait(.5)
                                                             end
@@ -237,13 +214,13 @@ end
                                                     else 
                                                         local AddItemUi =GetAddItemGui()
                                                         if AddItemUi then 
-                                                            if AddItemUi.FocusDisplayItem.EmptyTextLabel.Visible then 
+                                                            if AddItemUi.HolderButtons.ConfirmButton.TextLabel.Text == "No Selection" then 
                                                                 local Item = getItem(v,AddItemUi)
                                                                 if Item then 
-                                                                    print('dã tìm du?c item')
+                                                                    print('đã tìm được item')
                                                                     repeat wait()
                                                                         ClickButton(Item)
-                                                                    until not AddItemUi.FocusDisplayItem.EmptyTextLabel.Visible or not _G.farm 
+                                                                    until not AddItemUi.HolderButtons.ConfirmButton.TextLabel.Text == "Confirm" or not _G.farm 
                                                                     wait(.5)
                                                                 else 
                                                                     print('không có item')
@@ -255,7 +232,7 @@ end
                                                                 repeat wait()
                                                                     ClickButton(AddItemUi.HolderButtons.ConfirmButton)
                                                                     wait(.5)
-                                                                until not GetAddItemGui() or Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) or not _G.farm
+                                                                until not GetAddItemGui() or Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
                                                             end 
                                                         else
                                                             ClickButton(Plrgui.UI.TradeTransactionUI.AddItemsButton) 
@@ -266,16 +243,16 @@ end
                                                     CheckPutItemFinish[v] = true 
                                                     wait(.5)
                                                 end
-                                            until CheckPutItemFinish[v] or not _G.farm 
+                                            until CheckPutItemFinish[v] or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
                                             wait(.5)
                                         else
-                                            print('dã add xong t?t c? item')
+                                            print('đã add xong tất cả item')
                                             if not Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled then 
                                                 
                                                 repeat wait()
-                                                    print('b?m lock trade')
+                                                    print('bấm lock trade')
                                                     ClickButton(Plrgui.UI.TradeTransactionUI.Lock)
-                                                until Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled or not _G.farm 
+                                                until Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
                                                 print('xong')
                                             
                                             end 
