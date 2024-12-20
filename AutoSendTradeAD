@@ -1,271 +1,332 @@
 
-repeat wait() until game:IsLoaded()
-repeat wait() until game.Players.LocalPlayer
-local Plr = game.Players.LocalPlayer
-repeat wait() until Plr.Character
-repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
-repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
-local Plrgui =game.Players.LocalPlayer.PlayerGui
-local guiservice = game:GetService("GuiService")
-local vim = game:GetService("VirtualInputManager")
-local ListItemTrade = {"Trait Crystal","Frost Bind","Risky Dice"}
-local StarterGui = game:GetService("StarterGui")
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
-function SlideButton(a, targetX)
-    local currentX = a.AbsolutePosition.X + a.AbsoluteSize.X / 2
-    local moveStep = 5  -- Default step size
-    local deadZone = 1  -- A smaller dead zone for more precise control
-
-    while math.abs(targetX - currentX) > deadZone do
-        -- Dynamically adjust the step size to be smaller as we approach the target
-        local moveDirection = targetX > currentX and moveStep or -moveStep
-        moveStep = math.min(math.abs(targetX - currentX), moveStep)
-        
-        currentX = currentX + moveDirection
-        game:GetService("VirtualInputManager"):SendMouseButtonEvent(currentX, a.AbsolutePosition.Y + 35, 0, true, a, 1)
-        wait(0.05)
-    end
-
-    -- Final adjustment to ensure exact position
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(targetX, a.AbsolutePosition.Y + 35, 0, true, a, 1)
-    wait(0.05)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(targetX, a.AbsolutePosition.Y + 35, 0, false, a, 1)
-end
-function ClickButton(a)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
-    game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,false,a,1)
-end 
-local function GetMainLobbyGui()
-    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
-        if v.Name == "PromptDefault" then 
-            if v.Visible and v.Holder.TitleLabel.Text == "Teleport to Main Lobby"  then 
-                return v
-            end 
-        end 
-    end
-    return
-end
-local function GetTradeHubGui()
-    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
-        if v.Name == "PromptDefault" then 
-            if v.Visible and (v.Holder.TitleLabel.Text == "Trade Hub" or v.Holder.TitleLabel.Text == "Join A Friend")  then 
-                return v
-            end 
-        end 
-    end
-    return
-end
-local function GetWaitingTrade()
-    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
-        if v.Name == "PromptDefault" then 
-            if v.Visible and string.find(v.Holder.MessageLabel.Text,"before trading") then 
-                return v
-            end 
-        end 
-    end
-    return
-end
-function writeGui(path, text)
-   
-        guiservice.SelectedObject = path
-        wait(.2)
-        path.Text = text
-        wait(.2)
-        vim:SendKeyEvent(true, 13, false, game)
-        wait(.1)
-        vim:SendKeyEvent(false, 13, false, game)
-        wait(.2)
-        guiservice.SelectedObject = nil
-        wait(.2)
-        path.Text = text
-        wait(.2)
-
-end
-local function FindUserTrade()
-    for i,v in pairs(Plrgui.UI.TradeMenuUI.RequestFrame:GetChildren()) do 
-        if v.Name == "Player" then 
-            if v.Frame.PlayerName.Text == getgenv().AccHold  then 
-                return v 
-            end 
-        end 
-    end 
-end 
-local function CheckInputValueUi()
-    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
-        if v.Name == "PromptDefault" then 
-            if v.Visible and v.Holder.TitleLabel.Text == "Change Amount or Remove?" then 
-                return v
-            end 
-        end 
-    end
-    return
-end 
-local function GetAddItemGui()
-    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
-        if v.Name == "GridPrompt" then 
-            if v.TitleLabel.Text == "Select An Item To Trade" and v.Visible then 
-                return v 
-            end 
-        end 
-    end 
-end 
-local CheckPutItemFinish = {}
-for i,v in pairs(ListItemTrade) do 
-    CheckPutItemFinish[v] = false 
-end 
-local function CheckDoneAll()
-    for i,v in pairs(ListItemTrade) do 
-        if not CheckPutItemFinish[v] then 
-            return false 
+        repeat wait() until game:IsLoaded()
+        repeat wait() until game.Players.LocalPlayer
+        local Plr = game.Players.LocalPlayer
+        repeat wait() until Plr.Character
+        repeat wait() until Plr.Character:FindFirstChild("HumanoidRootPart")
+        repeat wait() until Plr.Character:FindFirstChild("Humanoid") 
+        local Plrgui =game.Players.LocalPlayer.PlayerGui
+        local guiservice = game:GetService("GuiService")
+        local vim = game:GetService("VirtualInputManager")
+        local ListItemTrade = {"Trait Crystal","Frost Bind","Risky Dice"}
+        local StarterGui = game:GetService("StarterGui")
+        StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+        StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+       local function disableCodex()
+    local Codex = game:GetService("CoreGui"):FindFirstChild("Codex")
+    if Codex then
+        for _, v in ipairs(Codex:GetChildren()) do
+            v.Enabled = false
         end
-    end 
-    return true 
+        return true
+    end
+    return false
 end
-local function getItem(ItemName,ItemGui)
-    for i,v in pairs(ItemGui.ScrollingFrame:GetChildren()) do 
-        if v.Name == ItemName then 
-            return v 
-        end 
-    end 
-    return  
+
+
+local function checkAndDisable()
+    if disableCodex() then return end
+    
 end
-local function CheckTradeFinish()
-    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
-        if v.Name == "PromptDefault" then 
-            if v.Visible and v.Holder.MessageLabel.Text == "Trade has been completed!" then 
-                return v
+
+while true do
+    wait(1)
+    if game:IsLoaded() then
+        checkAndDisable()
+        break
+    end
+end
+        function ClickButton(d)
+            game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+                d.AbsolutePosition.X + d.AbsoluteSize.X / 2,
+                d.AbsolutePosition.Y + 65,
+                0,
+                true,
+                d,
+                1
+            )
+            game:GetService("VirtualInputManager"):SendMouseButtonEvent(
+                d.AbsolutePosition.X + d.AbsoluteSize.X / 2,
+                d.AbsolutePosition.Y + 65,
+                0,
+                false,
+                d,
+                1
+            )
+        end
+        local function GetMainLobbyGui()
+            for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+                if v.Name == "PromptDefault" then 
+                    if v.Visible and v.Holder.TitleLabel.Text == "Teleport to Main Lobby"  then 
+                        return v
+                    end 
+                end 
+            end
+            return
+        end
+        local function GetTradeHubGui()
+            for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+                if v.Name == "PromptDefault" then 
+                    if v.Visible and (v.Holder.TitleLabel.Text == "Trade Hub" or v.Holder.TitleLabel.Text == "Join A Friend")  then 
+                        return v
+                    end 
+                end 
+            end
+            return
+        end
+        local function GetWaitingTrade()
+            for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+                if v.Name == "PromptDefault" then 
+                    if v.Visible and string.find(v.Holder.MessageLabel.Text,"before sending trades") then 
+                        return v
+                    end 
+                end 
+            end
+            return
+        end
+    local function writeGui(path, text)
+        game:GetService("GuiService").SelectedObject = path
+        wait(.1)
+
+        path.Text = text
+        wait(.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, 13, false, game)
+        wait(.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, 13, false, game)
+        wait(.1)
+
+        game:GetService("GuiService").SelectedObject = nil
+        wait(.1)
+
+        path.Text = text
+        wait(.1)
+        
+    end
+        local function FindUserTrade()
+            for i,v in pairs(Plrgui.UI.TradeMenuUI.RequestFrame:GetChildren()) do 
+                if v.Name == "Player" then 
+                    if v.Frame.PlayerName.Text == getgenv().AccHold  then 
+                        return v 
+                    end 
+                end 
             end 
         end 
-    end
-    return
-end 
-local Loaded = false 
-_G.farm = true 
-spawn(function()
-    while _G.farm  do wait()
-        pcall(function()
-            if game.PlaceId == 17764698696 or game.PlaceId == 17017769292 then 
-                
-                local TradeHubGui = GetTradeHubGui()
-                if TradeHubGui then 
-                    if TradeHubGui.Holder.Options:FindFirstChild("Join Friend") then 
-                        ClickButton(TradeHubGui.Holder.Options["Join Friend"])
-                    elseif TradeHubGui.Holder.Options:FindFirstChild("Teleport") then 
-                        if TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ~=getgenv().AccHold then
-                            writeGui(TradeHubGui.Holder.Friend.TextBoxHolder.TextBox,getgenv().AccHold)
-                            wait()
-                        else 
-                            ClickButton(TradeHubGui.Holder.Options["Teleport"])
-                        end
+        local function CheckInputValueUi()
+            for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+                if v.Name == "PromptDefault" then 
+                    if v.Visible and v.Holder.TitleLabel.Text == "Change Amount or Remove?" then 
+                        return v
                     end 
-                else 
-                    Plr.Character.HumanoidRootPart.CFrame = CFrame.new(93.8999634, 10.9806194, -325.375671)
-                    
-                    vim:SendKeyEvent(true, "E", false, game)
-                    wait(.1)
-                    vim:SendKeyEvent(false, "E", false, game)
                 end 
-            elseif game.PlaceId == 17490500437 then 
-                if game.Players:FindFirstChild(getgenv().AccHold) then 
-                   
-                    if CheckTradeFinish() then 
-                        _G.farm = false 
-                    
-                    else    
-                        if Plrgui.UI.TradeTransactionUI.Visible then
-                            for i,v in pairs(ListItemTrade) do 
-                                if not CheckPutItemFinish[v] and not CheckDoneAll() then 
+            end
+            return
+        end 
+        local function GetAddItemGui()
+            for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+                if v.Name == "GridPrompt" then 
+                    if v.TitleLabel.Text == "Select An Item To Trade" and v.Visible then 
+                        return v 
+                    end 
+                end 
+            end 
+        end 
+        local CheckPutItemFinish = {}
+        for i,v in pairs(ListItemTrade) do 
+            CheckPutItemFinish[v] = false 
+        end 
+        local function CheckDoneAll()
+            for i,v in pairs(ListItemTrade) do 
+                if not CheckPutItemFinish[v] then 
+                    return false 
+                end
+            end 
+            return true 
+        end
+        local function getItem(ItemName,ItemGui)
+            for i,v in pairs(ItemGui.ScrollingFrame:GetChildren()) do 
+                if v.Name == ItemName then 
+                    return v 
+                end 
+            end 
+            return  
+        end
+        local function CheckTradeFinish()
+            for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+                if v.Name == "PromptDefault" then 
+                    if v.Visible and v.Holder.MessageLabel.Text == "Trade has been completed!" then 
+                        return v
+                    end 
+                end 
+            end
+            return
+        end 
+        local PlayerControl = require(game:GetService("ReplicatedFirst").Classes.PlayerControl)
+        local Data = PlayerControl.AllPlayerControls[Plr].Inventory
+        local Loaded = false 
+        _G.farm = true 
+        spawn(function()
+            while _G.farm  do wait()
+                pcall(function()
+                    if game.PlaceId == 17764698696 or game.PlaceId == 17017769292 then 
+                        
+                        local TradeHubGui = GetTradeHubGui()
+                        if TradeHubGui then 
+                        
+                            if TradeHubGui.Holder.Options:FindFirstChild("Join Friend") then 
+                                ClickButton(TradeHubGui.Holder.Options["Join Friend"])
+                            elseif TradeHubGui.Holder.Options:FindFirstChild("Teleport") then 
+                                if TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ~=getgenv().AccHold then
                                     repeat wait()
-                                        if Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) then 
-                                            local InputValueUi = CheckInputValueUi()
-                                            if InputValueUi then 
-                                                repeat wait()
-                                                    SlideButton(InputValueUi.Holder.UpdateCountSlider.SliderButton.SliderVisual.BallFrame,485)
-                                                    
-                                                until  (InputValueUi.Holder.UpdateCountSlider.SliderButton.SliderVisual.BallFrame.AbsolutePosition.X > 470 and InputValueUi.Holder.UpdateCountSlider.SliderButton.SliderVisual.BallFrame.AbsolutePosition.X > 195)  or not _G.farm 
-                                                ClickButton(InputValueUi.Holder.Options.Change)
-                                                CheckPutItemFinish[v] = true 
-                                            else
-                                                ClickButton(Plrgui.UI.TradeTransactionUI.SendItems[v])
-                                            end
-                                        else 
-                                            local AddItemUi =GetAddItemGui()
-                                            if AddItemUi then 
-                                                if AddItemUi.FocusDisplayItem.EmptyTextLabel.Visible then 
-                                                    local Item = getItem(v,AddItemUi)
-                                                    if Item then 
-                                                        repeat wait()
-                                                            ClickButton(Item)
-                                                        until not AddItemUi.FocusDisplayItem.EmptyTextLabel.Visible or not _G.farm 
+                                        writeGui(TradeHubGui.Holder.Friend.TextBoxHolder.TextBox,getgenv().AccHold)
+                                        wait()
+                                    until TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ==getgenv().AccHold or not _G.farm
+                                else 
+                                    ClickButton(TradeHubGui.Holder.Options["Teleport"])
+                                end
+                            end 
+                        else 
+                            Plr.Character.HumanoidRootPart.CFrame = CFrame.new(93.8999634, 10.9806194, -325.375671)
+                            
+                            vim:SendKeyEvent(true, "E", false, game)
+                            wait(.1)
+                            vim:SendKeyEvent(false, "E", false, game)
+                        end 
+                    elseif game.PlaceId == 17490500437 then 
+                        if game.Players:FindFirstChild(getgenv().AccHold) then 
+                        
+                            if CheckTradeFinish() then 
+                                _G.farm = false 
+                            
+                            else    
+                                if Plrgui.UI.TradeTransactionUI.Visible then
+                                    for i,v in pairs(ListItemTrade) do 
+                                        if not CheckPutItemFinish[v] and not CheckDoneAll() then 
+                                            
+                                            repeat wait()
+                                                if  tonumber(Data.Items[v]) > 0 then 
+                                                    print('có item',v)
+                                                    if Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) then 
+                                                        local amountItem =string.match(Plrgui.UI.TradeTransactionUI.SendItems[v].Button.CountLabel.Text,"(.*)x"):gsub(",","")
+                                                        if tonumber(amountItem) >= tonumber(Data.Items[v]) then 
+                                                            print('item',v,'dã d? s? lu?ng')
+                                                            CheckPutItemFinish[v] = true 
+                                                            wait(.5)
+                                                        else
+                                                            local InputValueUi = CheckInputValueUi()
+                                                            if InputValueUi then 
+
+                                                                if tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) ~= tonumber(Data.Items[v]) then 
+                                                                    print('item chua d? s? lu?ng dang s?a l?i')
+                                                                    repeat wait()
+                                                                        ClickButton(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox)
+                                                                        writeGui(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox,Data.Items[v])
+                                                                        wait()
+                                                                        print(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text ,Data.Items[v], tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) ==tonumber(Data.Items[v]))
+                                                                    until tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) == tonumber(Data.Items[v]) or not _G.farm
+                                                                    ClickButton(InputValueUi.Holder.Options.Change)
+                                                                    print("dã s?a xong b?m change")
+                                                                    CheckPutItemFinish[v] = true 
+                                                                    wait(.5)
+                                                                end
+                                                            else
+                                                                print('b?m vào item d? s?a giá')
+                                                                ClickButton(Plrgui.UI.TradeTransactionUI.SendItems[v])
+                                                                wait(.5)
+                                                            end
+                                                        end
                                                     else 
-                                                        CheckPutItemFinish[v] = true 
-                                                    end 
-                                                    
+                                                        local AddItemUi =GetAddItemGui()
+                                                        if AddItemUi then 
+                                                            if AddItemUi.FocusDisplayItem.EmptyTextLabel.Visible then 
+                                                                local Item = getItem(v,AddItemUi)
+                                                                if Item then 
+                                                                    print('dã tìm du?c item')
+                                                                    repeat wait()
+                                                                        ClickButton(Item)
+                                                                    until not AddItemUi.FocusDisplayItem.EmptyTextLabel.Visible or not _G.farm 
+                                                                    wait(.5)
+                                                                else 
+                                                                    print('không có item')
+                                                                    CheckPutItemFinish[v] = true 
+                                                                    wait(.5)
+                                                                end 
+                                                                
+                                                            else 
+                                                                repeat wait()
+                                                                    ClickButton(AddItemUi.HolderButtons.ConfirmButton)
+                                                                    wait(.5)
+                                                                until not GetAddItemGui() or Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) or not _G.farm
+                                                            end 
+                                                        else
+                                                            ClickButton(Plrgui.UI.TradeTransactionUI.AddItemsButton) 
+                                                            wait(.5)
+                                                        end 
+                                                    end
                                                 else 
-                                                    repeat wait()
-                                                        ClickButton(AddItemUi.HolderButtons.ConfirmButton)
-                                                        wait(.5)
-                                                    until not GetAddItemGui() or Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) or not _G.farm
-                                                end 
-                                            else
-                                                ClickButton(Plrgui.UI.TradeTransactionUI.AddItemsButton) 
+                                                    CheckPutItemFinish[v] = true 
+                                                    wait(.5)
+                                                end
+                                            until CheckPutItemFinish[v] or not _G.farm 
+                                            wait(.5)
+                                        else
+                                            print('dã add xong t?t c? item')
+                                            if not Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled then 
+                                                
+                                                repeat wait()
+                                                    print('b?m lock trade')
+                                                    ClickButton(Plrgui.UI.TradeTransactionUI.Lock)
+                                                until Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled or not _G.farm 
+                                                print('xong')
+                                            
                                             end 
                                         end
-                                    until CheckPutItemFinish[v] or not _G.farm 
+                                    end
                                 else 
-                                    if not Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled then 
-                                        repeat wait()
-                                            ClickButton(Plrgui.UI.TradeTransactionUI.Lock)
-                                            wait()
-                                        until Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled or not _G.farm 
+                                    if Plrgui.UI.TradeMenuUI.Visible then 
+                                        local WaitingTrade = GetWaitingTrade()
+                                        if WaitingTrade then 
+                                            print('waiting')
+                                            wait(tonumber(string.match(WaitingTrade.Holder.MessageLabel.Text,"wait (.*) seconds")))
+                                            ClickButton(WaitingTrade.Holder.Options.Back)
+                                        else
+                                            print('not waiting')
+                                            local TradeUser = FindUserTrade()
+                                            if TradeUser then   
+                                                for i,v in pairs(Plrgui.UI.TradeMenuUI.RequestFrame:GetChildren()) do 
+                                                    if v.Name == "Player" then 
+                                                        if v~= TradeUser then 
+                                                            v.Visible = false 
+                                                        end
+                                                    end 
+                                                end
+                                                ClickButton(TradeUser.Frame.RequestButton)                         
+                                            end
+                                        end 
+                                    else 
+
+                                        local TradeButton
+                                        if Plrgui.HUD.HolderLeft:FindFirstChild("TradeButtonHolder") then 
+                                            TradeButton =Plrgui.HUD.HolderLeft:FindFirstChild("TradeButtonHolder").OpenTrade
+                                        elseif Plrgui.HUD.MobileHolderRight:FindFirstChild("TradeButtonHolder") then
+                                            TradeButton =Plrgui.HUD.MobileHolderRight:FindFirstChild("TradeButtonHolder").OpenTrade
+                                        end
+                                        ClickButton(TradeButton)
                                     end 
                                 end
                             end
                         else 
-                            if Plrgui.UI.TradeMenuUI.Visible then 
-                                local WaitingTrade = GetWaitingTrade()
-                                if WaitingTrade then 
-                                    print('waiting')
-                                    ClickButton(WaitingTrade.Holder.Options.Back)
-                                else
-                                    print('not waiting')
-                                    local TradeUser = FindUserTrade()
-                                    if TradeUser then   
-                                        for i,v in pairs(Plrgui.UI.TradeMenuUI.RequestFrame:GetChildren()) do 
-                                            if v.Name == "Player" then 
-                                                if v~= TradeUser then 
-                                                    v.Visible = false 
-                                                end
-                                            end 
-                                        end
-                                        ClickButton(TradeUser.Frame.RequestButton)                         
-                                    end
-                                end 
+                            local MainLobbyGui =GetMainLobbyGui()
+                            if MainLobbyGui then 
+                                ClickButton(MainLobbyGui.Holder.Options.Teleport)
                             else 
-
-                                local TradeButton
-                                if Plrgui.HUD.HolderLeft:FindFirstChild("TradeButtonHolder") then 
-                                    TradeButton =Plrgui.HUD.HolderLeft:FindFirstChild("TradeButtonHolder").OpenTrade
-                                elseif Plrgui.HUD.MobileHolderRight:FindFirstChild("TradeButtonHolder") then
-                                    TradeButton =Plrgui.HUD.MobileHolderRight:FindFirstChild("TradeButtonHolder").OpenTrade
-                                end
-                                ClickButton(TradeButton)
-                            end 
+                                Plr.Character.HumanoidRootPart.CFrame = CFrame.new(73.7887802, -91.0125885, -158.98053)
+                                vim:SendKeyEvent(true, "E", false, game)
+                                wait(.1)
+                                vim:SendKeyEvent(false, "E", false, game)
+                            end
                         end
                     end
-                else 
-                    local MainLobbyGui =GetMainLobbyGui()
-                    if MainLobbyGui then 
-                        ClickButton(MainLobbyGui.Holder.Options.Teleport)
-                    else 
-                        Plr.Character.HumanoidRootPart.CFrame = CFrame.new(73.7887802, -91.0125885, -158.98053)
-                        vim:SendKeyEvent(true, "E", false, game)
-                        wait(.1)
-                        vim:SendKeyEvent(false, "E", false, game)
-                    end
-                end
+                end)
             end
         end)
-    end
-end)
+    
