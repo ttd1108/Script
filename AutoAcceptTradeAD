@@ -30,7 +30,7 @@ local vim = game:GetService("VirtualInputManager")
 local function CheckTradeFinish()
     for i, v in pairs(Plrgui.PromptGui:GetChildren()) do
         if v.Name == "PromptDefault" then
-            if v.Visible and (v.Holder.MessageLabel.Text == "Trade has been completed!" or  string.find(v.Holder.MessageLabel.Text,"Trade cancelled")  then
+            if v.Visible and (v.Holder.MessageLabel.Text == "Trade has been completed!" or  string.find(v.Holder.MessageLabel.Text,"Trade cancelled") ) then
                 return v
             end
         end
@@ -46,7 +46,16 @@ local function getTradeRequest()
     end
     return nil
 end
-
+local function GetTradeHubGui()
+    for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
+        if v.Name == "PromptDefault" then 
+            if v.Visible and (v.Holder.TitleLabel.Text == "Trade Hub" or v.Holder.TitleLabel.Text == "Join A Friend")  then 
+                return v
+            end 
+        end 
+    end
+    return
+end
 _G.farm = true
 spawn(function()
     while _G.farm do
@@ -56,17 +65,10 @@ spawn(function()
             local TradeHubGui = GetTradeHubGui()
             if TradeHubGui then 
             
-                if TradeHubGui.Holder.Options:FindFirstChild("Join Friend") then 
-                    ClickButton(TradeHubGui.Holder.Options["Join Friend"])
-                elseif TradeHubGui.Holder.Options:FindFirstChild("Teleport") then 
-                    if TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ~=getgenv().AccHold then
-                        repeat wait()
-                            writeGui(TradeHubGui.Holder.Friend.TextBoxHolder.TextBox,getgenv().AccHold)
-                            wait()
-                        until TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ==getgenv().AccHold or not _G.farm
-                    else 
+                if TradeHubGui.Holder.Options:FindFirstChild("Teleport") then 
+                    
                         ClickButton(TradeHubGui.Holder.Options["Teleport"])
-                    end
+                    
                 end 
             else 
                 Plr.Character.HumanoidRootPart.CFrame = CFrame.new(93.8999634, 10.9806194, -325.375671)
