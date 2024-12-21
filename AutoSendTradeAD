@@ -169,6 +169,10 @@
                             vim:SendKeyEvent(false, "E", false, game)
                         end 
                     elseif game.PlaceId == 17490500437 then 
+spawn(function()
+repeat wait(60*7) until game:IsLoaded() 
+game:Shutdown()
+end)
                         if game.Players:FindFirstChild(getgenv().AccHold) then 
                         
                             if CheckTradeFinish() then 
