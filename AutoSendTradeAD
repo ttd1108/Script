@@ -265,7 +265,7 @@ wait(.5)
                                         local WaitingTrade = GetWaitingTrade()
                                         if WaitingTrade then 
                                             print('waiting')
-                                            wait(tonumber(string.match(WaitingTrade.Holder.MessageLabel.Text,"wait (.*) seconds")))
+                                            wait(5)
                                             ClickButton(WaitingTrade.Holder.Options.Back)
                                         else
                                             print('not waiting')
