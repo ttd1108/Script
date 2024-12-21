@@ -30,7 +30,7 @@ local vim = game:GetService("VirtualInputManager")
 local function CheckTradeFinish()
     for i, v in pairs(Plrgui.PromptGui:GetChildren()) do
         if v.Name == "PromptDefault" then
-            if v.Visible and (v.Holder.MessageLabel.Text == "Trade has been completed!" or  string.find(v.Holder.MessageLabel.Text,"Trade cancelled") ) then
+            if v.Visible and (v.Holder.MessageLabel.Text == "Trade has been completed!" or  string.find(v.Holder.MessageLabel.Text,"Trade cancelled") or string.find(v.Holder.MessageLabel.Text,"currently") ) then
                 return v
             end
         end
