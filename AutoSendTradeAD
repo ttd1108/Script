@@ -140,9 +140,9 @@ end
 local PlayerControl = require(game:GetService("ReplicatedFirst").Classes.PlayerControl)
 local Data = PlayerControl.AllPlayerControls[Plr].Inventory
 local Loaded = false 
-_G.farm = true 
+getgenv().farm = true 
 spawn(function()
-    while _G.farm  do wait()
+    while getgenv().farm  do wait()
         pcall(function()
             if game.PlaceId == 17764698696 or game.PlaceId == 17017769292 then 
                 spawn(function()
@@ -160,7 +160,7 @@ end)
                             repeat wait()
                                 writeGui(TradeHubGui.Holder.Friend.TextBoxHolder.TextBox,getgenv().AccHold)
                                 wait()
-                            until TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ==getgenv().AccHold or not _G.farm
+                            until TradeHubGui.Holder.Friend.TextBoxHolder.TextBox.Text ==getgenv().AccHold or not getgenv().farm
                         else 
                             ClickButton(TradeHubGui.Holder.Options["Teleport"])
                         end
@@ -180,7 +180,7 @@ end)
                 if game.Players:FindFirstChild(getgenv().AccHold) then 
                 
                     if CheckTradeFinish() then 
-                        _G.farm = false 
+                        getgenv().farm = false 
                     
                     else    
                         if Plrgui.UI.TradeTransactionUI.Visible then
@@ -207,7 +207,7 @@ end)
                                                                 writeGui(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox,Data.Items[v])
                                                                 wait()
                                                                 print(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text ,Data.Items[v], tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) ==tonumber(Data.Items[v]))
-                                                            until tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) == tonumber(Data.Items[v]) or not _G.farm
+                                                            until tonumber(InputValueUi.Holder.UpdateCountSlider.TextBoxHolder.TextBox.Text) == tonumber(Data.Items[v]) or not getgenv().farm
                                                             ClickButton(InputValueUi.Holder.Options.Change)
                                                             print("đã sửa xong bấm change")
                                                             CheckPutItemFinish[v] = true 
@@ -229,7 +229,7 @@ end)
                                                             repeat wait()
                                                                 ClickButton(Item)
                                                                 wait(.5)
-                                                            until not AddItemUi.HolderButtons.ConfirmButton.TextLabel.Text ~= "No Selection" or not _G.farm 
+                                                            until not AddItemUi.HolderButtons.ConfirmButton.TextLabel.Text ~= "No Selection" or not getgenv().farm
                                                             wait(.5)
                                                         else 
                                                             print('không có item')
@@ -241,7 +241,7 @@ end)
                                                         repeat wait()
                                                             ClickButton(AddItemUi.HolderButtons.ConfirmButton)
                                                             wait(.5)
-                                                        until not GetAddItemGui() or Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
+                                                        until not GetAddItemGui() or Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) or not getgenv().farm or not game.Players:FindFirstChild(getgenv().AccHold)
                                                         wait(1)
                                                     end 
                                                 else
@@ -253,7 +253,7 @@ end)
                                             CheckPutItemFinish[v] = true 
                                             wait(.5)
                                         end
-                                    until CheckPutItemFinish[v] or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
+                                    until CheckPutItemFinish[v] or not getgenv().farm or not game.Players:FindFirstChild(getgenv().AccHold)
                                     wait(.5)
                                 else
                                     print('đã add xong tất cả item')
@@ -263,7 +263,7 @@ end)
                                             print('bấm lock trade')
                                             ClickButton(Plrgui.UI.TradeTransactionUI.Lock)
 wait(.5)
-                                        until Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
+                                        until Plrgui.UI.TradeTransactionUI.SendContents.Locked.Enabled or not getgenv().farm or not game.Players:FindFirstChild(getgenv().AccHold)
                                         print('xong')
                                     
                                     end 
