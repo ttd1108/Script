@@ -145,7 +145,11 @@
             while _G.farm  do wait()
                 pcall(function()
                     if game.PlaceId == 17764698696 or game.PlaceId == 17017769292 then 
-                        
+                        spawn(function()
+repeat wait(60*3) until game:IsLoaded() 
+game:Shutdown()
+end)
+     
                         local TradeHubGui = GetTradeHubGui()
                         if TradeHubGui then 
                         
