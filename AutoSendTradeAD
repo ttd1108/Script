@@ -234,6 +234,7 @@
                                                                     ClickButton(AddItemUi.HolderButtons.ConfirmButton)
                                                                     wait(.5)
                                                                 until not GetAddItemGui() or Plrgui.UI.TradeTransactionUI.SendItems:FindFirstChild(v) or not _G.farm or not game.Players:FindFirstChild(getgenv().AccHold)
+                                                                wait(1)
                                                             end 
                                                         else
                                                             ClickButton(Plrgui.UI.TradeTransactionUI.AddItemsButton) 
