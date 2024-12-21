@@ -54,7 +54,7 @@ end
 local function GetWaitingTrade()
     for i,v in pairs(Plrgui.PromptGui:GetChildren()) do 
         if v.Name == "PromptDefault" then 
-            if v.Visible and (string.find(v.Holder.MessageLabel.Text,"before sending trades") or string.find(v.Holder.MessageLabel.Text,"before trading")) then 
+            if v.Visible and (string.find(v.Holder.MessageLabel.Text,"before sending trades") or string.find(v.Holder.MessageLabel.Text,"before trading") or string.find(v.Holder.MessageLabel.Text,"currently") ) then 
                 return v
             end 
         end 
